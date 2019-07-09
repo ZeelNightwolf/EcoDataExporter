@@ -10,6 +10,9 @@ using static Eco.Simulation.Types.PlantSpecies;
 using Eco.World;
 using Eco.Gameplay.Plants;
 using Eco.World.Blocks;
+using Eco.Shared.Localization;
+using Eco.Shared.Utils;
+using Eco.Core.Utils;
 
 namespace FZM.Wiki
 {
@@ -26,7 +29,7 @@ namespace FZM.Wiki
 
         [ChatCommand("Creates a dump file of all plant conditions", ChatAuthorizationLevel.Admin)]
         public static void PlantDetails(User user)
-        {
+        {          
             // dictionary of plant properties
             Dictionary<string, string> plantDetails = new Dictionary<string, string>()
             {
@@ -46,12 +49,14 @@ namespace FZM.Wiki
                 { "isWater", "nil" },
                 { "isDecorative", "nil" },
                 { "calorieValue", "nil" },
+                /*
                 { "seedDrop", "nil" },
                 { "seedDropChance", "nil" },
                 { "seedAtGrowth", "nil" },
                 { "seedBonusGrowth", "nil" },
                 { "seedMax", "nil" },
                 { "seedMin", "nil" },
+                */
                 { "harvestTool", "nil" },
                 { "killOnHarvest", "nil" },
                 { "postHarvestGrowth", "nil" },
@@ -83,7 +88,6 @@ namespace FZM.Wiki
                 if (s is PlantSpecies && !(s is TreeSpecies))
                 {
                     PlantSpecies plant = s as PlantSpecies;
-                    //Console.WriteLine(plant.Name);
                     if (!EveryPlant.ContainsKey(plant.DisplayName))
                     {
                         string plantName = plant.DisplayName;
@@ -101,13 +105,15 @@ namespace FZM.Wiki
                         EveryPlant[plantName]["isWater"] = plant.Water ? "'Underwater'" : "nil";
                         EveryPlant[plantName]["calorieValue"] = "'" + plant.CalorieValue.ToString("F1") + "'";
 
+                        /* Seeds no longer a stat ??
                         if (plant.SeedItemType != null) { EveryPlant[plantName]["seedDrop"] = "'" + SplitName(RemoveItemTag(plant.SeedItemType.Name)) + "'"; }
-
+                        
                         EveryPlant[plantName]["seedDropChance"] = "'" + (plant.SeedDropChance * 100).ToString("F0") + "'";
                         EveryPlant[plantName]["seedAtGrowth"] = "'" + (plant.SeedsAtGrowth * 100).ToString("F0") + "'";
                         EveryPlant[plantName]["seedBonusGrowth"] = "'" + (plant.SeedsBonusAtGrowth * 100).ToString("F0") + "'";
                         EveryPlant[plantName]["seedMax"] = "'" + plant.SeedRange.Max.ToString("F1") + "'";
                         EveryPlant[plantName]["seedMin"] = "'" + plant.SeedRange.Min.ToString("F1") + "'";
+                        */
 
                         if (Block.Is<Reapable>(plant.BlockType))
                             EveryPlant[plantName]["harvestTool"] = "'Scythe'";
@@ -184,8 +190,8 @@ namespace FZM.Wiki
                     }
                 }
             }
+                WriteDictionaryToFile(user, "Wiki_Module_PlantData.txt", "plants", EveryPlant);
 
-            WriteDictionaryToFile(user, "Wiki_Module_PlantData.txt", "plants", EveryPlant);
         }
 
         [ChatCommand("Creates a dump file of all Tree conditions", ChatAuthorizationLevel.Admin)]
@@ -213,12 +219,14 @@ namespace FZM.Wiki
                 { "isWater", "nil" },
                 { "isDecorative", "nil" },
                 { "calorieValue", "nil" },
+                /*
                 { "seedDrop", "nil" },
                 { "seedDropChance", "nil" },
                 { "seedAtGrowth", "nil" },
                 { "seedBonusGrowth", "nil" },
                 { "seedMax", "nil" },
                 { "seedMin", "nil" },
+                */
                 { "killOnHarvest", "nil" },
                 { "postHarvestGrowth", "nil" },
                 { "scytheKills", "nil" },
@@ -266,6 +274,7 @@ namespace FZM.Wiki
                         EveryTree[treeName]["isWater"] = tree.Water ? "'Underwater'" : "nil";
                         EveryTree[treeName]["calorieValue"] = "'" + tree.CalorieValue.ToString("F1") + "'";
 
+                        /* Seeds no longer a stat ??
                         if (tree.SeedItemType != null) { EveryTree[treeName]["seedDrop"] = "'[[" + SplitName(RemoveItemTag(tree.SeedItemType.Name)) + "]]'"; }
 
                         EveryTree[treeName]["seedDropChance"] = "'" + (tree.SeedDropChance * 100).ToString("F0") + "'";
@@ -273,6 +282,7 @@ namespace FZM.Wiki
                         EveryTree[treeName]["seedBonusGrowth"] = "'" + (tree.SeedsBonusAtGrowth * 100).ToString("F0") + "'";
                         EveryTree[treeName]["seedMax"] = "'" + tree.SeedRange.Max.ToString("F1") + "'";
                         EveryTree[treeName]["seedMin"] = "'" + tree.SeedRange.Min.ToString("F1") + "'";
+                        */
 
                         if (tree.PostHarvestingGrowth == 0)
                             EveryTree[treeName]["killOnHarvest"] = "'Yes'";
@@ -343,7 +353,6 @@ namespace FZM.Wiki
                     }
                 }
             }
-
             WriteDictionaryToFile(user, "Wiki_Module_TreeData.txt", "trees", EveryTree);
         }
 
@@ -450,7 +459,6 @@ namespace FZM.Wiki
                     }
                 }
             }
-
             WriteDictionaryToFile(user, "Wiki_Module_AnimalData.txt", "animals", EveryAnimal);
         }
     }

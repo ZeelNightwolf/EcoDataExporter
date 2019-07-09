@@ -32,32 +32,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Eco.Core">
+    <Reference Include="Eco.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.Gameplay">
+    <Reference Include="Eco.Gameplay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Gameplay.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.ModKit">
+    <Reference Include="Eco.ModKit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.ModKit.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Mods, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Mods.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.Shared">
+    <Reference Include="Eco.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Shared.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.Simulation">
+    <Reference Include="Eco.Simulation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Simulation.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.Stats">
+    <Reference Include="Eco.Stats, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Stats.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.World">
+    <Reference Include="Eco.World, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.World.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.WorldGenerator">
+    <Reference Include="Eco.WorldGenerator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.WorldGenerator.dll</HintPath>
     </Reference>
     <Reference Include="System" />

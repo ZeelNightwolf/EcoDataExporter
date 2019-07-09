@@ -1,4 +1,5 @@
-﻿using Eco.Gameplay.Items;
+﻿using Eco.Core.Utils;
+using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared;
@@ -15,6 +16,8 @@ namespace FZM.Wiki
 {
     public partial class WikiDetails : IChatCommandHandler
     {
+        public static NLogWrapper logger = NLogWriter.GetConcreteLogger("WikiExporter");
+
         // outputting formats
         private static string space2 = "        ";
         private static string space3 = "            ";

@@ -391,7 +391,7 @@ namespace FZM.Wiki
                 }
                 streamWriter.WriteLine("    },\n}");
                 streamWriter.Close();
-                user.Player.SendTemporaryMessage(Localizer.Do($"Dumped to  {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_ItemData.txt"), ChatCategory.Info);
+                user.Player.SendTemporaryMessage(Localizer.Do($"Dumped to  {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_ItemData.txt"));
             }
             #endregion
 

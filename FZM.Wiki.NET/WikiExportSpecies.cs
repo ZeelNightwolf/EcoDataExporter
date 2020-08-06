@@ -415,7 +415,7 @@ namespace FZM.Wiki
                         EveryTree[treeName]["scytheKills"] = tree.ScythingKills ? "'Yes'" : "nil";
 
                         // The item returned when this species is harvrested.
-                        if (tree.ResourceItemType != null) { EveryPlant[treeName]["resourceItem"] = "'[[" + SplitName(RemoveItemTag(tree.ResourceItemType.Name)) + "]]'"; }
+                        if (tree.ResourceItemType != null) { EveryTree[treeName]["resourceItem"] = "'[[" + SplitName(RemoveItemTag(tree.ResourceItemType.Name)) + "]]'"; }
 
                         EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1") + "'"; // The minimum number of items returned.
                         EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1") + "'"; // The maximum number of items returned.

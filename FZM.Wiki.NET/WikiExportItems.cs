@@ -80,7 +80,7 @@ namespace FZM.Wiki
             foreach (Item allItem in Item.AllItems)
             {
                 //Console.WriteLine("Item: " + allItem.DisplayName);
-                if (!EveryItem.ContainsKey(allItem.DisplayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents"))
+                if (!EveryItem.ContainsKey(allItem.DisplayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents") && allItem.Group != "Actionbar Items")
                 {
                     string displayName = allItem.DisplayName;
                     EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));
@@ -361,8 +361,8 @@ namespace FZM.Wiki
 
                         #endregion
 
-                        if (!obj.Name.Contains("Ramp"))
-                            obj.Destroy();
+                        //if (!obj.Name.Contains("Ramp"))
+                            //obj.Destroy();
                     }
 
                     #endregion

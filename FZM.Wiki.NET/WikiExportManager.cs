@@ -4,6 +4,7 @@ using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared;
 using Eco.Shared.Localization;
+using Eco.Shared.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,17 +38,23 @@ namespace FZM.Wiki
         [ChatCommand("Creates all 8 dump files", ChatAuthorizationLevel.Admin)]
         public static void DumpDetails(User user)
         {
-            DiscoverAll(user);
-            ItemDetails(user);
-            RecipesDetails(user);
-            SkillsDetails(user);
-            TalentDetails(user);
-            PlantDetails(user);
-            TreeDetails(user);
-            AnimalDetails(user);
-            CommandDetails(user);
+            try { DiscoverAll(user); } catch (Exception e) { LogExceptionAndNotify(user,e,"Discover All"); }
+            try { ItemDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Item Details"); }
+            try { RecipesDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Recipe Details"); }
+            try { SkillsDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Skills Details"); }
+            try { TalentDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Talent Details"); }
+            try { PlantDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Plant Details"); }
+            try { TreeDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Tree Details"); }
+            try { AnimalDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Animal Details"); }
+            try { CommandDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Command Details"); }  
         }
-        
+
+        public static void LogExceptionAndNotify(User user, Exception e, string dump)
+        {
+            Log.WriteErrorLine(Localizer.DoStr(e.Message));
+            user.Player.MsgLocStr("ERROR: " + dump + " returned an error, check log for details, no dump generated!");
+        }
+
         /// <summary>
         /// Discover all items and skills in the game to enable query.
         /// </summary>

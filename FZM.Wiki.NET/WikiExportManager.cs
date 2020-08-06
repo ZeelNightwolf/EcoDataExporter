@@ -47,7 +47,7 @@ namespace FZM.Wiki
             AnimalDetails(user);
             CommandDetails(user);
         }
-
+        
         /// <summary>
         /// Discover all items and skills in the game to enable query.
         /// </summary>

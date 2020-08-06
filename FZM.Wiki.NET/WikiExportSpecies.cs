@@ -113,7 +113,7 @@ namespace FZM.Wiki
 
                         #region INFO
                         EveryPlant[plantName]["isDecorative"] = plant.Decorative ? "'Decorative'" : "nil"; // Is the plant considered decorative. Not simulated after spawn.
-                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? "'Spreads'" : "nil"; // Does the plant spread. Old growth does not for example.
+                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? "'No Spread'" : "'Spread'"; // Does the plant spread. Old growth does not for example.
                         #endregion
 
                         #region LIFETIME
@@ -373,7 +373,7 @@ namespace FZM.Wiki
 
                         #region INFO
                         EveryTree[treeName]["isDecorative"] = tree.Decorative ? "'Decorative'" : "nil"; // Is the plant considered decorative. Not simulated after spawn.
-                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? "'Spreads'" : "nil"; // Does the plant spread. Old growth does not for example.
+                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? "'No Spread'" : "'Spread'"; // Does the plant spread. Old growth does not for example.
                         #endregion
 
                         #region LIFETIME
@@ -456,7 +456,7 @@ namespace FZM.Wiki
                         #endregion
 
                         #region WORLDLAYERS
-                        EveryPlant[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'"; // CO2 Release by this species.
+                        EveryTree[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'"; // CO2 Release by this species.
 
                         // Under ideal conditions, how fast should this plant grow.
                         EveryTree[treeName]["idealGrowthRate"] = "'" + tree.MaxGrowthRate.ToString("F4") + "'";

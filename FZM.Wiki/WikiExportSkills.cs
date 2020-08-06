@@ -288,8 +288,8 @@ namespace FZM.Wiki
             }
 
             // gets the recipe benefits for mat costs and time
-            var allRecipes = Recipe.AllRecipes;
-            foreach (Recipe r in allRecipes)
+            var allRecipes = RecipeFamily.AllRecipes;
+            foreach (RecipeFamily r in allRecipes)
             {
                 bool firstNotSmv = false;
 
@@ -320,7 +320,7 @@ namespace FZM.Wiki
                 }
 
                 // get material bonus' if they are smv
-                foreach (CraftingElement e in r.Ingredients)
+                foreach (IngredientElement e in r.Ingredients)
                 {
                     // ensure the first item not being an smv does not break our output
                     if (!(e.Quantity is SkillModifiedValue) && e == r.Ingredients.First())

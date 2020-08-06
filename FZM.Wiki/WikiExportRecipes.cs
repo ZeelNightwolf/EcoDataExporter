@@ -42,12 +42,12 @@ namespace FZM.Wiki
             Dictionary<string, string> recipeDetails = new Dictionary<string, string>() { };
 
             // collect all the recipes
-            IEnumerable<Recipe> recipes = ReflectionUtils.DerivedTypes(typeof(WorldObject), null, false).SelectMany(type => CraftingComponent.RecipesOnWorldObject(type)).Distinct();
+            var famalies = RecipeFamily.AllRecipes;
 
-            foreach (Recipe recipe in recipes)
+            foreach (RecipeFamily family in famalies)
             {
-                string recipeName = recipe.RecipeName;
-                if (!EveryRecipe.ContainsKey(recipe.RecipeName))
+                string recipeName = family.RecipeName;
+                if (!EveryRecipe.ContainsKey(family.RecipeName))
                 {
                     EveryRecipe.Add(recipeName, new Dictionary<string, string>(recipeDetails));
 
@@ -59,7 +59,7 @@ namespace FZM.Wiki
                     tables.Append("{");
                     int tableCount = 0;
                     //return the crafting stations
-                    foreach (Type type in CraftingComponent.TablesForRecipe(recipe.GetType()))
+                    foreach (Type type in CraftingComponent.TablesForRecipe(family.GetType()))
                     {
                         string str = WorldObject.UILink(type, false);
                         int startIndex1 = str.IndexOf("</");
@@ -70,7 +70,7 @@ namespace FZM.Wiki
 
                         tableCount++;
 
-                        if (tableCount != CraftingComponent.TablesForRecipe(recipe.GetType()).Count())
+                        if (tableCount != CraftingComponent.TablesForRecipe(family.GetType()).Count())
                             tables.Append(",");
                     }
                     tables.Append("}");
@@ -81,13 +81,13 @@ namespace FZM.Wiki
                     int itemCount = 0;
                     StringBuilder products = new StringBuilder();
                     products.Append("{");
-                    foreach (CraftingElement e in recipe.Products)
+                    foreach (CraftingElement e in family.Product)
                     {
                         products.Append("{'" + e.Item.DisplayName + "','" + e.Quantity.GetBaseValue + "'}");
                         AddItemRecipeRelation(e.Item.DisplayName, recipeName);
                         AddGroupRecipeRelation(e.Item.Group, recipeName);
                         itemCount++;
-                        if (itemCount != recipe.Products.Length)
+                        if (itemCount != family.Product.Length)
                             products.Append(",");
                     }
                     products.Append("}");
@@ -97,11 +97,11 @@ namespace FZM.Wiki
                     int skillNeedCount = 1;
                     StringBuilder skillNeeds = new StringBuilder();
                     skillNeeds.Append("{");
-                    foreach (RequiresSkillAttribute req in recipe.RequiredSkills)
+                    foreach (RequiresSkillAttribute req in family.RequiredSkills)
                     {
                         skillNeeds.Append("{'" + req.SkillItem.DisplayName + "','" + req.Level.ToString() + "'}");
                         skillNeedCount++;
-                        if (skillNeedCount != recipe.RequiredSkills.Count())
+                        if (skillNeedCount != family.RequiredSkills.Count())
                             products.Append(",");
                     }
                     skillNeeds.Append("}");
@@ -113,7 +113,7 @@ namespace FZM.Wiki
                     ingredients.Append("{");
                     string consistancyCheck = null;
                     bool multipleAffectedSkills = false;
-                    foreach (CraftingElement e in recipe.Ingredients)
+                    foreach (IngredientElement e in family.Ingredients)
                     {
                         if (consistancyCheck == null)
                             if (e.Quantity is SkillModifiedValue)
@@ -126,21 +126,21 @@ namespace FZM.Wiki
                         ingredients.Append("{'" + e.Item.DisplayName + "','" + e.Quantity.GetBaseValue + "'}");
                         AddItemRecipeRelation(e.Item.DisplayName, recipeName);
                         materCount++;
-                        if (materCount != recipe.Ingredients.Length)
+                        if (materCount != family.Ingredients.Length)
                             ingredients.Append(",");
 
                     }
                     ingredients.Append("}");
                     EveryRecipe[recipeName].Add("ingredients", ingredients.ToString());
 
-                    EveryRecipe[recipeName].Add("ctime", "'" + GetIDynamicValue(recipe.CraftMinutes, user) + "'");
+                    EveryRecipe[recipeName].Add("ctime", "'" + GetIDynamicValue(family.CraftMinutes, user) + "'");
 
                     if (multipleAffectedSkills)
                     {
                         int track = 0;
                         StringBuilder sb = new StringBuilder();
                         sb.Append("{");
-                        foreach (CraftingElement e in recipe.Ingredients)
+                        foreach (IngredientElement e in family.Ingredients)
                         {
                             if (!(e.Quantity is SkillModifiedValue))
                                 continue;
@@ -149,7 +149,7 @@ namespace FZM.Wiki
 
                             track++;
 
-                            if (track != recipe.Ingredients.Length)
+                            if (track != family.Ingredients.Length)
                             {
                                 sb.Append(",");
                             }
@@ -160,14 +160,14 @@ namespace FZM.Wiki
                     }
                     else
                     {
-                        if (recipe.Ingredients.Any(x => x.Quantity is SkillModifiedValue))
-                            EveryRecipe[recipeName].Add("efficiencySkills", "{'" + (recipe.Ingredients.First(x => x.Quantity is SkillModifiedValue).Quantity as SkillModifiedValue).Skill.DisplayName + "'}");
+                        if (family.Ingredients.Any(x => x.Quantity is SkillModifiedValue))
+                            EveryRecipe[recipeName].Add("efficiencySkills", "{'" + (family.Ingredients.First(x => x.Quantity is SkillModifiedValue).Quantity as SkillModifiedValue).Skill.DisplayName + "'}");
                         else
                             EveryRecipe[recipeName].Add("efficiencySkills", "{'nil'}");
                     }
 
-                    if (recipe.CraftMinutes is SkillModifiedValue)
-                        EveryRecipe[recipeName].Add("speedSkills", "'" + ((SkillModifiedValue)recipe.CraftMinutes).Skill.DisplayName + "'");
+                    if (family.CraftMinutes is SkillModifiedValue)
+                        EveryRecipe[recipeName].Add("speedSkills", "'" + ((SkillModifiedValue)family.CraftMinutes).Skill.DisplayName + "'");
                 }
             }
 
@@ -211,7 +211,7 @@ namespace FZM.Wiki
                 }
                 streamWriter.Write("    },\n}");
                 streamWriter.Close();
-                user.Player.SendTemporaryMessage(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_CraftingRecipes.txt"));
+                user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_CraftingRecipes.txt"));
             }
         }
 
@@ -277,7 +277,7 @@ namespace FZM.Wiki
             if (value is SkillModifiedValue)
                 return (value as SkillModifiedValue).Values[0];
             if (value is ConstantValue)
-                return (value as ConstantValue).Value;
+                return (value as ConstantValue).GetBaseValue;
             return 0.0f;
         }
 

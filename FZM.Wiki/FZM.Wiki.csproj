@@ -34,39 +34,54 @@
   <ItemGroup>
     <Reference Include="Eco.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Core.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.Core.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Gameplay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Gameplay.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.Gameplay.dll</HintPath>
     </Reference>
     <Reference Include="Eco.ModKit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.ModKit.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.ModKit.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Mods, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Mods.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.Mods.dll</HintPath>
+    </Reference>
+    <Reference Include="Eco.Networking.ENet">
+      <HintPath>..\..\..\EcoDeps\Eco.Networking.ENet.dll</HintPath>
+    </Reference>
+    <Reference Include="Eco.Plugins">
+      <HintPath>..\..\..\EcoDeps\Eco.Plugins.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Shared.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Simulation, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Simulation.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.Simulation.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Stats, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.Stats.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.Stats.dll</HintPath>
+    </Reference>
+    <Reference Include="Eco.WebServer">
+      <HintPath>..\..\..\EcoDeps\Eco.WebServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Eco.WindowsForms">
+      <HintPath>..\..\..\EcoDeps\Eco.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Eco.World, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.World.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.World.dll</HintPath>
     </Reference>
     <Reference Include="Eco.WorldGenerator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Projects\ECO Current Server Dlls\Eco.WorldGenerator.dll</HintPath>
+      <HintPath>..\..\..\EcoDeps\Eco.WorldGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="NodeGraphControl">
+      <HintPath>..\..\..\EcoDeps\NodeGraphControl.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

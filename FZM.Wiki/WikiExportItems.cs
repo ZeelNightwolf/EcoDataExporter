@@ -32,10 +32,6 @@ namespace FZM.Wiki
         // dictionary of items and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryItem = new SortedDictionary<string, Dictionary<string, string>>();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
         [ChatCommand("Creates a dump file of all discovered items", ChatAuthorizationLevel.Admin)]
         public static void ItemDetails(User user)
         {
@@ -171,7 +167,7 @@ namespace FZM.Wiki
                     {
                         WorldObjectItem i = allItem as WorldObjectItem;
                         WorldObject obj = Activator.CreateInstance(i.WorldObjectType, true) as WorldObject;
-                        WorldObjectManager.Add(obj, user, user.Player.Position, Quaternion.Identity);
+                        WorldObjectManager.ForceAdd(obj.GetType(), user, user.Player.Position, Quaternion.Identity);
                         PropertyInfo[] props = obj.GetType().GetProperties();
 
                         EveryItem[displayName]["mobile"] = obj.Mobile ? "'Yes'" : "nil";
@@ -249,15 +245,14 @@ namespace FZM.Wiki
 
                         #region World Object Fuel Supply
 
-
                         if (obj.HasComponent<FuelSupplyComponent>())
                         {
                             var fuelComponent = obj.GetComponent<FuelSupplyComponent>();
                             string fuelsString = "[[";
-                            foreach (Type t in fuelComponent.FuelTypes)
+                            foreach (string t in fuelComponent.FuelTags)
                             {
-                                fuelsString += t.Name.Substring(0, t.Name.Length - 4);
-                                if (t != fuelComponent.FuelTypes.Last())
+                                fuelsString += t.Substring(0, t.Length - 4);
+                                if (t != fuelComponent.FuelTags.Last())
                                     fuelsString += "]], [[";
                             }
                             EveryItem[displayName]["fuelsUsed"] = "'" + fuelsString + "]]'";
@@ -374,27 +369,7 @@ namespace FZM.Wiki
                 }
             }
 
-            #region WriteToFile
-            // writes to WikiItems.txt to the Eco Server directory.
-            string path = AppDomain.CurrentDomain.BaseDirectory + "Wiki_Module_ItemData.txt";
-            using (StreamWriter streamWriter = new StreamWriter(path, false))
-            {
-                streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);
-                streamWriter.WriteLine();
-                streamWriter.WriteLine("return {\n    items = {");
-                foreach (string key in EveryItem.Keys)
-                {
-                    streamWriter.WriteLine(string.Format("{0}['{1}'] = {{", space2, key));
-                    foreach (KeyValuePair<string, string> keyValuePair in EveryItem[key])
-                        streamWriter.WriteLine(string.Format("{0}{1}['{2}'] = {3},", space2, space3, keyValuePair.Key, keyValuePair.Value));
-                    streamWriter.WriteLine(string.Format("{0}{1}}},", space2, space3));
-                }
-                streamWriter.WriteLine("    },\n}");
-                streamWriter.Close();
-                user.Player.SendTemporaryMessage(Localizer.Do($"Dumped to  {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_ItemData.txt"));
-            }
-            #endregion
-
+            WriteDictionaryToFile(user, "Wiki_Module_ItemData.txt", "items", EveryItem);
         }
     }
 }

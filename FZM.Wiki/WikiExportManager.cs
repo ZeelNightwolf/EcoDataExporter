@@ -48,9 +48,9 @@ namespace FZM.Wiki
         public static void DiscoverAll(User user)
         {
             IEnumerable<Type> types = ((IEnumerable<Item>)Item.AllItems).Select<Item, Type>(item => item.Type);
-            DiscoveryTracker.DiscoveredItems.Union(types);
-            DiscoveryTracker.OnNewItemsDiscovered.Invoke();
-            user.Player.SendTemporaryMessage(Localizer.Do($"All discovered"));
+            DiscoveryManager.Obj.DiscoveredThings.UnionWith(types);
+            DiscoveryManager.Obj.UpdateDiscoveredItems();
+            user.Player.Msg(Localizer.Do($"All discovered"));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace FZM.Wiki
                 }
                 streamWriter.WriteLine("    },\n}");
                 streamWriter.Close();
-                user.Player.SendTemporaryMessage(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory}{filename}"));
+                user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory}{filename}"));
             }
         }
     }

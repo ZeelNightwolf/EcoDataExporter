@@ -7,6 +7,14 @@ using Eco.Gameplay.Systems.Chat;
 using System;
 using System.Collections.Generic;
 
+/*
+ * This script is an extension by FZM based on the work done by Pradoxzon.
+ * 
+ * Most code was re-written to make use of changed or new additions to the Eco source code
+ * and to change the reliance on Pradoxzon Core Utilities mod.
+ *  
+ */
+
 namespace FZM.Wiki
 {
 

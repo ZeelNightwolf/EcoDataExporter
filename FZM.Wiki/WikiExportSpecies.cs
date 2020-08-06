@@ -13,6 +13,14 @@ using Eco.World.Blocks;
 using Eco.Shared.Utils;
 using System.Linq;
 
+/*
+ * This script is an extension by FZM based on the work done by Pradoxzon.
+ * 
+ * Most code was re-written to make use of changed or new additions to the Eco source code
+ * and to change the reliance on Pradoxzon Core Utilities mod.
+ *  
+ */
+
 namespace FZM.Wiki
 {
     public partial class WikiDetails : IChatCommandHandler

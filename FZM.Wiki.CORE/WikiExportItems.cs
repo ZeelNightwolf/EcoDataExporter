@@ -8,14 +8,14 @@ using Eco.Gameplay.Systems.Chat;
 using Eco.Shared.Math;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Eco.Shared;
-using Eco.Shared.Localization;
-using Eco.Shared.Services;
 using Eco.Gameplay.Pipes.LiquidComponents;
+using Eco.Shared.Utils;
+using Eco.Shared.Localization;
+using Eco.Gameplay;
+using Eco.World;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -29,6 +29,9 @@ namespace FZM.Wiki
 {
     public partial class WikiDetails : IChatCommandHandler
     {
+        // required for clearing space for objects
+        static Vector3i cellSize = new Vector3i(10, 10, 10);
+
         // dictionary of items and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryItem = new SortedDictionary<string, Dictionary<string, string>>();
 
@@ -76,6 +79,8 @@ namespace FZM.Wiki
                 { "type", "nil" },
                 { "typeID", "nil" }
             };
+
+            PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12));
 
             foreach (Item allItem in Item.AllItems)
             {
@@ -165,17 +170,22 @@ namespace FZM.Wiki
                     // for world objects we need to get the object placed in world to access it's properties, each object is destroyed at the end of it's read.
                     if (allItem.Group == "World Object Items" || allItem.Group == "Road Items" || allItem.Group == "Modules") //&& allItem.Type != typeof(GasGeneratorItem)
                     {
+                        //Log.WriteLine(Localizer.DoStr(allItem.DisplayName));
                         WorldObjectItem i = allItem as WorldObjectItem;
-                        WorldObject obj = Activator.CreateInstance(i.WorldObjectType, true) as WorldObject;
-                        WorldObjectManager.ForceAdd(obj.GetType(), user, user.Player.Position, Quaternion.Identity);
-                        PropertyInfo[] props = obj.GetType().GetProperties();
+                        var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity);
+                        if (obj == null)
+                        {
+                            Log.WriteLine(Localizer.DoStr("Unable to create instance of " + i.WorldObjectType.Name));
+                            continue;                    
+                        }
+                            
+                        //PropertyInfo[] props = obj.GetType().GetProperties();
 
                         EveryItem[displayName]["mobile"] = obj.Mobile ? "'Yes'" : "nil";
 
                         #region World Object Liquid Components
 
                         // Checks the objectfor the three liquid components and returns the private fields of those components to the dictionary.
-
                         // first create a list item and rate strings to attach
                         List<string> consumedFluids = new List<string>();
                         List<string> producedFluids = new List<string>();
@@ -185,7 +195,7 @@ namespace FZM.Wiki
                         if (lp != null)
                         {
                             Type producesType = (Type)GetFieldValue(lp, "producesType");
-                            int productionRate = (int)GetFieldValue(lp, "constantProductionRate");
+                            float productionRate = (float)GetFieldValue(lp, "constantProductionRate");
 
                             producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', " + productionRate + "}"));
                         }
@@ -194,7 +204,7 @@ namespace FZM.Wiki
                         if (lc != null)
                         {
                             Type acceptedType = lc.AcceptedType;
-                            int consumptionRate = (int)GetFieldValue(lc, "constantConsumptionRate");
+                            float consumptionRate = (float)GetFieldValue(lc, "constantConsumptionRate");
 
                             consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]], " + consumptionRate + "}"));
                         }
@@ -206,12 +216,12 @@ namespace FZM.Wiki
                             LiquidConsumerComponent convLC = (LiquidConsumerComponent)GetFieldValue(lconv, "consumer");
 
                             Type producesType = (Type)GetFieldValue(convLP, "producesType");
-                            int productionRate = (int)GetFieldValue(convLP, "constantProductionRate");
+                            float productionRate = (float)GetFieldValue(convLP, "constantProductionRate");
 
                             producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', " + productionRate + "}"));
 
                             Type acceptedType = convLC.AcceptedType;
-                            int consumptionRate = (int)GetFieldValue(convLC, "constantConsumptionRate");
+                            float consumptionRate = (float)GetFieldValue(convLC, "constantConsumptionRate");
                             consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]]', " + consumptionRate + "}"));
                         }
 
@@ -248,11 +258,12 @@ namespace FZM.Wiki
                         if (obj.HasComponent<FuelSupplyComponent>())
                         {
                             var fuelComponent = obj.GetComponent<FuelSupplyComponent>();
+                            var fuelTags = GetFieldValue(fuelComponent, "fuelTags") as string[];
                             string fuelsString = "[[";
-                            foreach (string t in fuelComponent.FuelTags)
+                            foreach (string t in fuelTags)
                             {
-                                fuelsString += t.Substring(0, t.Length - 4);
-                                if (t != fuelComponent.FuelTags.Last())
+                                fuelsString += t;
+                                if (t != fuelTags.Last())
                                     fuelsString += "]], [[";
                             }
                             EveryItem[displayName]["fuelsUsed"] = "'" + fuelsString + "]]'";
@@ -361,8 +372,7 @@ namespace FZM.Wiki
 
                         #endregion
 
-                        //if (!obj.Name.Contains("Ramp"))
-                            //obj.Destroy();
+                        obj.Destroy();
                     }
 
                     #endregion
@@ -370,6 +380,17 @@ namespace FZM.Wiki
             }
 
             WriteDictionaryToFile(user, "Wiki_Module_ItemData.txt", "items", EveryItem);
+        }
+
+        //Flatten ground, add a border
+        private static void PrepGround(User user, Vector3i position)
+        {
+            var insideType = BlockManager.FromTypeName("DirtRoadBlock");
+            var borderType = BlockManager.FromTypeName("StoneRoadBlock");
+
+            WorldObjectDebugUtil.LevelTerrain(cellSize.XZ, position, insideType, user.Player);
+            WorldObjectDebugUtil.LevelTerrain(new Vector2i(0, cellSize.Z), position, borderType, user.Player);
+            WorldObjectDebugUtil.LevelTerrain(new Vector2i(cellSize.X, 0), position, borderType, user.Player);          
         }
     }
 }

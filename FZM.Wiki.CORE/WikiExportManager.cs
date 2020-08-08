@@ -75,7 +75,7 @@ namespace FZM.Wiki
         /// <returns></returns>
         public static string SplitName(string name)
         {
-            string[] NameSplit = Regex.Split(name, @"(?<!^)(?=[A-Z])");
+            string[] NameSplit = Regex.Split(name, @"(?<!(^|[A-Z0-9]))(?=[A-Z0-9])|(?<!(^|[^A-Z]))(?=[0-9])|(?<!(^|[^0-9]))(?=[A-Za-z])|(?<!^)(?=[A-Z][a-z])");
             int count = 0;
             var sb = new StringBuilder();
             foreach (string str in NameSplit)
@@ -100,6 +100,19 @@ namespace FZM.Wiki
             return cleanItem;
         }
 
+        public static string WriteDictionaryAsSubObject(Dictionary<string,string> dict)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(" {");
+            foreach (KeyValuePair<string,string> kvp in dict)
+            {
+                sb.AppendLine(space2 + space3 + space2 + "['" + kvp.Key + "'] = {" + kvp.Value + "},");
+            }
+            sb.Append(space2 + space3 + space2 + "}");
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Helper method as reflection is used a number of times to get private fields
         /// </summary>
@@ -109,6 +122,13 @@ namespace FZM.Wiki
         public static object GetFieldValue(object obj, string field)
         {
             var _value = obj.GetType().GetField(field, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
+
+            return _value;
+        }
+
+        public static object GetPropertyValue(object obj, string property)
+        {
+            var _value = obj.GetType().GetProperty(property, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
 
             return _value;
         }

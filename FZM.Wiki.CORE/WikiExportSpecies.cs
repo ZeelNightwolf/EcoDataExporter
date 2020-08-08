@@ -12,6 +12,7 @@ using Eco.Gameplay.Plants;
 using Eco.World.Blocks;
 using Eco.Shared.Utils;
 using System.Linq;
+using Eco.Gameplay.Items;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -423,13 +424,13 @@ namespace FZM.Wiki
 
                         // Debris
                         EveryTree[treeName]["debrisSpawnChance"] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F0") + "'"; // Chance to spawn debris.
-                        EveryTree[treeName]["debrisType"] = "'" + tree.DebrisType.Name.ToString() + "'"; // The debriscreated when chopping this tree.
+                        EveryTree[treeName]["debrisType"] = "'" + tree.DebrisType.Name + "'"; // The debris created when chopping this tree.
 
                         // The resources returned for chopping the debris.
                         var debrisResources = new StringBuilder();
                         tree.DebrisResources.ForEach(kvp =>
                         {
-                            debrisResources.Append("'" + kvp.Key + "'");
+                            debrisResources.Append("'[[" + Item.Get(kvp.Key).DisplayName + "]]'");
                             if (tree.DebrisResources.Last().Key != kvp.Key)
                             {
                                 debrisResources.Append(",");

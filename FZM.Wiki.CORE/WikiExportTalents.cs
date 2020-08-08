@@ -47,7 +47,6 @@ namespace FZM.Wiki
                     string displayName = talentGroup.DisplayName.ToString();
                     if (!EveryTalent.ContainsKey(displayName))
                     {
-                        Console.WriteLine("C");
                         EveryTalent.Add(displayName, new Dictionary<string, string>(TalentDetails));
                         EveryTalent[displayName]["category"] = string.Format($"'{talentGroup.Category}'");
                         EveryTalent[displayName]["group"] = string.Format($"'{talentGroup.Group}'");

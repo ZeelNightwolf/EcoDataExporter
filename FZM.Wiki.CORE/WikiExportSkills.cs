@@ -168,7 +168,7 @@ namespace FZM.Wiki
 
                             //TODO: Currently there are no TalentGroups that have more than 1 Talents, but this assumedly could change and thus this it will need to be built eventually to accept it.
                         });
-                        EverySkill[friendlyName]["talents"] = WriteDictionaryAsSubObject(levelTalents);
+                        EverySkill[friendlyName]["talents"] = WriteDictionaryAsSubObject(levelTalents,1);
                     }
 
                     // BENEFITS BY LEVEL
@@ -220,7 +220,7 @@ namespace FZM.Wiki
                             }                                                        
                         }
                     }
-                    EverySkill[friendlyName]["benefits"] = WriteDictionaryAsSubObject(levelBenefits);
+                    EverySkill[friendlyName]["benefits"] = WriteDictionaryAsSubObject(levelBenefits,1);
 
                     // UNLOCKS BY LEVEL
                     Dictionary<string, string> levelUnlocks = new Dictionary<string, string>()
@@ -256,7 +256,7 @@ namespace FZM.Wiki
                             }
                         }                        
                     }
-                    EverySkill[friendlyName]["recipes"] = WriteDictionaryAsSubObject(levelUnlocks);
+                    EverySkill[friendlyName]["recipes"] = WriteDictionaryAsSubObject(levelUnlocks,1);
                 }
             }
             WriteDictionaryToFile(user, "Wiki_Module_Skills.txt", "skills", EverySkill);

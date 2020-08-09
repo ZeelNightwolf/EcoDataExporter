@@ -39,26 +39,44 @@ namespace FZM.Wiki
         public static void RecipesDetails(User user)
         {
             // dictionary of recipe properties
-            Dictionary<string, string> recipeDetails = new Dictionary<string, string>() { };
+            Dictionary<string, string> recipeDetails = new Dictionary<string, string>()
+            {
+                // Legacy? Maybe OBSOLETE?
+                { "dispCraftStn", "'1'" },
+                { "checkImage", "'1'"},
+                
+                // Info
+                { "craftStn", "nil"},
+                { "skillNeeds", "nil"},
+                { "moduleNeeds", "nil"},
+                { "baseCraftTime", "nil"},
+
+                // Variants
+                { "defaultVariant", "nil"},
+                { "numberOfVariants", "nil"},
+                { "variants", "nil"},
+
+            };
+
+            Dictionary<string, string> variantDetails = new Dictionary<string, string>()
+            {
+                { "ingredients", "nil" },
+                { "products", "nil" }
+            };
 
             // collect all the recipes
             var famalies = RecipeFamily.AllRecipes;
 
             foreach (RecipeFamily family in famalies)
             {
-                string recipeName = family.RecipeName;
+                string familyName = family.RecipeName;
                 if (!EveryRecipe.ContainsKey(family.RecipeName))
                 {
-                    EveryRecipe.Add(recipeName, new Dictionary<string, string>(recipeDetails));
+                    EveryRecipe.Add(familyName, new Dictionary<string, string>(recipeDetails));
 
-                    // these are left here from old write, not sure if they are used in the wiki modules
-                    EveryRecipe[recipeName].Add("dispCraftStn", "1");
-                    EveryRecipe[recipeName].Add("checkImage", "1");
-
+                    // Crafting Stations.
                     StringBuilder tables = new StringBuilder();
-                    tables.Append("{");
-                    int tableCount = 0;
-                    //return the crafting stations
+                    tables.Append("{");             
                     foreach (Type type in CraftingComponent.TablesForRecipe(family.GetType()))
                     {
                         string str = WorldObject.UILink(type, false);
@@ -66,109 +84,111 @@ namespace FZM.Wiki
                         int startIndex2 = str.LastIndexOf(">", startIndex1) + 1;
                         string table = str.Substring(startIndex2, startIndex1 - startIndex2);
                         tables.Append("'" + table + "'");
-                        AddTableRecipeRelation(table, recipeName);
+                        AddTableRecipeRelation(table, familyName);
 
-                        tableCount++;
-
-                        if (tableCount != CraftingComponent.TablesForRecipe(family.GetType()).Count())
-                            tables.Append(",");
+                        if (type != CraftingComponent.TablesForRecipe(family.GetType()).Last())
+                            tables.Append(", ");
                     }
                     tables.Append("}");
-                    EveryRecipe[recipeName].Add("craftStn", tables.ToString());
+                    EveryRecipe[familyName]["craftStn"] = tables.ToString();
 
-
-                    // return each product from the recipe and add them to the relations
-                    int itemCount = 0;
-                    StringBuilder products = new StringBuilder();
-                    products.Append("{");
-                    foreach (CraftingElement e in family.Product)
-                    {
-                        products.Append("{'" + e.Item.DisplayName + "','" + e.Quantity.GetBaseValue + "'}");
-                        AddItemRecipeRelation(e.Item.DisplayName, recipeName);
-                        AddGroupRecipeRelation(e.Item.Group, recipeName);
-                        itemCount++;
-                        if (itemCount != family.Product.Length)
-                            products.Append(",");
-                    }
-                    products.Append("}");
-                    EveryRecipe[recipeName].Add("products", products.ToString());
-
-                    // return the required skills for the recipe
-                    int skillNeedCount = 1;
+                    // Skills required
                     StringBuilder skillNeeds = new StringBuilder();
                     skillNeeds.Append("{");
                     foreach (RequiresSkillAttribute req in family.RequiredSkills)
                     {
                         skillNeeds.Append("{'" + req.SkillItem.DisplayName + "','" + req.Level.ToString() + "'}");
-                        skillNeedCount++;
-                        if (skillNeedCount != family.RequiredSkills.Count())
-                            products.Append(",");
+                        if (req != family.RequiredSkills.Last())
+                            skillNeeds.Append(", ");
                     }
                     skillNeeds.Append("}");
-                    EveryRecipe[recipeName].Add("skillNeeds", skillNeeds.ToString());
+                    EveryRecipe[familyName]["skillNeeds"] = skillNeeds.ToString();
 
-                    // return each ingredient from the recipe and add them to the relations
-                    int materCount = 0;
-                    StringBuilder ingredients = new StringBuilder();
-                    ingredients.Append("{");
-                    string consistancyCheck = null;
-                    bool multipleAffectedSkills = false;
-                    foreach (IngredientElement e in family.Ingredients)
+                    // Modules Required
+                    StringBuilder moduleNeeds = new StringBuilder();
+                    moduleNeeds.Append("{");
+                    foreach (var module in family.RequiredModules)
                     {
-                        if (consistancyCheck == null)
-                            if (e.Quantity is SkillModifiedValue)
-                                consistancyCheck = (e.Quantity as SkillModifiedValue).Skill.DisplayName;
-
-                        if (e.Quantity is SkillModifiedValue)
-                            if (consistancyCheck != (e.Quantity as SkillModifiedValue).Skill.DisplayName)
-                                multipleAffectedSkills = true;
-
-                        ingredients.Append("{'" + e.Item.DisplayName + "','" + e.Quantity.GetBaseValue + "'}");
-                        AddItemRecipeRelation(e.Item.DisplayName, recipeName);
-                        materCount++;
-                        if (materCount != family.Ingredients.Length)
-                            ingredients.Append(",");
-
+                        moduleNeeds.Append("'" + module.ModuleName + "'");
+                        if (module != family.RequiredModules.Last())
+                            moduleNeeds.Append(", ");
                     }
-                    ingredients.Append("}");
-                    EveryRecipe[recipeName].Add("ingredients", ingredients.ToString());
 
-                    EveryRecipe[recipeName].Add("ctime", "'" + GetIDynamicValue(family.CraftMinutes, user) + "'");
+                    // Base craft time.
+                    EveryRecipe[familyName]["baseCraftTime"] = "'" + family.CraftMinutes.GetBaseValue.ToString() + "'";
 
-                    if (multipleAffectedSkills)
+                    // Default Recipe
+                    EveryRecipe[familyName]["defaultVariant"] = "'" + family.DefaultRecipe.DisplayName + "'";
+
+                    EveryRecipe[familyName]["numberOfVariants"] = "'" + family.Recipes.Count + "'";
+
+                    SortedDictionary<string, Dictionary<string,string>> variant = new SortedDictionary<string, Dictionary<string,string>>();
+                    foreach (Recipe r in family.Recipes)
                     {
-                        int track = 0;
-                        StringBuilder sb = new StringBuilder();
-                        sb.Append("{");
-                        foreach (IngredientElement e in family.Ingredients)
+                        var recipe = r.DisplayName;
+                        if (!variant.ContainsKey(recipe))
                         {
-                            if (!(e.Quantity is SkillModifiedValue))
-                                continue;
+                            variant.Add(recipe, new Dictionary<string, string>(variantDetails));
 
-                            sb.Append("'" + ((SkillModifiedValue)e.Quantity).Skill.DisplayName + "'");
-
-                            track++;
-
-                            if (track != family.Ingredients.Length)
+                            // Ingredients required
+                            StringBuilder ingredients = new StringBuilder();
+                            ingredients.Append("{");
+                            foreach (var e in r.Ingredients)
                             {
-                                sb.Append(",");
+                                ingredients.Append("{");
+                                string element;
+                                if (e.IsSpecificItem)
+                                {
+                                    ingredients.Append("'ITEM', ");
+                                    element = e.Item.DisplayName;
+                                }
+                                else
+                                {
+                                    ingredients.Append("'TAG', ");
+                                    element = e.Tag.DisplayName;
+                                }
+
+                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "'}");
+
+                                if (e != r.Ingredients.Last())
+                                    ingredients.Append(", ");
                             }
-                        }
-                        sb.Append("}");
+                            ingredients.Append("}");
+                            variant[recipe]["ingredients"] = ingredients.ToString();
 
-                        EveryRecipe[recipeName].Add("efficiencySkills", sb.ToString());
+                            // Products recieved
+                            StringBuilder products = new StringBuilder();
+                            products.Append("{");
+                            foreach (var e in r.Items)
+                            {
+                                products.Append("{");
+                                products.Append("'" + e.Item.DisplayName + "', " + e.Quantity.GetBaseValue + "'}");
+
+                                if (e != r.Items.Last())
+                                    products.Append(", ");
+
+                                if (e != r.Items.Last())
+                                    products.Append(", ");
+                            }
+                            products.Append("}");
+                            variant[recipe]["products"] = products.ToString();
+                        }                       
                     }
-                    else
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendLine(" {");
+                    string space = space2 + space2 + space3;
+                    foreach (string key in variant.Keys)
                     {
-                        if (family.Ingredients.Any(x => x.Quantity is SkillModifiedValue))
-                            EveryRecipe[recipeName].Add("efficiencySkills", "{'" + (family.Ingredients.First(x => x.Quantity is SkillModifiedValue).Quantity as SkillModifiedValue).Skill.DisplayName + "'}");
-                        else
-                            EveryRecipe[recipeName].Add("efficiencySkills", "{'nil'}");
-                    }
+                        builder.AppendLine(string.Format("{0}['{1}'] = {{", space, key));
+                        foreach (KeyValuePair<string, string> keyValuePair in variant[key])
+                            builder.AppendLine(string.Format("{0}{1}['{2}'] = {3},", space, space2, keyValuePair.Key, keyValuePair.Value));
+                        builder.Append(string.Format("{0}{1}}}", space, space2));
 
-                    if (family.CraftMinutes is SkillModifiedValue)
-                        EveryRecipe[recipeName].Add("speedSkills", "'" + ((SkillModifiedValue)family.CraftMinutes).Skill.DisplayName + "'");
-                }
+                        if (key != variant.Keys.Last())
+                            builder.AppendLine(",");
+                    }
+                    EveryRecipe[familyName]["variants"] = builder.ToString();
+                }                   
             }
 
             // writes to WikiItems.txt to the Eco Server directory.
@@ -185,6 +205,7 @@ namespace FZM.Wiki
                         streamWriter.WriteLine(string.Format("{0}{1}['{2}'] = {3},", space2, space3, keyValuePair.Key, keyValuePair.Value));
                     streamWriter.WriteLine(string.Format("{0}{1}}},", space2, space3));
                 }
+                /*
                 streamWriter.WriteLine("    },\n    items = {");
                 foreach (string key1 in itemRecipeDic.Keys)
                 {
@@ -209,6 +230,7 @@ namespace FZM.Wiki
                         streamWriter.Write(string.Format("'{0}', ", key2));
                     streamWriter.WriteLine("},");
                 }
+                */
                 streamWriter.Write("    },\n}");
                 streamWriter.Close();
                 user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_CraftingRecipes.txt"));
@@ -288,28 +310,6 @@ namespace FZM.Wiki
             return "";
         }
 
-        private static string CleanTags(string hasTags)
-        {
-            string str;
-            StringBuilder stringBuilder1;
-            for (str = hasTags; str.Contains(" <b>"); str = stringBuilder1.ToString())
-            {
-                stringBuilder1 = new StringBuilder();
-                stringBuilder1.Append(str.Substring(0, str.IndexOf(" <b>") + 1));
-                stringBuilder1.Append(str.Substring(str.IndexOf("'>") + 2, str.IndexOf("</") - (str.IndexOf("'>") + 2)));
-                if (str.IndexOf("</b>") != str.Length - 4)
-                    stringBuilder1.Append(str.Substring(str.IndexOf("</b>") + 4));
-            }
-            StringBuilder stringBuilder2;
-            for (; str.Contains(" <style="); str = stringBuilder2.ToString())
-            {
-                stringBuilder2 = new StringBuilder();
-                stringBuilder2.Append(str.Substring(0, str.IndexOf(" <style=") + 1));
-                stringBuilder2.Append(str.Substring(str.IndexOf("\">") + 2, str.IndexOf("</") - (str.IndexOf("\">") + 2)));
-                if (str.IndexOf("</style>") != str.Length - 8)
-                    stringBuilder2.Append(str.Substring(str.IndexOf("</style>") + 8));
-            }
-            return str;
-        }
+        
     }
 }

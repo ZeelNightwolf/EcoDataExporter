@@ -100,18 +100,7 @@ namespace FZM.Wiki
             return cleanItem;
         }
 
-        public static string WriteDictionaryAsSubObject(Dictionary<string,string> dict)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(" {");
-            foreach (KeyValuePair<string,string> kvp in dict)
-            {
-                sb.AppendLine(space2 + space3 + space2 + "['" + kvp.Key + "'] = {" + kvp.Value + "},");
-            }
-            sb.Append(space2 + space3 + space2 + "}");
 
-            return sb.ToString();
-        }
 
         /// <summary>
         /// Helper method as reflection is used a number of times to get private fields
@@ -131,6 +120,51 @@ namespace FZM.Wiki
             var _value = obj.GetType().GetProperty(property, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
 
             return _value;
+        }
+
+        private static string CleanTags(string hasTags)
+        {
+            string str;
+            StringBuilder stringBuilder1;
+            for (str = hasTags; str.Contains(" <b>"); str = stringBuilder1.ToString())
+            {
+                stringBuilder1 = new StringBuilder();
+                stringBuilder1.Append(str.Substring(0, str.IndexOf(" <b>") + 1));
+                stringBuilder1.Append(str.Substring(str.IndexOf("'>") + 2, str.IndexOf("</") - (str.IndexOf("'>") + 2)));
+                if (str.IndexOf("</b>") != str.Length - 4)
+                    stringBuilder1.Append(str.Substring(str.IndexOf("</b>") + 4));
+            }
+            StringBuilder stringBuilder2;
+            for (; str.Contains(" <style="); str = stringBuilder2.ToString())
+            {
+                stringBuilder2 = new StringBuilder();
+                stringBuilder2.Append(str.Substring(0, str.IndexOf(" <style=") + 1));
+                stringBuilder2.Append(str.Substring(str.IndexOf("\">") + 2, str.IndexOf("</") - (str.IndexOf("\">") + 2)));
+                if (str.IndexOf("</style>") != str.Length - 8)
+                    stringBuilder2.Append(str.Substring(str.IndexOf("</style>") + 8));
+            }
+            return str;
+        }
+
+        // wrties out a Dictionary To be used as a Next Level Object
+        public static string WriteDictionaryAsSubObject(Dictionary<string, string> dict, int depth)
+        {
+            string spaces = space2 + space3;
+
+            for (int i = 0; i < depth; i++)
+            {
+                spaces += space2;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(" {");
+            foreach (KeyValuePair<string, string> kvp in dict)
+            {
+                sb.AppendLine(spaces + "['" + kvp.Key + "'] = {" + kvp.Value + "},");
+            }
+            sb.Append(spaces + "}");
+
+            return sb.ToString();
         }
 
         /// <summary>

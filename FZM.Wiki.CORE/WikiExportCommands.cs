@@ -85,7 +85,7 @@ namespace FZM.Wiki
                         if (p.HasDefaultValue)
                             pars[pos] += ", '" + p.DefaultValue + "'";
                     }
-                    EveryCommand[command]["parameters"] = WriteDictionaryAsSubObject(pars);
+                    EveryCommand[command]["parameters"] = WriteDictionaryAsSubObject(pars,1);
                 }
             }
 

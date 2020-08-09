@@ -15,6 +15,8 @@ using Eco.Gameplay.Pipes.LiquidComponents;
 using Eco.Shared.Utils;
 using Eco.Shared.Localization;
 using Eco.Gameplay;
+using Eco.Mods.TechTree;
+using Eco.Core.IoC;
 using Eco.World;
 
 /*
@@ -81,6 +83,7 @@ namespace FZM.Wiki
             };
 
             PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12));
+            PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
 
             foreach (Item allItem in Item.AllItems)
             {
@@ -173,12 +176,21 @@ namespace FZM.Wiki
                         //Log.WriteLine(Localizer.DoStr(allItem.DisplayName));
                         WorldObjectItem i = allItem as WorldObjectItem;
                         var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity);
+                        
+                        // Couldn't Place the obj
                         if (obj == null)
                         {
-                            Log.WriteLine(Localizer.DoStr("Unable to create instance of " + i.WorldObjectType.Name));
-                            continue;                    
+                            // Attempt a special placement
+                            obj = SpecialPlacement(user, i.WorldObjectType);
+
+                            // Still couldn't place the obj
+                            if (obj == null)
+                            {
+                                Log.WriteLine(Localizer.DoStr("Unable to create instance of " + i.WorldObjectType.Name));
+                                continue;
+                            }
                         }
-                            
+
                         //PropertyInfo[] props = obj.GetType().GetProperties();
 
                         EveryItem[displayName]["mobile"] = obj.Mobile ? "'Yes'" : "nil";
@@ -382,6 +394,37 @@ namespace FZM.Wiki
             WriteDictionaryToFile(user, "Wiki_Module_ItemData.txt", "items", EveryItem);
         }
 
+        private static WorldObject SpecialPlacement(User user,Type worldObjectType)
+        {
+            if (worldObjectType == typeof(WoodenElevatorObject))
+                    return PlaceWoodenElevator(user);
+
+            if (worldObjectType == typeof(WindmillObject) || worldObjectType == typeof(WaterwheelObject))
+                    return PlaceWindmill(user, worldObjectType);
+
+            return null;
+        }
+
+        private static WorldObject PlaceWindmill(User user, Type worldObjectType)
+        {
+            int height = 0;
+            while (height < 6)
+            {
+                World.SetBlock(typeof(Eco.World.Blocks.DirtBlock), (Vector3i)user.Player.Position + new Vector3i(-12, height, -12));
+                height++;
+            }
+            
+            return WorldObjectManager.ForceAdd(worldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(-11, 5, -12), Quaternion.Identity); 
+        }
+
+        private static WorldObject PlaceWoodenElevator(User user)
+        {
+            var position = user.Player.Position.XYZi + Vector3i.Up;
+            WorldObjectDebugUtil.LevelTerrain(new Vector2i(5, 4), position + new Vector3i(-1, 0, -1), typeof(Eco.World.Blocks.DirtBlock), user.Player);
+            WorldObjectDebugUtil.CreateShaft(new Vector2i(1, 2), position + new Vector3i(1, 0, 0), user.Player);
+            return WorldObjectManager.ForceAdd(ServiceHolder<IWorldObjectManager>.Obj.GetTypeFromName("WoodenElevatorObject"), user, position, Quaternion.Identity, false);
+        }
+
         //Flatten ground, add a border
         private static void PrepGround(User user, Vector3i position)
         {
@@ -390,7 +433,7 @@ namespace FZM.Wiki
 
             WorldObjectDebugUtil.LevelTerrain(cellSize.XZ, position, insideType, user.Player);
             WorldObjectDebugUtil.LevelTerrain(new Vector2i(0, cellSize.Z), position, borderType, user.Player);
-            WorldObjectDebugUtil.LevelTerrain(new Vector2i(cellSize.X, 0), position, borderType, user.Player);          
+            WorldObjectDebugUtil.LevelTerrain(new Vector2i(cellSize.X, 0), position, borderType, user.Player);
         }
     }
 }

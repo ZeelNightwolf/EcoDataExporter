@@ -82,7 +82,7 @@ namespace FZM.Wiki
                 { "soilMoistureContent", "nil" },
                 { "consumedFertileGround", "nil" },
                 { "consumedCanopySpace", "nil" },
-                { "consumedUnderwaterFertileGorund", "nil" },
+                { "consumedUnderwaterFertileGround", "nil" },
                 { "consumedShrubSpace", "nil" },
                 { "extremeTempMin", "nil" },
                 { "idealTempMin", "nil" },
@@ -226,7 +226,7 @@ namespace FZM.Wiki
                                 if (c.CapacityLayerName == "CanopySpace")
                                     EveryPlant[plantName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "UnderwaterFertileGorund")
-                                    EveryPlant[plantName]["consumedUnderwaterFertileGorund"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryPlant[plantName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "ShrubSpace")
                                     EveryPlant[plantName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                             }
@@ -342,7 +342,7 @@ namespace FZM.Wiki
                 { "soilMoistureContent", "nil" },
                 { "consumedFertileGround", "nil" },
                 { "consumedCanopySpace", "nil" },
-                { "consumedUnderwaterFertileGorund", "nil" },
+                { "consumedUnderwaterFertileGround", "nil" },
                 { "consumedShrubSpace", "nil" },
                 { "extremeTempMin", "nil" },
                 { "idealTempMin", "nil" },
@@ -509,7 +509,7 @@ namespace FZM.Wiki
                                 if (c.CapacityLayerName == "CanopySpace")
                                     EveryTree[treeName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "UnderwaterFertileGorund")
-                                    EveryTree[treeName]["consumedUnderwaterFertileGorund"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryTree[treeName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "ShrubSpace")
                                     EveryTree[treeName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                             }

@@ -58,7 +58,7 @@ namespace FZM.Wiki
                     if (com.ParentKey != null && com.ParentKey != "" )
                         EveryCommand[command]["parent"] = "'" + com.ParentKey + "'";
 
-                    EveryCommand[command]["helpText"] = "'" + com.HelpText + "'";
+                    EveryCommand[command]["helpText"] = "'" + JSONStringSafe(com.HelpText) + "'";
                     EveryCommand[command]["shortCut"] = "'" + com.ShortCut + "'";
                     EveryCommand[command]["level"] = "'" + com.AuthLevel.ToString() + "'";
 

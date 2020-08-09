@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Eco.Shared.Localization;
+using System.Text.RegularExpressions;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -78,8 +79,8 @@ namespace FZM.Wiki
                     //INFO
                     if (skill.Title != "")
                         EverySkill[friendlyName]["title"] = "'" + skill.Title + "'"; // The title conferred by this skill.
-                    
-                    EverySkill[friendlyName]["description"] = "'" + skill.DisplayDescription + "'"; // The description of the skill.
+
+                    EverySkill[friendlyName]["description"] = "'" + JSONStringSafe(skill.DisplayDescription) + "'"; // The description of the skill.
                     EverySkill[friendlyName]["skillID"] = "'" + skill.Type.Name + "'"; // For linking purposes in the wiki.
                     EverySkill[friendlyName]["skillIDNum"] = "'" + skill.TypeID + "'"; // For linking purposes in the wiki.
                     EverySkill[friendlyName]["maxLevel"] = "'" + skill.MaxLevel.ToString() + "'"; // The maximum level of this skill

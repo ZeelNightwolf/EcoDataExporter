@@ -89,6 +89,20 @@ namespace FZM.Wiki
             return sb.ToString();
         }
 
+        public static string JSONStringSafe(string s)
+        {
+            string[] NameSplit = Regex.Split(s, @"(?=['?])");
+            var sb = new StringBuilder();
+            foreach (string str in NameSplit)
+            {
+                sb.Append(str);
+                if (str != NameSplit.Last())
+                    sb.Append("\\");
+            }
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Remove the annoying 'Item' and the end of type names
         /// </summary>

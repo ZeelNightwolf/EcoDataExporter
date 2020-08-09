@@ -162,7 +162,7 @@ namespace FZM.Wiki
                             foreach (var e in r.Items)
                             {
                                 products.Append("{");
-                                products.Append("'" + e.Item.DisplayName + "', " + e.Quantity.GetBaseValue + "'}");
+                                products.Append("'" + e.Item.DisplayName + "', '" + e.Quantity.GetBaseValue + "'}");
 
                                 if (e != r.Items.Last())
                                     products.Append(", ");

@@ -18,6 +18,8 @@ using Eco.Gameplay;
 using Eco.Mods.TechTree;
 using Eco.Core.IoC;
 using Eco.World;
+using System.Text;
+using Eco.Gameplay.Skills;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -46,6 +48,7 @@ namespace FZM.Wiki
                 { "category", "nil" },
                 { "group", "nil" },
                 { "description", "nil" },
+                { "tagGroups", "nil"},
                 { "maxStack", "nil" },
                 { "carried", "nil" },
                 { "weight", "nil" },
@@ -99,6 +102,18 @@ namespace FZM.Wiki
 
                     Regex regex = new Regex("\t\n\v\f\r");
                     EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ").Replace("'", "\\'") + "'";
+
+                    StringBuilder tags = new StringBuilder();
+                    tags.Append("{");
+                    foreach (Tag tag in allItem.Tags())
+                    {
+                        tags.Append("'[[" + SplitName(tag.DisplayName) + "]]'");
+
+                        if (tag != allItem.Tags().Last())
+                            tags.Append(", ");                       
+                    }
+                    tags.Append("}");
+                    EveryItem[displayName]["tagGroups"] = tags.ToString();
 
                     EveryItem[displayName]["maxStack"] = "'" + allItem.MaxStackSize.ToString() + "'";
                     EveryItem[displayName]["carried"] = allItem.IsCarried ? "'Hands'" : "'Backpack'";
@@ -209,7 +224,7 @@ namespace FZM.Wiki
                             Type producesType = (Type)GetFieldValue(lp, "producesType");
                             float productionRate = (float)GetFieldValue(lp, "constantProductionRate");
 
-                            producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', " + productionRate + "}"));
+                            producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', '" + productionRate + "'}"));
                         }
 
                         var lc = obj.GetComponent<LiquidConsumerComponent>();
@@ -218,7 +233,7 @@ namespace FZM.Wiki
                             Type acceptedType = lc.AcceptedType;
                             float consumptionRate = (float)GetFieldValue(lc, "constantConsumptionRate");
 
-                            consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]], " + consumptionRate + "}"));
+                            consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]], '" + consumptionRate + "'}"));
                         }
 
                         var lconv = obj.GetComponent<LiquidConverterComponent>();
@@ -230,11 +245,11 @@ namespace FZM.Wiki
                             Type producesType = (Type)GetFieldValue(convLP, "producesType");
                             float productionRate = (float)GetFieldValue(convLP, "constantProductionRate");
 
-                            producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', " + productionRate + "}"));
+                            producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', '" + productionRate + "'}"));
 
                             Type acceptedType = convLC.AcceptedType;
                             float consumptionRate = (float)GetFieldValue(convLC, "constantConsumptionRate");
-                            consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]]', " + consumptionRate + "}"));
+                            consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]]', '" + consumptionRate + "'}"));
                         }
 
                         // combine the strings to add to the dictionary
@@ -300,7 +315,7 @@ namespace FZM.Wiki
                         if (obj.HasComponent<RoomRequirementsComponent>())
                         {
                             var roomRequirementsComponent = obj.GetComponent<RoomRequirementsComponent>();
-                            var requirements = RoomRequirements.Get(roomRequirementsComponent.GetType());
+                            var requirements = RoomRequirements.Get(obj.GetType());
                             if (requirements != null)
                             {
                                 foreach (RoomRequirementAttribute a in requirements.Requirements)
@@ -372,16 +387,16 @@ namespace FZM.Wiki
                         if (obj.HasComponent<CraftingComponent>())
                         {
                             var cc = obj.GetComponent<CraftingComponent>();
-                            string talentString = "[[";
-                            foreach (string talent in cc.ValidTalents)
+                            string talentString = "{";
+                            foreach (var talent in Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
                             {
-                                talentString += talent;
-                                if (talent != cc.ValidTalents.Last())
-                                    talentString += "]], [[";
-                            }
-                            EveryItem[displayName]["validTalents"] = "'" + talentString + "]]'";
+                                talentString += "'[[" + SplitName(talent.GetType().Name) + "]]'";
+                                if (talent != Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
+                                    talentString += ", ";
+                            }                            
+                            talentString += "}";
+                            EveryItem[displayName]["validTalents"] = talentString;
                         }
-
                         #endregion
 
                         obj.Destroy();

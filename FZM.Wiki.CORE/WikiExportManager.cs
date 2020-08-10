@@ -202,7 +202,7 @@ namespace FZM.Wiki
                     streamWriter.WriteLine(string.Format("{0}['{1}'] = {{", space2, key));
                     foreach (KeyValuePair<string, string> keyValuePair in dictionary[key])
                         streamWriter.WriteLine(string.Format("{0}{1}['{2}'] = {3},", space2, space3, keyValuePair.Key, keyValuePair.Value));
-                    streamWriter.WriteLine(string.Format("{0}{1}}},", space2, space3));
+                    streamWriter.WriteLine(string.Format("{0}}},", space2));
                 }
                 streamWriter.WriteLine("    },\n}");
                 streamWriter.Close();

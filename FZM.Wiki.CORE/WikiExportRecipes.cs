@@ -166,9 +166,6 @@ namespace FZM.Wiki
 
                                 if (e != r.Items.Last())
                                     products.Append(", ");
-
-                                if (e != r.Items.Last())
-                                    products.Append(", ");
                             }
                             products.Append("}");
                             variant[recipe]["products"] = products.ToString();
@@ -182,11 +179,12 @@ namespace FZM.Wiki
                         builder.AppendLine(string.Format("{0}['{1}'] = {{", space, key));
                         foreach (KeyValuePair<string, string> keyValuePair in variant[key])
                             builder.AppendLine(string.Format("{0}{1}['{2}'] = {3},", space, space2, keyValuePair.Key, keyValuePair.Value));
-                        builder.Append(string.Format("{0}{1}}}", space, space2));
+                        builder.Append(string.Format("{0}}}", space));
 
-                        if (key != variant.Keys.Last())
-                            builder.AppendLine(",");
+                        //if (key != variant.Keys.Last())
+                        builder.AppendLine(",");
                     }
+                    builder.Append(space2 + space3 + "}");
                     EveryRecipe[familyName]["variants"] = builder.ToString();
                 }                   
             }
@@ -203,7 +201,7 @@ namespace FZM.Wiki
                     streamWriter.WriteLine(string.Format("{0}['{1}'] = {{", space2, key));
                     foreach (KeyValuePair<string, string> keyValuePair in EveryRecipe[key])
                         streamWriter.WriteLine(string.Format("{0}{1}['{2}'] = {3},", space2, space3, keyValuePair.Key, keyValuePair.Value));
-                    streamWriter.WriteLine(string.Format("{0}{1}}},", space2, space3));
+                    streamWriter.WriteLine(string.Format("{0}}},", space2));
                 }
                 /*
                 streamWriter.WriteLine("    },\n    items = {");

@@ -80,7 +80,8 @@ namespace FZM.Wiki
                     if (skill.Title != "")
                         EverySkill[friendlyName]["title"] = "'" + skill.Title + "'"; // The title conferred by this skill.
 
-                    EverySkill[friendlyName]["description"] = "'" + JSONStringSafe(skill.DisplayDescription) + "'"; // The description of the skill.
+                    Regex regex = new Regex("[\t\n\v\f\r]");
+                    EverySkill[friendlyName]["description"] = "'" + regex.Replace(JSONStringSafe(skill.DisplayDescription), " ") + "'"; // The description of the skill.
                     EverySkill[friendlyName]["skillID"] = "'" + skill.Type.Name + "'"; // For linking purposes in the wiki.
                     EverySkill[friendlyName]["skillIDNum"] = "'" + skill.TypeID + "'"; // For linking purposes in the wiki.
                     EverySkill[friendlyName]["maxLevel"] = "'" + skill.MaxLevel.ToString() + "'"; // The maximum level of this skill

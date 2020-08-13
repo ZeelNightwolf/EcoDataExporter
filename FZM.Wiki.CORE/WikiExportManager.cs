@@ -38,7 +38,7 @@ namespace FZM.Wiki
         [ChatCommand("Creates all 8 dump files", ChatAuthorizationLevel.Admin)]
         public static void DumpDetails(User user)
         {
-            try { DiscoverAll(user); } catch (Exception e) { LogExceptionAndNotify(user,e,"Discover All"); }
+            try { DiscoverAll(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Discover All"); }
             try { ItemDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Item Details"); }
             try { RecipesDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Recipe Details"); }
             try { SkillsDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Skills Details"); }
@@ -46,7 +46,7 @@ namespace FZM.Wiki
             try { PlantDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Plant Details"); }
             try { TreeDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Tree Details"); }
             try { AnimalDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Animal Details"); }
-            try { CommandDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Command Details"); }  
+            try { CommandDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Command Details"); }
         }
 
         public static void LogExceptionAndNotify(User user, Exception e, string dump)
@@ -188,7 +188,7 @@ namespace FZM.Wiki
         /// <param name="filename"> filename to dump to</param>
         /// <param name="type"> for the lua table initial name</param>
         /// <param name="dictionary"> the dictionary to write</param>
-        public static void WriteDictionaryToFile(User user, string filename, string type, SortedDictionary<string, Dictionary<string, string>> dictionary)
+        public static void WriteDictionaryToFile(User user, string filename, string type, SortedDictionary<string, Dictionary<string, string>> dictionary, bool final = true)
         {
             // writes to the Eco Server directory.
             string path = AppDomain.CurrentDomain.BaseDirectory + filename;
@@ -204,7 +204,9 @@ namespace FZM.Wiki
                         streamWriter.WriteLine(string.Format("{0}{1}['{2}'] = {3},", space2, space3, keyValuePair.Key, keyValuePair.Value));
                     streamWriter.WriteLine(string.Format("{0}}},", space2));
                 }
-                streamWriter.WriteLine("    },\n}");
+                streamWriter.Write("    },");
+                if (final)
+                    streamWriter.Write("\n}");
                 streamWriter.Close();
                 user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory}{filename}"));
             }

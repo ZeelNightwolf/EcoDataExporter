@@ -20,6 +20,7 @@ using Eco.Core.IoC;
 using Eco.World;
 using System.Text;
 using Eco.Gameplay.Skills;
+using System.IO;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -38,6 +39,7 @@ namespace FZM.Wiki
 
         // dictionary of items and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryItem = new SortedDictionary<string, Dictionary<string, string>>();
+        private static SortedDictionary<string, Dictionary<string, string>> tagItemDic = new SortedDictionary<string, Dictionary<string, string>>();
 
         [ChatCommand("Creates a dump file of all discovered items", ChatAuthorizationLevel.Admin)]
         public static void ItemDetails(User user)
@@ -110,7 +112,9 @@ namespace FZM.Wiki
                         tags.Append("'[[" + SplitName(tag.DisplayName) + "]]'");
 
                         if (tag != allItem.Tags().Last())
-                            tags.Append(", ");                       
+                            tags.Append(", ");
+
+                        AddTagItemRelation(tag.DisplayName, allItem.DisplayName);
                     }
                     tags.Append("}");
                     EveryItem[displayName]["tagGroups"] = tags.ToString();
@@ -191,7 +195,7 @@ namespace FZM.Wiki
                         //Log.WriteLine(Localizer.DoStr(allItem.DisplayName));
                         WorldObjectItem i = allItem as WorldObjectItem;
                         var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity);
-                        
+
                         // Couldn't Place the obj
                         if (obj == null)
                         {
@@ -393,7 +397,7 @@ namespace FZM.Wiki
                                 talentString += "'[[" + SplitName(talent.GetType().Name) + "]]'";
                                 if (talent != Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
                                     talentString += ", ";
-                            }                            
+                            }
                             talentString += "}";
                             EveryItem[displayName]["validTalents"] = talentString;
                         }
@@ -406,7 +410,25 @@ namespace FZM.Wiki
                 }
             }
 
-            WriteDictionaryToFile(user, "Wiki_Module_ItemData.txt", "items", EveryItem);
+            WriteDictionaryToFile(user, "Wiki_Module_ItemData.txt", "items", EveryItem, false);
+
+            // Append Tag info
+            string filename = "Wiki_Module_ItemData.txt";
+            string path = AppDomain.CurrentDomain.BaseDirectory + filename;
+            using (StreamWriter streamWriter = new StreamWriter(path, true))
+            {
+                streamWriter.WriteLine("\n    " + "tags = {");
+                foreach (string key in tagItemDic.Keys)
+                {
+                    streamWriter.Write(string.Format("{0}['{1}'] = {{ ", space2, key));
+                    foreach (string value in tagItemDic[key].Keys)
+                        streamWriter.Write(string.Format("'{0}', ", value));
+                    streamWriter.WriteLine("},");
+                }
+                streamWriter.WriteLine("    },\n}");
+                streamWriter.Close();
+                user.Player.Msg(Localizer.Do($"Tags appended to {AppDomain.CurrentDomain.BaseDirectory}{filename}"));
+            }
         }
 
         private static WorldObject SpecialPlacement(User user,Type worldObjectType)
@@ -449,6 +471,15 @@ namespace FZM.Wiki
             WorldObjectDebugUtil.LevelTerrain(cellSize.XZ, position, insideType, user.Player);
             WorldObjectDebugUtil.LevelTerrain(new Vector2i(0, cellSize.Z), position, borderType, user.Player);
             WorldObjectDebugUtil.LevelTerrain(new Vector2i(cellSize.X, 0), position, borderType, user.Player);
+        }
+
+        private static void AddTagItemRelation(string tag, string item)
+        {
+            if (!tagItemDic.ContainsKey(tag))
+                tagItemDic.Add(tag, new Dictionary<string, string>());
+            if (tagItemDic[tag].ContainsKey(item))
+                return;
+            tagItemDic[tag].Add(item, item);
         }
     }
 }

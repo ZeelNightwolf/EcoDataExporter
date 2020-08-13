@@ -30,8 +30,8 @@ namespace FZM.Wiki
         private static SortedDictionary<string, Dictionary<string, string>> EveryRecipe = new SortedDictionary<string, Dictionary<string, string>>();
 
         private static SortedDictionary<string, StringBuilder> recipeBuilder = new SortedDictionary<string, StringBuilder>();
-        private static SortedDictionary<string, SortedDictionary<string, string>> itemRecipeDic = new SortedDictionary<string, SortedDictionary<string, string>>();
-        private static SortedDictionary<string, SortedDictionary<string, string>> tableRecipeDic = new SortedDictionary<string, SortedDictionary<string, string>>();
+        private static SortedDictionary<string, SortedDictionary<string, string>> itemRecipeVariantDic = new SortedDictionary<string, SortedDictionary<string, string>>();
+        private static SortedDictionary<string, SortedDictionary<string, string>> tableRecipeFamilyDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         private static SortedDictionary<string, SortedDictionary<string, string>> groupRecipeDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         // Extracting Recipes is complex and requires collection and sorting.
 
@@ -50,6 +50,8 @@ namespace FZM.Wiki
                 { "skillNeeds", "nil"},
                 { "moduleNeeds", "nil"},
                 { "baseCraftTime", "nil"},
+                { "baseLaborCost", "nil" },
+                { "baseXPGain", "nil" },
 
                 // Variants
                 { "defaultVariant", "nil"},
@@ -73,6 +75,7 @@ namespace FZM.Wiki
                 if (!EveryRecipe.ContainsKey(family.RecipeName))
                 {
                     EveryRecipe.Add(familyName, new Dictionary<string, string>(recipeDetails));
+                    string table;
 
                     // Crafting Stations.
                     StringBuilder tables = new StringBuilder();
@@ -82,7 +85,7 @@ namespace FZM.Wiki
                         string str = WorldObject.UILink(type, false);
                         int startIndex1 = str.IndexOf("</");
                         int startIndex2 = str.LastIndexOf(">", startIndex1) + 1;
-                        string table = str.Substring(startIndex2, startIndex1 - startIndex2);
+                        table = str.Substring(startIndex2, startIndex1 - startIndex2);
                         tables.Append("'" + table + "'");
                         AddTableRecipeRelation(table, familyName);
 
@@ -117,6 +120,12 @@ namespace FZM.Wiki
                     // Base craft time.
                     EveryRecipe[familyName]["baseCraftTime"] = "'" + family.CraftMinutes.GetBaseValue.ToString() + "'";
 
+                    // Base labor cost
+                    EveryRecipe[familyName]["baseLaborCost"] = "'" + family.Labor.ToString() + "'";
+
+                    // Base XP gain
+                    EveryRecipe[familyName]["baseXPGain"] = "'" + family.ExperienceOnCraft.ToString() + "'";
+
                     // Default Recipe
                     EveryRecipe[familyName]["defaultVariant"] = "'" + family.DefaultRecipe.DisplayName + "'";
 
@@ -129,7 +138,7 @@ namespace FZM.Wiki
                         if (!variant.ContainsKey(recipe))
                         {
                             variant.Add(recipe, new Dictionary<string, string>(variantDetails));
-
+                            
                             // Ingredients required
                             StringBuilder ingredients = new StringBuilder();
                             ingredients.Append("{");
@@ -166,6 +175,7 @@ namespace FZM.Wiki
 
                                 if (e != r.Items.Last())
                                     products.Append(", ");
+                                AddItemRecipeRelation(e.Item.DisplayName, r.DisplayName);
                             }
                             products.Append("}");
                             variant[recipe]["products"] = products.ToString();
@@ -203,23 +213,29 @@ namespace FZM.Wiki
                         streamWriter.WriteLine(string.Format("{0}{1}['{2}'] = {3},", space2, space3, keyValuePair.Key, keyValuePair.Value));
                     streamWriter.WriteLine(string.Format("{0}}},", space2));
                 }
-                /*
+                
+                // write the items to recipe variant data
                 streamWriter.WriteLine("    },\n    items = {");
-                foreach (string key1 in itemRecipeDic.Keys)
+                foreach (string key1 in itemRecipeVariantDic.Keys)
                 {
                     streamWriter.Write(string.Format("{0}['{1}'] = {{ ", space2, key1));
-                    foreach (string key2 in itemRecipeDic[key1].Keys)
+                    foreach (string key2 in itemRecipeVariantDic[key1].Keys)
                         streamWriter.Write(string.Format("'{0}', ", key2));
                     streamWriter.WriteLine("},");
                 }
+
+                // write the table to recipe family data
                 streamWriter.WriteLine("    },\n    tables = {");
-                foreach (string key1 in tableRecipeDic.Keys)
+                foreach (string key1 in tableRecipeFamilyDic.Keys)
                 {
                     streamWriter.Write(string.Format("{0}['{1}'] = {{ ", space2, key1));
-                    foreach (string key2 in tableRecipeDic[key1].Keys)
+                    foreach (string key2 in tableRecipeFamilyDic[key1].Keys)
                         streamWriter.Write(string.Format("'{0}', ", key2));
                     streamWriter.WriteLine("},");
                 }
+
+                /*
+                // write the group(tag) to recipe data
                 streamWriter.WriteLine("    },\n    groups = {");
                 foreach (string key1 in groupRecipeDic.Keys)
                 {
@@ -229,28 +245,29 @@ namespace FZM.Wiki
                     streamWriter.WriteLine("},");
                 }
                 */
+
                 streamWriter.Write("    },\n}");
                 streamWriter.Close();
                 user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_CraftingRecipes.txt"));
             }
         }
 
-        private static void AddItemRecipeRelation(string item, string recipe)
+        private static void AddItemRecipeRelation(string item, string recipeVariant)
         {
-            if (!itemRecipeDic.ContainsKey(item))
-                itemRecipeDic.Add(item, new SortedDictionary<string, string>());
-            if (itemRecipeDic[item].ContainsKey(recipe))
+            if (!itemRecipeVariantDic.ContainsKey(item))
+                itemRecipeVariantDic.Add(item, new SortedDictionary<string, string>());
+            if (itemRecipeVariantDic[item].ContainsKey(recipeVariant))
                 return;
-            itemRecipeDic[item].Add(recipe, recipe);
+            itemRecipeVariantDic[item].Add(recipeVariant, recipeVariant);
         }
 
-        private static void AddTableRecipeRelation(string table, string recipe)
+        private static void AddTableRecipeRelation(string table, string recipeFamily)
         {
-            if (!tableRecipeDic.ContainsKey(table))
-                tableRecipeDic.Add(table, new SortedDictionary<string, string>());
-            if (tableRecipeDic[table].ContainsKey(recipe))
+            if (!tableRecipeFamilyDic.ContainsKey(table))
+                tableRecipeFamilyDic.Add(table, new SortedDictionary<string, string>());
+            if (tableRecipeFamilyDic[table].ContainsKey(recipeFamily))
                 return;
-            tableRecipeDic[table].Add(recipe, recipe);
+            tableRecipeFamilyDic[table].Add(recipeFamily, recipeFamily);
         }
 
         private static void AddGroupRecipeRelation(string group, string recipe)

@@ -109,7 +109,7 @@ namespace FZM.Wiki
                     tags.Append("{");
                     foreach (Tag tag in allItem.Tags())
                     {
-                        tags.Append("'[[" + SplitName(tag.DisplayName) + "]]'");
+                        tags.Append("'" + SplitName(tag.DisplayName) + "'");
 
                         if (tag != allItem.Tags().Last())
                             tags.Append(", ");

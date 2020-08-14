@@ -42,62 +42,63 @@ namespace FZM.Wiki
             Dictionary<string, string> plantDetails = new Dictionary<string, string>()
             {
                 // INFO
-                { "isDecorative", "nil" },
-                { "doesSpread", "nil" },
+                { "isDecorative", "nil" }, // Is the plant considered decorative. Not simulated after spawn.
+                { "doesSpread", "nil" }, // The plant will spawn others like it nearby given enough time not dying and not harvested
 
                 // LIFETIME
-                { "maturity", "nil" },
+                { "maturity", "nil" }, // Age for full maturity and reproduction.
 
                 // GENERATION
-                { "isWater", "nil" },
-                { "height", "nil" },
+                { "isWater", "nil" }, // Does the species live underwater.
+                { "height", "nil" }, // Plant height in meters.
 
                 // FOOD
-                { "calorieValue", "nil" },
+                { "calorieValue", "nil" }, // The base calories this species provides to it's consumers.
 
                 // RESOURCES
-                { "requireHarvestable", "nil" },
-                { "pickableAtPercent", "nil" },
-                { "experiencePerHarvest", "nil" },
-                { "harvestTool", "nil" },
-                { "killOnHarvest", "nil" },
-                { "postHarvestGrowth", "nil" },
-                { "scytheKills", "nil" },
-                { "resourceItem", "nil" },
-                { "resourceMin", "nil" },
-                { "resourceMax", "nil" },
+                { "requireHarvestable", "nil" }, // Does this plant require to have reached a harvestable stage before you can harvest it, you will get no resources for this if its not at a harvestable stage. 
+                { "pickableAtPercent", "nil" }, // This plant will be pickable at this percent and you will get some resources.
+                { "experiencePerHarvest", "nil" }, // Base experience you get per harvest.
+                { "harvestTool", "nil" }, // The tool required to harvest this plant, nil means hands.
+                { "killOnHarvest", "nil" }, // Does the plant die on harvest.
+                { "postHarvestGrowth", "nil" }, // What % growth does the plant return to after harvest.
+                { "scytheKills", "nil" }, // Will using a Scythe/Sickle on this plant kill it.
+                { "resourceItem", "nil" }, // The item you get from harvesting this plant.
+                { "resourceMin", "nil" }, // The minimum number of items returned.
+                { "resourceMax", "nil" }, // The maximum number of items returned.
+                { "resourceBonus", "nil" }, // The bonus items returned for allowing it to grow.
 
                 // WORLD LAYERS
-                { "carbonRelease", "nil" },
-                { "idealGrowthRate", "nil" },
-                { "idealDeathRate", "nil" },
-                { "spreadRate", "nil" },
-                { "nitrogenHalfSpeed", "nil" },
-                { "nitrogenContent", "nil" },
-                { "phosphorusHalfSpeed", "nil" },
-                { "phosphorusContent", "nil" },
-                { "potassiumHalfSpeed", "nil" },
-                { "potassiumContent", "nil" },
-                { "soilMoistureHalfSpeed", "nil" },
-                { "soilMoistureContent", "nil" },
-                { "consumedFertileGround", "nil" },
-                { "consumedCanopySpace", "nil" },
-                { "consumedUnderwaterFertileGround", "nil" },
-                { "consumedShrubSpace", "nil" },
-                { "extremeTempMin", "nil" },
-                { "idealTempMin", "nil" },
-                { "idealTempMax", "nil" },
-                { "extremeTempMax", "nil" },
-                { "extremeMoistureMin", "nil" },
-                { "idealMoistureMin", "nil" },
-                { "idealMoistureMax", "nil" },
-                { "extremeMoistureMax", "nil" },
-                { "extremeSaltMin", "nil" },
-                { "idealSaltMin", "nil" },
-                { "idealSaltMax", "nil" },
-                { "extremeSaltMax", "nil" },
-                { "maxPollutionDensity", "nil" },
-                { "pollutionTolerance", "nil" }
+                { "carbonRelease", "nil" }, // The amount of carbon dioxide released by this species. (Plants & Trees are negative values)
+                { "idealGrowthRate", "nil" }, // In ideal conditions, what is the rate of growth.
+                { "idealDeathRate", "nil" }, // In ideal conditions what is the rate of death.
+                { "spreadRate", "nil" }, // In ideal conditions what is the rate of spread, if it does spread.
+                { "nitrogenHalfSpeed", "nil" }, // At what nitrogen value will the growth speed reduce to half.
+                { "nitrogenContent", "nil" }, // What nitrogen content is ideal.
+                { "phosphorusHalfSpeed", "nil" }, // At what phosphorus value will the growth speed reduce to half.
+                { "phosphorusContent", "nil" }, // What phosphorus content is ideal.
+                { "potassiumHalfSpeed", "nil" }, // At what potassium value will the growth speed reduce to half.
+                { "potassiumContent", "nil" }, // What potassium content is ideal.
+                { "soilMoistureHalfSpeed", "nil" }, // At what moisture value will the growth speed reduce to half.
+                { "soilMoistureContent", "nil" }, // What moisture content is ideal.
+                { "consumedFertileGround", "nil" }, // How much of the area deemed Fertile Ground does this plant take up, this is almost always more than the in game physical space.
+                { "consumedCanopySpace", "nil" }, // How much of the area deemed Canopy Space does this plant take up, this is almost always more than the in game physical space.
+                { "consumedUnderwaterFertileGround", "nil" }, // How much of the area deemed Underwater Fertile Ground does this plant take up, this is almost always more than the in game physical space.
+                { "consumedShrubSpace", "nil" }, // How much of the area deemed Shrub Space does this plant take up, this is almost always more than the in game physical space.
+                { "extremeTempMin", "nil" }, // The lowest temperature before this plant stops growth.
+                { "idealTempMin", "nil" }, // The lowest temperature of the ideal growth range (max growth).
+                { "idealTempMax", "nil" }, // The highest temperature of the ideal growth range (max growth).
+                { "extremeTempMax", "nil" }, // The highest temperature before this plant stops growth.
+                { "extremeMoistureMin", "nil" }, // The lowest moisture content before this plant stops growth.
+                { "idealMoistureMin", "nil" }, // The lowest moisture content of the ideal growth range (max growth).
+                { "idealMoistureMax", "nil" }, // The highest moisture content of the ideal growth range (max growth).
+                { "extremeMoistureMax", "nil" },// The highest moisture content before this plant stops growth.
+                { "extremeSaltMin", "nil" }, // The lowest salt content before this plant stops growth.
+                { "idealSaltMin", "nil" }, // The lowest salt contente of the ideal growth range (max growth).
+                { "idealSaltMax", "nil" }, // The highest salt content of the ideal growth range (max growth).
+                { "extremeSaltMax", "nil" }, // The highest Sslt content before this plant stops growth.
+                { "maxPollutionDensity", "nil" }, // The highest pollution density before this plant stops growing.
+                { "pollutionTolerance", "nil" } // The pollution density at which this plant slows growth, spread and carbon dioxide absorbtion.
             };
 
             IEnumerable<Species> species = EcoSim.AllSpecies;
@@ -113,59 +114,51 @@ namespace FZM.Wiki
                         EveryPlant.Add(plantName, new Dictionary<string, string>(plantDetails));
 
                         #region INFO
-                        EveryPlant[plantName]["isDecorative"] = plant.Decorative ? "'Decorative'" : "nil"; // Is the plant considered decorative. Not simulated after spawn.
-                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? "'No Spread'" : "'Spread'"; // Does the plant spread. Old growth does not for example.
+                        EveryPlant[plantName]["isDecorative"] = plant.Decorative ? "'Decorative'" : "nil"; 
+                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? "'No Spread'" : "'Spread'"; 
                         #endregion
 
                         #region LIFETIME
 
-                        EveryPlant[plantName]["maturity"] = "'" + plant.MaturityAgeDays.ToString("F1") + "'"; // Age for full maturity and reproduction.
+                        EveryPlant[plantName]["maturity"] = "'" + plant.MaturityAgeDays.ToString("F1") + "'"; 
                         #endregion
 
                         #region GENERATION
-                        EveryPlant[plantName]["isWater"] = plant.Water ? "'Underwater'" : "nil"; // Does the species live underwater.
-                        EveryPlant[plantName]["height"] = "'" + plant.Height.ToString("F1") + "'"; // Plant height in meters.
+                        EveryPlant[plantName]["isWater"] = plant.Water ? "'Underwater'" : "nil"; 
+                        EveryPlant[plantName]["height"] = "'" + plant.Height.ToString("F1") + "'"; 
                         #endregion
 
                         #region FOOD
-                        EveryPlant[plantName]["calorieValue"] = "'" + plant.CalorieValue.ToString("F1") + "'"; // The base calories this species provides to it's consumers.
+                        EveryPlant[plantName]["calorieValue"] = "'" + plant.CalorieValue.ToString("F1") + "'"; 
                         #endregion
 
-                        #region RESOURCES
-                        // Does this plant need to be mature before it is harvestable.
+                        #region RESOURCES                       
                         EveryPlant[plantName]["requireHarvestable"] = plant.RequireHarvestable ? "'Yes'" : "nil";
 
-                        // What growth is it considered acceptable to pick this plant at.
                         EveryPlant[plantName]["pickableAtPercent"] = "'" + (plant.PickableAtPercent * 100).ToString("F0") + "'";
 
-                        // How much experience is gained from harvesting this plant.
                         EveryPlant[plantName]["experiencePerHarvest"] = "'" + (plant.ExperiencePerHarvest).ToString("F1") + "'";
 
-                        // Is a particular tool required for harvest.
                         if (Block.Is<Reapable>(plant.BlockType))
                             EveryPlant[plantName]["harvestTool"] = "'Scythe'";
                         else if (Block.Is<Diggable>(plant.BlockType))
                             EveryPlant[plantName]["harvestTool"] = "'Shovel'";
 
-                        // Will the plant dies if harvested.
                         if (plant.PostHarvestingGrowth == 0)
                             EveryPlant[plantName]["killOnHarvest"] = "'Yes'";
                         else
                             EveryPlant[plantName]["killOnHarvest"] = "'No'";
 
-                        // If it does not die what growth level will it return to.
                         if (plant.PostHarvestingGrowth != 0)
                             EveryPlant[plantName]["postHarvestGrowth"] = "'" + (plant.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
-                        // Will using a Scythe kill this plant.
                         EveryPlant[plantName]["scytheKills"] = plant.ScythingKills ? "'Yes'" : "nil";
 
-                        // The item returned when this species is harvrested.
                         if (plant.ResourceItemType != null) { EveryPlant[plantName]["resourceItem"] = "'[[" + SplitName(RemoveItemTag(plant.ResourceItemType.Name)) + "]]'"; }
 
-                        EveryPlant[plantName]["resourceMin"] = "'" + plant.ResourceRange.Min.ToString("F1") + "'"; // The minimum number of items returned.
-                        EveryPlant[plantName]["resourceMax"] = "'" + plant.ResourceRange.Max.ToString("F1") + "'"; // The maximum number of items returned.
-                        EveryPlant[plantName]["resourceBonus"] = "'" + (plant.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; // The bonus items returned for allowing it to grow.
+                        EveryPlant[plantName]["resourceMin"] = "'" + plant.ResourceRange.Min.ToString("F1") + "'"; 
+                        EveryPlant[plantName]["resourceMax"] = "'" + plant.ResourceRange.Max.ToString("F1") + "'"; 
+                        EveryPlant[plantName]["resourceBonus"] = "'" + (plant.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; 
 
                         #endregion
 
@@ -174,18 +167,14 @@ namespace FZM.Wiki
                         #endregion
 
                         #region WORLDLAYERS
-                        EveryPlant[plantName]["carbonRelease"] = "'" + plant.ReleasesCO2TonsPerDay.ToString("F4") + "'"; // CO2 Release by this species.
+                        EveryPlant[plantName]["carbonRelease"] = "'" + plant.ReleasesCO2TonsPerDay.ToString("F4") + "'"; 
 
-                        // Under ideal conditions, how fast should this plant grow.
                         EveryPlant[plantName]["idealGrowthRate"] = "'" + plant.MaxGrowthRate.ToString("F4") + "'";
 
-                        // Under ideal conditions, how fast should this plant die. SLGs Property name is not intuitive here as this is likely the minimum death rate.
                         EveryPlant[plantName]["idealDeathRate"] = "'" + plant.MaxDeathRate.ToString("F4") + "'";
 
-                        // The rate at which this plant spreads.
                         EveryPlant[plantName]["spreadRate"] = "'" + plant.SpreadRate.ToString("F4") + "'";
 
-                        // The resource constraints that slow growth rate.
                         #region Resource Constraints
                         if (plant.ResourceConstraints != null)
                         {
@@ -215,7 +204,6 @@ namespace FZM.Wiki
                         }
                         #endregion
 
-                        // The capacity constraints which slow growth.
                         #region Capacity Constraints
                         if (plant.CapacityConstraints != null)
                         {
@@ -233,7 +221,6 @@ namespace FZM.Wiki
                         }
                         #endregion
 
-                        // The environmental ranges this plant can tolerate.
                         #region Environment Ranges
 
                         // Temperature
@@ -256,7 +243,6 @@ namespace FZM.Wiki
 
                         #endregion
 
-                        // The pollution density maximum and tollerance levels for this plant to spread and produce.
                         EveryPlant[plantName]["maxPollutionDensity"] = "'" + plant.MaxPollutionDensity.ToString("F4") + "'";
                         EveryPlant[plantName]["pollutionTolerance"] = "'" + plant.PollutionDensityTolerance.ToString("F4") + "'";
 
@@ -301,8 +287,8 @@ namespace FZM.Wiki
 
                 // LIFETIME
                 { "maturity", "nil" },
-                { "treeHealth", "nil" },
-                { "logHealth", "nil" },
+                { "treeHealth", "nil" }, // The health of the tree for chopping.
+                { "logHealth", "nil" }, // The health of the log for chopping.
 
                 // GENERATION
                 { "isWater", "nil" },
@@ -322,10 +308,10 @@ namespace FZM.Wiki
                 { "resourceItem", "nil" },
                 { "resourceMin", "nil" },
                 { "resourceMax", "nil" },
-                { "debrisSpawnChance", "nil" },
-                { "debrisType", "nil" },
-                { "debrisResources", "nil" },
-                { "trunkResources", "nil" },
+                { "debrisSpawnChance", "nil" }, // Chance to spawn debris.
+                { "debrisType", "nil" }, // The debris created when chopping this tree. BlockType.
+                { "debrisResources", "nil" }, // The resources returned for chopping the debris.
+                { "trunkResources", "nil" }, // The resources returned for chopping the trunk.
 
                 // WORLD LAYERS
                 { "carbonRelease", "nil" },
@@ -373,58 +359,49 @@ namespace FZM.Wiki
                         EveryTree.Add(treeName, new Dictionary<string, string>(treeDetails));
 
                         #region INFO
-                        EveryTree[treeName]["isDecorative"] = tree.Decorative ? "'Decorative'" : "nil"; // Is the plant considered decorative. Not simulated after spawn.
-                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? "'No Spread'" : "'Spread'"; // Does the plant spread. Old growth does not for example.
+                        EveryTree[treeName]["isDecorative"] = tree.Decorative ? "'Decorative'" : "nil"; 
+                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? "'No Spread'" : "'Spread'"; 
                         #endregion
 
                         #region LIFETIME
-                        EveryTree[treeName]["maturity"] = "'" + tree.MaturityAgeDays.ToString("F1") + "'"; // Age for full maturity and reproduction.
-                        EveryTree[treeName]["treeHealth"] = "'" + tree.TreeHealth.ToString("F1") + "'"; // The health of the tree for chopping.
-                        EveryTree[treeName]["logHealth"] = "'" + tree.LogHealth.ToString("F1") + "'"; // The health of the log for chopping.
+                        EveryTree[treeName]["maturity"] = "'" + tree.MaturityAgeDays.ToString("F1") + "'"; 
+                        EveryTree[treeName]["treeHealth"] = "'" + tree.TreeHealth.ToString("F1") + "'"; 
+                        EveryTree[treeName]["logHealth"] = "'" + tree.LogHealth.ToString("F1") + "'"; 
                         #endregion
 
                         #region GENERATION
-                        EveryTree[treeName]["isWater"] = tree.Water ? "'Underwater'" : "nil"; // Does the species live underwater.
-                        EveryTree[treeName]["height"] = "'" + tree.Height.ToString("F1") + "'"; // Plant height in meters.
+                        EveryTree[treeName]["isWater"] = tree.Water ? "'Underwater'" : "nil"; 
+                        EveryTree[treeName]["height"] = "'" + tree.Height.ToString("F1") + "'"; 
                         #endregion
 
                         #region FOOD
-                        EveryTree[treeName]["calorieValue"] = "'" + tree.CalorieValue.ToString("F1") + "'"; // The base calories this species provides to it's consumers.
+                        EveryTree[treeName]["calorieValue"] = "'" + tree.CalorieValue.ToString("F1") + "'"; 
                         #endregion
 
                         #region RESOURCES
-                        // Does this plant need to be mature before it is harvestable.
                         EveryTree[treeName]["requireHarvestable"] = tree.RequireHarvestable ? "'Yes'" : "nil";
-
-                        // What growth is it considered acceptable to pick this plant at.
                         EveryTree[treeName]["pickableAtPercent"] = "'" + (tree.PickableAtPercent * 100).ToString("F0") + "'";
-
-                        // How much experience is gained from harvesting this plant.
                         EveryTree[treeName]["experiencePerHarvest"] = "'" + (tree.ExperiencePerHarvest).ToString("F1") + "'";
 
-                        // Will the plant dies if harvested.
                         if (tree.PostHarvestingGrowth == 0)
                             EveryTree[treeName]["killOnHarvest"] = "'Yes'";
                         else
                             EveryTree[treeName]["killOnHarvest"] = "'No'";
 
-                        // If it does not die what growth level will it return to.
                         if (tree.PostHarvestingGrowth != 0)
                             EveryTree[treeName]["postHarvestGrowth"] = "'" + (tree.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
-                        // Will using a Scythe kill this plant.
                         EveryTree[treeName]["scytheKills"] = tree.ScythingKills ? "'Yes'" : "nil";
 
-                        // The item returned when this species is harvrested.
                         if (tree.ResourceItemType != null) { EveryTree[treeName]["resourceItem"] = "'[[" + SplitName(RemoveItemTag(tree.ResourceItemType.Name)) + "]]'"; }
 
-                        EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1") + "'"; // The minimum number of items returned.
-                        EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1") + "'"; // The maximum number of items returned.
-                        EveryTree[treeName]["resourceBonus"] = "'" + (tree.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; // The bonus items returned for allowing it to grow.
+                        EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1") + "'"; 
+                        EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1") + "'"; 
+                        EveryTree[treeName]["resourceBonus"] = "'" + (tree.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; 
 
                         // Debris
-                        EveryTree[treeName]["debrisSpawnChance"] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F0") + "'"; // Chance to spawn debris.
-                        EveryTree[treeName]["debrisType"] = "'" + tree.DebrisType.Name + "'"; // The debris created when chopping this tree.
+                        EveryTree[treeName]["debrisSpawnChance"] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F0") + "'"; 
+                        EveryTree[treeName]["debrisType"] = "'" + tree.DebrisType.Name + "'"; 
 
                         // The resources returned for chopping the debris.
                         var debrisResources = new StringBuilder();
@@ -457,15 +434,12 @@ namespace FZM.Wiki
                         #endregion
 
                         #region WORLDLAYERS
-                        EveryTree[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'"; // CO2 Release by this species.
+                        EveryTree[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'"; 
 
-                        // Under ideal conditions, how fast should this plant grow.
                         EveryTree[treeName]["idealGrowthRate"] = "'" + tree.MaxGrowthRate.ToString("F4") + "'";
 
-                        // Under ideal conditions, how fast should this plant die. SLGs Property name is not intuitive here as this is likely the minimum death rate.
                         EveryTree[treeName]["idealDeathRate"] = "'" + tree.MaxDeathRate.ToString("F4") + "'";
 
-                        // The rate at which this plant spreads.
                         EveryTree[treeName]["spreadRate"] = "'" + tree.SpreadRate.ToString("F4") + "'";
 
                         // The resource constraints that slow growth rate.
@@ -539,7 +513,6 @@ namespace FZM.Wiki
 
                         #endregion
 
-                        // The pollution density maximum and tollerance levels for this plant to spread and produce.
                         EveryTree[treeName]["maxPollutionDensity"] = "'" + tree.MaxPollutionDensity.ToString("F4") + "'";
                         EveryTree[treeName]["pollutionTolerance"] = "'" + tree.PollutionDensityTolerance.ToString("F4") + "'";
 
@@ -563,42 +536,42 @@ namespace FZM.Wiki
             Dictionary<string, string> animalDetails = new Dictionary<string, string>()
             {
                 // LIFETIME
-                { "maturity", "nil" },
+                { "maturity", "nil" }, // Age for full maturity and reproduction.
 
                 // MOVEMENT
-                { "isSwimming", "nil" },
-                { "isFlying", "nil" },
-                { "climbHeight", "nil" },
+                { "isSwimming", "nil" }, // Is the animal a swimming one.
+                { "isFlying", "nil" }, // Is the animal a flying one.
+                { "climbHeight", "nil" }, // What height in meters can this animal effectively climb.
 
                 // BEHAVIOUR
-                { "wanderingSpeed", "nil" },
-                { "speed", "nil" },
-                { "health", "nil" },
-                { "damage", "nil" },
-                { "chanceToAttack", "nil" },
-                { "attackRange", "nil" },
-                { "detectRange", "nil" },
-                { "flees", "nil" },
-                { "fearFactor", "nil" },
-                { "headDistance", "nil" },
+                { "wanderingSpeed", "nil" }, // The animals speed when idle.
+                { "speed", "nil" }, // The animals speed when active (hunting, fleeing etc).
+                { "health", "nil" }, // The animals health.
+                { "damage", "nil" }, // The damage the animal inflicts.
+                { "chanceToAttack", "nil" }, //The chance the animal will attack.
+                { "attackRange", "nil" }, // The distance at which animal needs to be from its prey to attack.
+                { "detectRange", "nil" }, // This distance at which the animal can detect prey.
+                { "flees", "nil" }, // Does the animal flee from players by default (not being attacked).
+                { "fearFactor", "nil" }, // How quickly the animmal reaches the point where it wants to flee.
+                { "headDistance", "nil" }, // The space the animal require around its head (used to figure out pack behaviour for sleeping and wandering etc.)
 
-                { "minAttackDelay", "nil" },
-                { "maxAttackDelay", "nil" },
+                { "minAttackDelay", "nil" }, // Minimum possible time before the animal is ready to attack again after making an attack.
+                { "maxAttackDelay", "nil" }, // Maximum possible time before the animal is ready to attack again after making an attack.
 
                 // FOOD
-                { "calorieValue", "nil" },
+                { "calorieValue", "nil" }, // The base calories this species provides to it's consumers.
 
                 // FOOD SOURCES
-                { "foodSources", "nil" },
+                { "foodSources", "nil" }, // The species sources this animal eats.
 
                 // RESOURCES
-                { "resourceItem", "nil" },
-                { "resourceMin", "nil" },
-                { "resourceMax", "nil" },
-                { "resourceBonus", "nil" },
+                { "resourceItem", "nil" }, // The item you get from harvesting this animal.
+                { "resourceMin", "nil" }, // The minimum number of items returned.
+                { "resourceMax", "nil" }, // The maximum number of items returned.
+                { "resourceBonus", "nil" }, // The bonus items returned for allowing it to grow.
 
                 // WORLD LAYERS
-                { "carbonRelease", "nil" }
+                { "carbonRelease", "nil" } // The amount of carbon dioxide released by this species. (Animals are postive values)
             };
 
             IEnumerable<Species> species = EcoSim.AllSpecies;

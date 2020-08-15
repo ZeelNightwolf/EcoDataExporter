@@ -70,8 +70,8 @@ namespace FZM.Wiki
 
                 // WORLD LAYERS
                 { "carbonRelease", "nil" }, // The amount of carbon dioxide released by this species. (Plants & Trees are negative values)
-                { "idealGrowthRate", "nil" }, // In ideal conditions, what is the rate of growth.
-                { "idealDeathRate", "nil" }, // In ideal conditions what is the rate of death.
+                { "idealGrowthRate", "nil" }, // In ideal conditions, what is the rate of growth. (%)
+                { "idealDeathRate", "nil" }, // In ideal conditions what is the rate of death. (%)
                 { "spreadRate", "nil" }, // In ideal conditions what is the rate of spread, if it does spread.
                 { "nitrogenHalfSpeed", "nil" }, // At what nitrogen value will the growth speed reduce to half.
                 { "nitrogenContent", "nil" }, // What nitrogen content is ideal.

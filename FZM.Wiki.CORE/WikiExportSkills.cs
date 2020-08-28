@@ -105,15 +105,15 @@ namespace FZM.Wiki
                         foreach (SkillTree child in skill.SkillTree.Children)
                         {
                             Skill childSkill = child.StaticSkill;
-                            sb.Append(string.Format("[[{0}]]", childSkill));
+                            sb.Append(string.Format("'[[{0}]]'", childSkill));
                             track++;
                             if (track != skill.SkillTree.Children.Count())
                             {
-                                sb.Append(", ");
+                                sb.Append(",");
                             }
                         }
 
-                        EverySkill[friendlyName]["childSkills"] = "'" + sb.ToString() + "'";
+                        EverySkill[friendlyName]["childSkills"] = "{" + sb.ToString() + "}";
                     }
 
                     //RESEARCH                   

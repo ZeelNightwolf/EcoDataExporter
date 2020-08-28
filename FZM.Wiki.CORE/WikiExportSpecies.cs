@@ -419,10 +419,14 @@ namespace FZM.Wiki
                         var trunkResources = new StringBuilder();
                         tree.TrunkResources.ForEach(kvp =>
                         {
-                            debrisResources.Append("'" + kvp.Key + "'");
-                            if (tree.TrunkResources.Last().Key != kvp.Key)
+                            var item = Item.Get(kvp.Key);
+                            if (item != null)
                             {
-                                trunkResources.Append(",");
+                                debrisResources.Append("'[[" + item.DisplayName + "]]'");
+                                if (tree.TrunkResources.Last().Key != kvp.Key)
+                                {
+                                    trunkResources.Append(",");
+                                }
                             }
                         });
                         EveryTree[treeName]["trunkResources"] = "{" + trunkResources + "}";

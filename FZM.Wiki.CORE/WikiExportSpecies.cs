@@ -43,63 +43,63 @@ namespace FZM.Wiki
             Dictionary<string, string> plantDetails = new Dictionary<string, string>()
             {
                 // INFO
-                { "isDecorative", "nil" }, // Is the plant considered decorative. Not simulated after spawn.
-                { "doesSpread", "nil" }, // The plant will spawn others like it nearby given enough time not dying and not harvested
+                { Localizer.DoStr("isDecorative"), "nil" }, // Is the plant considered decorative. Not simulated after spawn.
+                { Localizer.DoStr("doesSpread"), "nil" }, // The plant will spawn others like it nearby given enough time not dying and not harvested
 
                 // LIFETIME
-                { "maturity", "nil" }, // Age for full maturity and reproduction.
+                { Localizer.DoStr("maturity"), "nil" }, // Age for full maturity and reproduction.
 
                 // GENERATION
-                { "isWater", "nil" }, // Does the species live underwater.
-                { "height", "nil" }, // Plant height in meters.
+                { Localizer.DoStr("isWater"), "nil" }, // Does the species live underwater.
+                { Localizer.DoStr("height"), "nil" }, // Plant height in meters.
 
                 // FOOD
-                { "calorieValue", "nil" }, // The base calories this species provides to it's consumers.
+                { Localizer.DoStr("calorieValue"), "nil" }, // The base calories this species provides to it's consumers.
 
                 // RESOURCES
-                { "requireHarvestable", "nil" }, // Does this plant require to have reached a harvestable stage before you can harvest it, you will get no resources for this if its not at a harvestable stage. 
-                { "pickableAtPercent", "nil" }, // This plant will be pickable at this percent and you will get some resources.
-                { "experiencePerHarvest", "nil" }, // Base experience you get per harvest.
-                { "harvestTool", "nil" }, // The tool required to harvest this plant, nil means hands.
-                { "killOnHarvest", "nil" }, // Does the plant die on harvest.
-                { "postHarvestGrowth", "nil" }, // What % growth does the plant return to after harvest.
-                { "scytheKills", "nil" }, // Will using a Scythe/Sickle on this plant kill it.
-                { "resourceItem", "nil" }, // The item you get from harvesting this plant.
-                { "resourceMin", "nil" }, // The minimum number of items returned.
-                { "resourceMax", "nil" }, // The maximum number of items returned.
-                { "resourceBonus", "nil" }, // The bonus items returned for allowing it to grow.
+                { Localizer.DoStr("requireHarvestable"), "nil" }, // Does this plant require to have reached a harvestable stage before you can harvest it, you will get no resources for this if its not at a harvestable stage. 
+                { Localizer.DoStr("pickableAtPercent"), "nil" }, // This plant will be pickable at this percent and you will get some resources.
+                { Localizer.DoStr("experiencePerHarvest"), "nil" }, // Base experience you get per harvest.
+                { Localizer.DoStr("harvestTool"), "nil" }, // The tool required to harvest this plant, nil means hands.
+                { Localizer.DoStr("killOnHarvest"), "nil" }, // Does the plant die on harvest.
+                { Localizer.DoStr("postHarvestGrowth"), "nil" }, // What % growth does the plant return to after harvest.
+                { Localizer.DoStr("scytheKills"), "nil" }, // Will using a Scythe/Sickle on this plant kill it.
+                { Localizer.DoStr("resourceItem"), "nil" }, // The item you get from harvesting this plant.
+                { Localizer.DoStr("resourceMin"), "nil" }, // The minimum number of items returned.
+                { Localizer.DoStr("resourceMax"), "nil" }, // The maximum number of items returned.
+                { Localizer.DoStr("resourceBonus"), "nil" }, // The bonus items returned for allowing it to grow.
 
                 // WORLD LAYERS
-                { "carbonRelease", "nil" }, // The amount of carbon dioxide released by this species. (Plants & Trees are negative values)
-                { "idealGrowthRate", "nil" }, // In ideal conditions, what is the rate of growth. (%)
-                { "idealDeathRate", "nil" }, // In ideal conditions what is the rate of death. (%)
-                { "spreadRate", "nil" }, // In ideal conditions what is the rate of spread, if it does spread.
-                { "nitrogenHalfSpeed", "nil" }, // At what nitrogen value will the growth speed reduce to half.
-                { "nitrogenContent", "nil" }, // What nitrogen content is ideal.
-                { "phosphorusHalfSpeed", "nil" }, // At what phosphorus value will the growth speed reduce to half.
-                { "phosphorusContent", "nil" }, // What phosphorus content is ideal.
-                { "potassiumHalfSpeed", "nil" }, // At what potassium value will the growth speed reduce to half.
-                { "potassiumContent", "nil" }, // What potassium content is ideal.
-                { "soilMoistureHalfSpeed", "nil" }, // At what moisture value will the growth speed reduce to half.
-                { "soilMoistureContent", "nil" }, // What moisture content is ideal.
-                { "consumedFertileGround", "nil" }, // How much of the area deemed Fertile Ground does this plant take up, this is almost always more than the in game physical space.
-                { "consumedCanopySpace", "nil" }, // How much of the area deemed Canopy Space does this plant take up, this is almost always more than the in game physical space.
-                { "consumedUnderwaterFertileGround", "nil" }, // How much of the area deemed Underwater Fertile Ground does this plant take up, this is almost always more than the in game physical space.
-                { "consumedShrubSpace", "nil" }, // How much of the area deemed Shrub Space does this plant take up, this is almost always more than the in game physical space.
-                { "extremeTempMin", "nil" }, // The lowest temperature before this plant stops growth.
-                { "idealTempMin", "nil" }, // The lowest temperature of the ideal growth range (max growth).
-                { "idealTempMax", "nil" }, // The highest temperature of the ideal growth range (max growth).
-                { "extremeTempMax", "nil" }, // The highest temperature before this plant stops growth.
-                { "extremeMoistureMin", "nil" }, // The lowest moisture content before this plant stops growth.
-                { "idealMoistureMin", "nil" }, // The lowest moisture content of the ideal growth range (max growth).
-                { "idealMoistureMax", "nil" }, // The highest moisture content of the ideal growth range (max growth).
-                { "extremeMoistureMax", "nil" },// The highest moisture content before this plant stops growth.
-                { "extremeSaltMin", "nil" }, // The lowest salt content before this plant stops growth.
-                { "idealSaltMin", "nil" }, // The lowest salt contente of the ideal growth range (max growth).
-                { "idealSaltMax", "nil" }, // The highest salt content of the ideal growth range (max growth).
-                { "extremeSaltMax", "nil" }, // The highest Sslt content before this plant stops growth.
-                { "maxPollutionDensity", "nil" }, // The highest pollution density before this plant stops growing.
-                { "pollutionTolerance", "nil" } // The pollution density at which this plant slows growth, spread and carbon dioxide absorbtion.
+                { Localizer.DoStr("carbonRelease"), "nil" }, // The amount of carbon dioxide released by this species. (Plants & Trees are negative values)
+                { Localizer.DoStr("idealGrowthRate"), "nil" }, // In ideal conditions, what is the rate of growth. (%)
+                { Localizer.DoStr("idealDeathRate"), "nil" }, // In ideal conditions what is the rate of death. (%)
+                { Localizer.DoStr("spreadRate"), "nil" }, // In ideal conditions what is the rate of spread, if it does spread.
+                { Localizer.DoStr("nitrogenHalfSpeed"), "nil" }, // At what nitrogen value will the growth speed reduce to half.
+                { Localizer.DoStr("nitrogenContent"), "nil" }, // What nitrogen content is ideal.
+                { Localizer.DoStr("phosphorusHalfSpeed"), "nil" }, // At what phosphorus value will the growth speed reduce to half.
+                { Localizer.DoStr("phosphorusContent"), "nil" }, // What phosphorus content is ideal.
+                { Localizer.DoStr("potassiumHalfSpeed"), "nil" }, // At what potassium value will the growth speed reduce to half.
+                { Localizer.DoStr("potassiumContent)"), "nil" }, // What potassium content is ideal.
+                { Localizer.DoStr("soilMoistureHalfSpeed"), "nil" }, // At what moisture value will the growth speed reduce to half.
+                { Localizer.DoStr("soilMoistureContent"), "nil" }, // What moisture content is ideal.
+                { Localizer.DoStr("consumedFertileGround"), "nil" }, // How much of the area deemed Fertile Ground does this plant take up, this is almost always more than the in game physical space.
+                { Localizer.DoStr("consumedCanopySpace"), "nil" }, // How much of the area deemed Canopy Space does this plant take up, this is almost always more than the in game physical space.
+                { Localizer.DoStr("consumedUnderwaterFertileGround"), "nil" }, // How much of the area deemed Underwater Fertile Ground does this plant take up, this is almost always more than the in game physical space.
+                { Localizer.DoStr("consumedShrubSpace"), "nil" }, // How much of the area deemed Shrub Space does this plant take up, this is almost always more than the in game physical space.
+                { Localizer.DoStr("extremeTempMin"), "nil" }, // The lowest temperature before this plant stops growth.
+                { Localizer.DoStr("idealTempMin"), "nil" }, // The lowest temperature of the ideal growth range (max growth).
+                { Localizer.DoStr("idealTempMax"), "nil" }, // The highest temperature of the ideal growth range (max growth).
+                { Localizer.DoStr("extremeTempMax"), "nil" }, // The highest temperature before this plant stops growth.
+                { Localizer.DoStr("extremeMoistureMin"), "nil" }, // The lowest moisture content before this plant stops growth.
+                { Localizer.DoStr("idealMoistureMin"), "nil" }, // The lowest moisture content of the ideal growth range (max growth).
+                { Localizer.DoStr("idealMoistureMax"), "nil" }, // The highest moisture content of the ideal growth range (max growth).
+                { Localizer.DoStr("extremeMoistureMax"), "nil" },// The highest moisture content before this plant stops growth.
+                { Localizer.DoStr("extremeSaltMin"), "nil" }, // The lowest salt content before this plant stops growth.
+                { Localizer.DoStr("idealSaltMin"), "nil" }, // The lowest salt contente of the ideal growth range (max growth).
+                { Localizer.DoStr("idealSaltMax"), "nil" }, // The highest salt content of the ideal growth range (max growth).
+                { Localizer.DoStr("extremeSaltMax"), "nil" }, // The highest Sslt content before this plant stops growth.
+                { Localizer.DoStr("maxPollutionDensity"), "nil" }, // The highest pollution density before this plant stops growing.
+                { Localizer.DoStr("pollutionTolerance"), "nil" } // The pollution density at which this plant slows growth, spread and carbon dioxide absorbtion.
             };
 
             IEnumerable<Species> species = EcoSim.AllSpecies;
@@ -115,51 +115,51 @@ namespace FZM.Wiki
                         EveryPlant.Add(plantName, new Dictionary<string, string>(plantDetails));
 
                         #region INFO
-                        EveryPlant[plantName]["isDecorative"] = plant.Decorative ? "'Decorative'" : "nil"; 
-                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? "'No Spread'" : "'Spread'"; 
+                        EveryPlant[plantName][Localizer.DoStr("isDecorative")] = plant.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
+                        EveryPlant[plantName][Localizer.DoStr("doesSpread")] = plant.NoSpread ? $"'{Localizer.DoStr("No Spread")}'" : $"'{Localizer.DoStr("Spread")}'"; 
                         #endregion
 
                         #region LIFETIME
 
-                        EveryPlant[plantName]["maturity"] = "'" + plant.MaturityAgeDays.ToString("F1") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("maturity")] = "'" + plant.MaturityAgeDays.ToString("F1") + "'"; 
                         #endregion
 
                         #region GENERATION
-                        EveryPlant[plantName]["isWater"] = plant.Water ? "'Underwater'" : "nil"; 
-                        EveryPlant[plantName]["height"] = "'" + plant.Height.ToString("F1") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("isWater")] = plant.Water ? $"'{Localizer.DoStr("Underwater")}'" : "nil"; 
+                        EveryPlant[plantName][Localizer.DoStr("height")] = "'" + plant.Height.ToString("F1") + "'"; 
                         #endregion
 
                         #region FOOD
-                        EveryPlant[plantName]["calorieValue"] = "'" + plant.CalorieValue.ToString("F1") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("calorieValue")] = "'" + plant.CalorieValue.ToString("F1") + "'"; 
                         #endregion
 
                         #region RESOURCES                       
-                        EveryPlant[plantName]["requireHarvestable"] = plant.RequireHarvestable ? "'Yes'" : "nil";
+                        EveryPlant[plantName][Localizer.DoStr("requireHarvestable")] = plant.RequireHarvestable ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
-                        EveryPlant[plantName]["pickableAtPercent"] = "'" + (plant.PickableAtPercent * 100).ToString("F0") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("pickableAtPercent")] = "'" + (plant.PickableAtPercent * 100).ToString("F0") + "'";
 
-                        EveryPlant[plantName]["experiencePerHarvest"] = "'" + (plant.ExperiencePerHarvest).ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("experiencePerHarvest")] = "'" + (plant.ExperiencePerHarvest).ToString("F1") + "'";
 
                         if (Block.Is<Reapable>(plant.BlockType))
-                            EveryPlant[plantName]["harvestTool"] = "'Scythe'";
+                            EveryPlant[plantName][Localizer.DoStr("harvestTool")] = $"'{Localizer.DoStr("Scythe")}'";
                         else if (Block.Is<Diggable>(plant.BlockType))
-                            EveryPlant[plantName]["harvestTool"] = "'Shovel'";
+                            EveryPlant[plantName][Localizer.DoStr("harvestTool")] = $"'{Localizer.DoStr("Shovel")}'";
 
                         if (plant.PostHarvestingGrowth == 0)
-                            EveryPlant[plantName]["killOnHarvest"] = "'Yes'";
+                            EveryPlant[plantName][Localizer.DoStr("killOnHarvest")] = $"'{Localizer.DoStr("Yes")}'";
                         else
-                            EveryPlant[plantName]["killOnHarvest"] = "'No'";
+                            EveryPlant[plantName][Localizer.DoStr("killOnHarvest")] = $"'{Localizer.DoStr("Yes")}'";
 
                         if (plant.PostHarvestingGrowth != 0)
-                            EveryPlant[plantName]["postHarvestGrowth"] = "'" + (plant.PostHarvestingGrowth * 100).ToString("F0") + "'";
+                            EveryPlant[plantName][Localizer.DoStr("postHarvestGrowth")] = "'" + (plant.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
-                        EveryPlant[plantName]["scytheKills"] = plant.ScythingKills ? "'Yes'" : "nil";
+                        EveryPlant[plantName][Localizer.DoStr("scytheKills")] = plant.ScythingKills ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
-                        if (plant.ResourceItemType != null) { EveryPlant[plantName]["resourceItem"] = "'[[" + SplitName(RemoveItemTag(plant.ResourceItemType.Name)) + "]]'"; }
+                        if (plant.ResourceItemType != null) { EveryPlant[plantName][Localizer.DoStr("resourceItem")] = "'[[" + Localizer.DoStr(SplitName(RemoveItemTag(plant.ResourceItemType.Name))) + "]]'"; }
 
-                        EveryPlant[plantName]["resourceMin"] = "'" + plant.ResourceRange.Min.ToString("F1") + "'"; 
-                        EveryPlant[plantName]["resourceMax"] = "'" + plant.ResourceRange.Max.ToString("F1") + "'"; 
-                        EveryPlant[plantName]["resourceBonus"] = "'" + (plant.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("resourceMin")] = "'" + plant.ResourceRange.Min.ToString("F1") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("resourceMax")] = "'" + plant.ResourceRange.Max.ToString("F1") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("resourceBonus")] = "'" + (plant.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; 
 
                         #endregion
 
@@ -168,13 +168,13 @@ namespace FZM.Wiki
                         #endregion
 
                         #region WORLDLAYERS
-                        EveryPlant[plantName]["carbonRelease"] = "'" + plant.ReleasesCO2TonsPerDay.ToString("F4") + "'"; 
+                        EveryPlant[plantName][Localizer.DoStr("carbonRelease")] = "'" + plant.ReleasesCO2TonsPerDay.ToString("F4") + "'"; 
 
-                        EveryPlant[plantName]["idealGrowthRate"] = "'" + plant.MaxGrowthRate.ToString("F4") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealGrowthRate")] = "'" + plant.MaxGrowthRate.ToString("F4") + "'";
 
-                        EveryPlant[plantName]["idealDeathRate"] = "'" + plant.MaxDeathRate.ToString("F4") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealDeathRate")] = "'" + plant.MaxDeathRate.ToString("F4") + "'";
 
-                        EveryPlant[plantName]["spreadRate"] = "'" + plant.SpreadRate.ToString("F4") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("spreadRate")] = "'" + plant.SpreadRate.ToString("F4") + "'";
 
                         #region Resource Constraints
                         if (plant.ResourceConstraints != null)
@@ -183,23 +183,23 @@ namespace FZM.Wiki
                             {
                                 if (r.LayerName == "Nitrogen")
                                 {
-                                    EveryPlant[plantName]["nitrogenHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryPlant[plantName]["nitrogenContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("nitrogenHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("nitrogenContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                                 if (r.LayerName == "Phosphorus")
                                 {
-                                    EveryPlant[plantName]["phosphorusHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryPlant[plantName]["phosphorusContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("phosphorusHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("phosphorusContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                                 if (r.LayerName == "Potassium")
                                 {
-                                    EveryPlant[plantName]["potassiumHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryPlant[plantName]["potassiumContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("potassiumHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("potassiumContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                                 if (r.LayerName == "SoilMoisture")
                                 {
-                                    EveryPlant[plantName]["soilMoistureHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryPlant[plantName]["soilMoistureContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("soilMoistureHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("soilMoistureContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                             }
                         }
@@ -211,13 +211,13 @@ namespace FZM.Wiki
                             foreach (CapacityConstraint c in plant.CapacityConstraints)
                             {
                                 if (c.CapacityLayerName == "FertileGorund")
-                                    EveryPlant[plantName]["consumedFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("consumedFertileGround")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "CanopySpace")
-                                    EveryPlant[plantName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("consumedCanopySpace")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "UnderwaterFertileGorund")
-                                    EveryPlant[plantName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("consumedUnderwaterFertileGround")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "ShrubSpace")
-                                    EveryPlant[plantName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryPlant[plantName][Localizer.DoStr("consumedShrubSpace")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                             }
                         }
                         #endregion
@@ -225,27 +225,27 @@ namespace FZM.Wiki
                         #region Environment Ranges
 
                         // Temperature
-                        EveryPlant[plantName]["extremeTempMin"] = "'" + plant.TemperatureExtremes.Min.ToString("F1") + "'";
-                        EveryPlant[plantName]["idealTempMin"] = "'" + plant.IdealTemperatureRange.Min.ToString("F1") + "'";
-                        EveryPlant[plantName]["idealTempMax"] = "'" + plant.IdealTemperatureRange.Max.ToString("F1") + "'";
-                        EveryPlant[plantName]["extremeTempMax"] = "'" + plant.TemperatureExtremes.Max.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("extremeTempMin")] = "'" + plant.TemperatureExtremes.Min.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealTempMin")] = "'" + plant.IdealTemperatureRange.Min.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealTempMax")] = "'" + plant.IdealTemperatureRange.Max.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("extremeTempMax")] = "'" + plant.TemperatureExtremes.Max.ToString("F1") + "'";
 
                         // Moisture
-                        EveryPlant[plantName]["extremeMoistureMin"] = "'" + plant.MoistureExtremes.Min.ToString("F1") + "'";
-                        EveryPlant[plantName]["idealMoistureMin"] = "'" + plant.IdealMoistureRange.Min.ToString("F1") + "'";
-                        EveryPlant[plantName]["idealMoistureMax"] = "'" + plant.IdealMoistureRange.Max.ToString("F1") + "'";
-                        EveryPlant[plantName]["extremeMoistureMax"] = "'" + plant.MoistureExtremes.Max.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("extremeMoistureMin")] = "'" + plant.MoistureExtremes.Min.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealMoistureMin")] = "'" + plant.IdealMoistureRange.Min.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealMoistureMax")] = "'" + plant.IdealMoistureRange.Max.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("extremeMoistureMax")] = "'" + plant.MoistureExtremes.Max.ToString("F1") + "'";
 
                         // Salt Content
-                        EveryPlant[plantName]["extremeSaltMin"] = "'" + plant.WaterExtremes.Min.ToString("F1") + "'";
-                        EveryPlant[plantName]["idealSaltMin"] = "'" + plant.IdealWaterRange.Min.ToString("F1") + "'";
-                        EveryPlant[plantName]["idealSaltMax"] = "'" + plant.IdealWaterRange.Max.ToString("F1") + "'";
-                        EveryPlant[plantName]["extremeSaltMax"] = "'" + plant.WaterExtremes.Max.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("extremeSaltMin")] = "'" + plant.WaterExtremes.Min.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealSaltMin")] = "'" + plant.IdealWaterRange.Min.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("idealSaltMax")] = "'" + plant.IdealWaterRange.Max.ToString("F1") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("extremeSaltMax")] = "'" + plant.WaterExtremes.Max.ToString("F1") + "'";
 
                         #endregion
 
-                        EveryPlant[plantName]["maxPollutionDensity"] = "'" + plant.MaxPollutionDensity.ToString("F4") + "'";
-                        EveryPlant[plantName]["pollutionTolerance"] = "'" + plant.PollutionDensityTolerance.ToString("F4") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("maxPollutionDensity")] = "'" + plant.MaxPollutionDensity.ToString("F4") + "'";
+                        EveryPlant[plantName][Localizer.DoStr("pollutionTolerance")] = "'" + plant.PollutionDensityTolerance.ToString("F4") + "'";
 
                         #endregion
 
@@ -283,68 +283,68 @@ namespace FZM.Wiki
             Dictionary<string, string> treeDetails = new Dictionary<string, string>()
             {
                 // INFO
-                { "isDecorative", "nil" },
-                { "doesSpread", "nil" },
+                { Localizer.DoStr("isDecorative"), "nil" },
+                { Localizer.DoStr("doesSpread"), "nil" },
 
                 // LIFETIME
-                { "maturity", "nil" },
-                { "treeHealth", "nil" }, // The health of the tree for chopping.
-                { "logHealth", "nil" }, // The health of the log for chopping.
+                { Localizer.DoStr("maturity"), "nil" },
+                { Localizer.DoStr("treeHealth"), "nil" }, // The health of the tree for chopping.
+                { Localizer.DoStr("logHealth"), "nil" }, // The health of the log for chopping.
 
                 // GENERATION
-                { "isWater", "nil" },
-                { "height", "nil" },
+                { Localizer.DoStr("isWater"), "nil" },
+                { Localizer.DoStr("height"), "nil" },
 
                 // FOOD
-                { "calorieValue", "nil" },
+                { Localizer.DoStr("calorieValue"), "nil" },
 
                 // RESOURCES
-                { "requireHarvestable", "nil" },
-                { "pickableAtPercent", "nil" },
-                { "experiencePerHarvest", "nil" },
-                { "harvestTool", "nil" },
-                { "killOnHarvest", "nil" },
-                { "postHarvestGrowth", "nil" },
-                { "scytheKills", "nil" },
-                { "resourceItem", "nil" },
-                { "resourceMin", "nil" },
-                { "resourceMax", "nil" },
-                { "debrisSpawnChance", "nil" }, // Chance to spawn debris.
-                { "debrisType", "nil" }, // The debris created when chopping this tree. BlockType.
-                { "debrisResources", "nil" }, // The resources returned for chopping the debris.
-                { "trunkResources", "nil" }, // The resources returned for chopping the trunk.
+                { Localizer.DoStr("requireHarvestable"), "nil" },
+                { Localizer.DoStr("pickableAtPercent"), "nil" },
+                { Localizer.DoStr("experiencePerHarvest"), "nil" },
+                { Localizer.DoStr("harvestTool"), "nil" },
+                { Localizer.DoStr("killOnHarvest"), "nil" },
+                { Localizer.DoStr("postHarvestGrowth"), "nil" },
+                { Localizer.DoStr("scytheKills"), "nil" },
+                { Localizer.DoStr("resourceItem"), "nil" },
+                { Localizer.DoStr("resourceMin"), "nil" },
+                { Localizer.DoStr("resourceMax"), "nil" },
+                { Localizer.DoStr("debrisSpawnChance"), "nil" }, // Chance to spawn debris.
+                { Localizer.DoStr("debrisType"), "nil" }, // The debris created when chopping this tree. BlockType.
+                { Localizer.DoStr("debrisResources"), "nil" }, // The resources returned for chopping the debris.
+                { Localizer.DoStr("trunkResources"), "nil" }, // The resources returned for chopping the trunk.
 
                 // WORLD LAYERS
-                { "carbonRelease", "nil" },
-                { "idealGrowthRate", "nil" },
-                { "idealDeathRate", "nil" },
-                { "spreadRate", "nil" },
-                { "nitrogenHalfSpeed", "nil" },
-                { "nitrogenContent", "nil" },
-                { "phosphorusHalfSpeed", "nil" },
-                { "phosphorusContent", "nil" },
-                { "potassiumHalfSpeed", "nil" },
-                { "potassiumContent", "nil" },
-                { "soilMoistureHalfSpeed", "nil" },
-                { "soilMoistureContent", "nil" },
-                { "consumedFertileGround", "nil" },
-                { "consumedCanopySpace", "nil" },
-                { "consumedUnderwaterFertileGround", "nil" },
-                { "consumedShrubSpace", "nil" },
-                { "extremeTempMin", "nil" },
-                { "idealTempMin", "nil" },
-                { "idealTempMax", "nil" },
-                { "extremeTempMax", "nil" },
-                { "extremeMoistureMin", "nil" },
-                { "idealMoistureMin", "nil" },
-                { "idealMoistureMax", "nil" },
-                { "extremeMoistureMax", "nil" },
-                { "extremeSaltMin", "nil" },
-                { "idealSaltMin", "nil" },
-                { "idealSaltMax", "nil" },
-                { "extremeSaltMax", "nil" },
-                { "maxPollutionDensity", "nil" },
-                { "pollutionTolerance", "nil" }
+                { Localizer.DoStr("carbonRelease"), "nil" },
+                { Localizer.DoStr("idealGrowthRate"), "nil" },
+                { Localizer.DoStr("idealDeathRate"), "nil" },
+                { Localizer.DoStr("spreadRate"), "nil" },
+                { Localizer.DoStr("nitrogenHalfSpeed"), "nil" },
+                { Localizer.DoStr("nitrogenContent"), "nil" },
+                { Localizer.DoStr("phosphorusHalfSpeed"), "nil" },
+                { Localizer.DoStr("phosphorusContent"), "nil" },
+                { Localizer.DoStr("potassiumHalfSpeed"), "nil" },
+                { Localizer.DoStr("potassiumContent"), "nil" },
+                { Localizer.DoStr("soilMoistureHalfSpeed"), "nil" },
+                { Localizer.DoStr("soilMoistureContent"), "nil" },
+                { Localizer.DoStr("consumedFertileGround"), "nil" },
+                { Localizer.DoStr("consumedCanopySpace"), "nil" },
+                { Localizer.DoStr("consumedUnderwaterFertileGround"), "nil" },
+                { Localizer.DoStr("consumedShrubSpace"), "nil" },
+                { Localizer.DoStr("extremeTempMin"), "nil" },
+                { Localizer.DoStr("idealTempMin"), "nil" },
+                { Localizer.DoStr("idealTempMax"), "nil" },
+                { Localizer.DoStr("extremeTempMax"), "nil" },
+                { Localizer.DoStr("extremeMoistureMin"), "nil" },
+                { Localizer.DoStr("idealMoistureMin"), "nil" },
+                { Localizer.DoStr("idealMoistureMax"), "nil" },
+                { Localizer.DoStr("extremeMoistureMax"), "nil" },
+                { Localizer.DoStr("extremeSaltMin"), "nil" },
+                { Localizer.DoStr("idealSaltMin"), "nil" },
+                { Localizer.DoStr("idealSaltMax"), "nil" },
+                { Localizer.DoStr("extremeSaltMax"), "nil" },
+                { Localizer.DoStr("maxPollutionDensity"), "nil" },
+                { Localizer.DoStr("pollutionTolerance"), "nil" }
             };
 
             IEnumerable<Species> species = EcoSim.AllSpecies;
@@ -360,49 +360,49 @@ namespace FZM.Wiki
                         EveryTree.Add(treeName, new Dictionary<string, string>(treeDetails));
 
                         #region INFO
-                        EveryTree[treeName]["isDecorative"] = tree.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
-                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? $"'{Localizer.DoStr("No Spread")}'" : $"'{Localizer.DoStr("Spread")}'"; 
+                        EveryTree[treeName][Localizer.DoStr("isDecorative")] = tree.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
+                        EveryTree[treeName][Localizer.DoStr("doesSpread")] = tree.NoSpread ? $"'{Localizer.DoStr("No Spread")}'" : $"'{Localizer.DoStr("Spread")}'"; 
                         #endregion
 
                         #region LIFETIME
-                        EveryTree[treeName]["maturity"] = "'" + tree.MaturityAgeDays.ToString("F1") + "'"; 
-                        EveryTree[treeName]["treeHealth"] = "'" + tree.TreeHealth.ToString("F1") + "'"; 
-                        EveryTree[treeName]["logHealth"] = "'" + tree.LogHealth.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("maturity")] = "'" + tree.MaturityAgeDays.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("treeHealth")] = "'" + tree.TreeHealth.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("logHealth")] = "'" + tree.LogHealth.ToString("F1") + "'"; 
                         #endregion
 
                         #region GENERATION
-                        EveryTree[treeName]["isWater"] = tree.Water ? $"'{Localizer.DoStr("Underwater")}'" : "nil"; 
-                        EveryTree[treeName]["height"] = "'" + tree.Height.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("isWater")] = tree.Water ? $"'{Localizer.DoStr("Underwater")}'" : "nil"; 
+                        EveryTree[treeName][Localizer.DoStr("height")] = "'" + tree.Height.ToString("F1") + "'"; 
                         #endregion
 
                         #region FOOD
-                        EveryTree[treeName]["calorieValue"] = "'" + tree.CalorieValue.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("calorieValue")] = "'" + tree.CalorieValue.ToString("F1") + "'"; 
                         #endregion
 
                         #region RESOURCES
-                        EveryTree[treeName]["requireHarvestable"] = tree.RequireHarvestable ? $"'{Localizer.DoStr("Yes")}'" : "nil";
-                        EveryTree[treeName]["pickableAtPercent"] = "'" + (tree.PickableAtPercent * 100).ToString("F0") + "'";
-                        EveryTree[treeName]["experiencePerHarvest"] = "'" + (tree.ExperiencePerHarvest).ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("requireHarvestable")] = tree.RequireHarvestable ? $"'{Localizer.DoStr("Yes")}'" : "nil";
+                        EveryTree[treeName][Localizer.DoStr("pickableAtPercent")] = "'" + (tree.PickableAtPercent * 100).ToString("F0") + "'";
+                        EveryTree[treeName][Localizer.DoStr("experiencePerHarvest")] = "'" + (tree.ExperiencePerHarvest).ToString("F1") + "'";
 
                         if (tree.PostHarvestingGrowth == 0)
-                            EveryTree[treeName]["killOnHarvest"] = $"'{Localizer.DoStr("Yes")}'";
+                            EveryTree[treeName][Localizer.DoStr("killOnHarvest")] = $"'{Localizer.DoStr("Yes")}'";
                         else
-                            EveryTree[treeName]["killOnHarvest"] = $"'{Localizer.DoStr("No")}'";
+                            EveryTree[treeName][Localizer.DoStr("killOnHarvest")] = $"'{Localizer.DoStr("No")}'";
 
                         if (tree.PostHarvestingGrowth != 0)
-                            EveryTree[treeName]["postHarvestGrowth"] = "'" + (tree.PostHarvestingGrowth * 100).ToString("F0") + "'";
+                            EveryTree[treeName][Localizer.DoStr("postHarvestGrowth")] = "'" + (tree.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
-                        EveryTree[treeName]["scytheKills"] = tree.ScythingKills ? "'Yes'" : "nil";
+                        EveryTree[treeName][Localizer.DoStr("scytheKills")] = tree.ScythingKills ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
-                        if (tree.ResourceItemType != null) { EveryTree[treeName]["resourceItem"] = "'[[" + Localizer.DoStr(SplitName(RemoveItemTag(tree.ResourceItemType.Name))) + "]]'"; }
+                        if (tree.ResourceItemType != null) { EveryTree[treeName][Localizer.DoStr("resourceItem")] = "'[[" + Localizer.DoStr(SplitName(RemoveItemTag(tree.ResourceItemType.Name))) + "]]'"; }
 
-                        EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1") + "'"; 
-                        EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1") + "'"; 
-                        EveryTree[treeName]["resourceBonus"] = "'" + (tree.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("resourceMin")] = "'" + tree.ResourceRange.Min.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("resourceMax")] = "'" + tree.ResourceRange.Max.ToString("F1") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("resourceBonus")] = "'" + (tree.ResourceBonusAtGrowth * 100).ToString("F0") + "'"; 
 
                         // Debris
-                        EveryTree[treeName]["debrisSpawnChance"] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F0") + "'"; 
-                        EveryTree[treeName]["debrisType"] = "'" + tree.DebrisType.Name + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("debrisSpawnChance")] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F0") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("debrisType")] = "'" + Localizer.DoStr(SplitName(RemoveItemTag(tree.DebrisType.Name))) + "'"; 
 
                         // The resources returned for chopping the debris.
                         var debrisResources = new StringBuilder();
@@ -414,7 +414,7 @@ namespace FZM.Wiki
                                 debrisResources.Append(",");
                             }
                         });
-                        EveryTree[treeName]["debrisResources"] = "{" + debrisResources + "}";
+                        EveryTree[treeName][Localizer.DoStr("debrisResources")] = "{" + debrisResources + "}";
 
                         // The resources returned for chopping the trunk.
                         var trunkResources = new StringBuilder();
@@ -430,7 +430,7 @@ namespace FZM.Wiki
                                 }
                             }
                         });
-                        EveryTree[treeName]["trunkResources"] = "{" + trunkResources + "}";
+                        EveryTree[treeName][Localizer.DoStr("trunkResources")] = "{" + trunkResources + "}";
 
                         #endregion
 
@@ -439,13 +439,13 @@ namespace FZM.Wiki
                         #endregion
 
                         #region WORLDLAYERS
-                        EveryTree[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'"; 
+                        EveryTree[treeName][Localizer.DoStr("carbonRelease")] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'"; 
 
-                        EveryTree[treeName]["idealGrowthRate"] = "'" + tree.MaxGrowthRate.ToString("F4") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealGrowthRate")] = "'" + tree.MaxGrowthRate.ToString("F4") + "'";
 
-                        EveryTree[treeName]["idealDeathRate"] = "'" + tree.MaxDeathRate.ToString("F4") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealDeathRate")] = "'" + tree.MaxDeathRate.ToString("F4") + "'";
 
-                        EveryTree[treeName]["spreadRate"] = "'" + tree.SpreadRate.ToString("F4") + "'";
+                        EveryTree[treeName][Localizer.DoStr("spreadRate")] = "'" + tree.SpreadRate.ToString("F4") + "'";
 
                         // The resource constraints that slow growth rate.
                         #region Resource Constraints
@@ -455,23 +455,23 @@ namespace FZM.Wiki
                             {
                                 if (r.LayerName == "Nitrogen")
                                 {
-                                    EveryTree[treeName]["nitrogenHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryTree[treeName]["nitrogenContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("nitrogenHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("nitrogenContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                                 if (r.LayerName == "Phosphorus")
                                 {
-                                    EveryTree[treeName]["phosphorusHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryTree[treeName]["phosphorusContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("phosphorusHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("phosphorusContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                                 if (r.LayerName == "Potassium")
                                 {
-                                    EveryTree[treeName]["potassiumHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryTree[treeName]["potassiumContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("potassiumHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("potassiumContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                                 if (r.LayerName == "SoilMoisture")
                                 {
-                                    EveryTree[treeName]["soilMoistureHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
-                                    EveryTree[treeName]["soilMoistureContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("soilMoistureHalfSpeed")] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("soilMoistureContent")] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                 }
                             }
                         }
@@ -484,13 +484,13 @@ namespace FZM.Wiki
                             foreach (CapacityConstraint c in tree.CapacityConstraints)
                             {
                                 if (c.CapacityLayerName == "FertileGorund")
-                                    EveryTree[treeName]["consumedFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("consumedFertileGround")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "CanopySpace")
-                                    EveryTree[treeName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("consumedCanopySpace")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "UnderwaterFertileGorund")
-                                    EveryTree[treeName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("consumedUnderwaterFertileGround")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 if (c.CapacityLayerName == "ShrubSpace")
-                                    EveryTree[treeName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
+                                    EveryTree[treeName][Localizer.DoStr("consumedShrubSpace")] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                             }
                         }
                         #endregion
@@ -499,27 +499,27 @@ namespace FZM.Wiki
                         #region Environment Ranges
 
                         // Temperature
-                        EveryTree[treeName]["extremeTempMin"] = "'" + tree.TemperatureExtremes.Min.ToString("F1") + "'";
-                        EveryTree[treeName]["idealTempMin"] = "'" + tree.IdealTemperatureRange.Min.ToString("F1") + "'";
-                        EveryTree[treeName]["idealTempMax"] = "'" + tree.IdealTemperatureRange.Max.ToString("F1") + "'";
-                        EveryTree[treeName]["extremeTempMax"] = "'" + tree.TemperatureExtremes.Max.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("extremeTempMin")] = "'" + tree.TemperatureExtremes.Min.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealTempMin")] = "'" + tree.IdealTemperatureRange.Min.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealTempMax")] = "'" + tree.IdealTemperatureRange.Max.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("extremeTempMax")] = "'" + tree.TemperatureExtremes.Max.ToString("F1") + "'";
 
                         // Moisture
-                        EveryTree[treeName]["extremeMoistureMin"] = "'" + tree.MoistureExtremes.Min.ToString("F1") + "'";
-                        EveryTree[treeName]["idealMoistureMin"] = "'" + tree.IdealMoistureRange.Min.ToString("F1") + "'";
-                        EveryTree[treeName]["idealMoistureMax"] = "'" + tree.IdealMoistureRange.Max.ToString("F1") + "'";
-                        EveryTree[treeName]["extremeMoistureMax"] = "'" + tree.MoistureExtremes.Max.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("extremeMoistureMin")] = "'" + tree.MoistureExtremes.Min.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealMoistureMin")] = "'" + tree.IdealMoistureRange.Min.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealMoistureMax")] = "'" + tree.IdealMoistureRange.Max.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("extremeMoistureMax")] = "'" + tree.MoistureExtremes.Max.ToString("F1") + "'";
 
                         // Salt Content
-                        EveryTree[treeName]["extremeSaltMin"] = "'" + tree.WaterExtremes.Min.ToString("F1") + "'";
-                        EveryTree[treeName]["idealSaltMin"] = "'" + tree.IdealWaterRange.Min.ToString("F1") + "'";
-                        EveryTree[treeName]["idealSaltMax"] = "'" + tree.IdealWaterRange.Max.ToString("F1") + "'";
-                        EveryTree[treeName]["extremeSaltMax"] = "'" + tree.WaterExtremes.Max.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("extremeSaltMin")] = "'" + tree.WaterExtremes.Min.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealSaltMin")] = "'" + tree.IdealWaterRange.Min.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("idealSaltMax")] = "'" + tree.IdealWaterRange.Max.ToString("F1") + "'";
+                        EveryTree[treeName][Localizer.DoStr("extremeSaltMax")] = "'" + tree.WaterExtremes.Max.ToString("F1") + "'";
 
                         #endregion
 
-                        EveryTree[treeName]["maxPollutionDensity"] = "'" + tree.MaxPollutionDensity.ToString("F4") + "'";
-                        EveryTree[treeName]["pollutionTolerance"] = "'" + tree.PollutionDensityTolerance.ToString("F4") + "'";
+                        EveryTree[treeName][Localizer.DoStr("maxPollutionDensity")] = "'" + tree.MaxPollutionDensity.ToString("F4") + "'";
+                        EveryTree[treeName][Localizer.DoStr("pollutionTolerance")] = "'" + tree.PollutionDensityTolerance.ToString("F4") + "'";
 
                         #endregion
 

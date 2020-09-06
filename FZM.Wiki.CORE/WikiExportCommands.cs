@@ -49,18 +49,18 @@ namespace FZM.Wiki
 
             foreach (var com in commands)
             {
-                var command = com.Name;
+                var command = Localizer.DoStr(com.Name);
                 if (!EveryCommand.ContainsKey(command))
                 {
                     EveryCommand.Add(command, new Dictionary<string, string>(commandDetails));
-                    EveryCommand[command]["command"] = "'" + com.Key + "'";
+                    EveryCommand[command]["command"] = "'" + Localizer.DoStr(com.Key) + "'";
 
                     if (com.ParentKey != null && com.ParentKey != "" )
-                        EveryCommand[command]["parent"] = "'" + com.ParentKey + "'";
+                        EveryCommand[command]["parent"] = "'" + Localizer.DoStr(com.ParentKey) + "'";
 
-                    EveryCommand[command]["helpText"] = "'" + JSONStringSafe(com.HelpText) + "'";
-                    EveryCommand[command]["shortCut"] = "'" + com.ShortCut + "'";
-                    EveryCommand[command]["level"] = "'" + com.AuthLevel.ToString() + "'";
+                    EveryCommand[command]["helpText"] = "'" + Localizer.DoStr(JSONStringSafe(com.HelpText)) + "'";
+                    EveryCommand[command]["shortCut"] = "'" + Localizer.DoStr(com.ShortCut) + "'";
+                    EveryCommand[command]["level"] = "'" + Localizer.DoStr(com.AuthLevel.ToString()) + "'";
 
                     
                     MethodInfo method = com.Method;

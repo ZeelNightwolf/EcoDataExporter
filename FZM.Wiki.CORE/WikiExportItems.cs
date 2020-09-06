@@ -97,8 +97,8 @@ namespace FZM.Wiki
                 {
                     string displayName = allItem.DisplayName;
                     EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));
-                    EveryItem[displayName]["category"] = "'" + allItem.Category + "'";
-                    EveryItem[displayName]["group"] = "'" + allItem.Group + "'";
+                    EveryItem[displayName]["category"] = "'" + Localizer.DoStr(allItem.Category) + "'";
+                    EveryItem[displayName]["group"] = "'" + Localizer.DoStr(allItem.Group) + "'";
                     EveryItem[displayName]["type"] = "'" + allItem.Type.ToString().Substring(allItem.Type.ToString().LastIndexOf('.') + 1) + "'";
                     EveryItem[displayName]["typeID"] = "'" + allItem.TypeID.ToString() + "'";
 
@@ -120,8 +120,8 @@ namespace FZM.Wiki
                     EveryItem[displayName]["tagGroups"] = tags.ToString();
 
                     EveryItem[displayName]["maxStack"] = "'" + allItem.MaxStackSize.ToString() + "'";
-                    EveryItem[displayName]["carried"] = allItem.IsCarried ? "'Hands'" : "'Backpack'";
-                    EveryItem[displayName]["currency"] = allItem.CanBeCurrency ? "'Yes'" : "nil";
+                    EveryItem[displayName]["carried"] = allItem.IsCarried ? $"'{Localizer.DoStr("Hands")}'" : $"'{Localizer.DoStr("Backpack")}'";
+                    EveryItem[displayName]["currency"] = allItem.CanBeCurrency ? $"'{Localizer.DoStr("Yes")}'" : "nil";
                     if (allItem.HasWeight) { EveryItem[displayName]["weight"] = "'" + ((Decimal)allItem.Weight / 1000).ToString() + "'"; }
                     if (allItem.IsFuel) { EveryItem[displayName]["fuel"] = "'" + allItem.Fuel.ToString() + "'"; }
                     if (allItem.HasYield) { EveryItem[displayName]["yield"] = "'[[" + allItem.Yield.Skill.DisplayName + "]]'"; }
@@ -158,10 +158,10 @@ namespace FZM.Wiki
                             {
                                 HousingValue v = prop.GetValue(allItem) as HousingValue;
                                 EveryItem[displayName]["skillValue"] = "'" + v.Val.ToString() + "'";
-                                EveryItem[displayName]["roomCategory"] = "'" + v.Category.ToString() + "'";
+                                EveryItem[displayName]["roomCategory"] = "'" + Localizer.DoStr(v.Category) + "'";
                                 if (v.Category.ToString() != "Industrial")
                                 {
-                                    EveryItem[displayName]["furnitureType"] = "'" + v.TypeForRoomLimit.ToString() + "'";
+                                    EveryItem[displayName]["furnitureType"] = "'" + Localizer.DoStr(v.TypeForRoomLimit) + "'";
                                     EveryItem[displayName]["repeatsDepreciation"] = "'" + v.DiminishingReturnPercent.ToString() + "'";
                                 }
                             }
@@ -255,9 +255,9 @@ namespace FZM.Wiki
                         foreach (string str in consumedFluids)
                         {
                             if (str == consumedFluids.First())
-                                EveryItem[displayName]["fluidsUsed"] = "{" + str;
+                                EveryItem[displayName]["fluidsUsed"] = "{" + Localizer.DoStr(str);
                             else
-                                EveryItem[displayName]["fluidsUsed"] += str;
+                                EveryItem[displayName]["fluidsUsed"] += Localizer.DoStr(str);
 
                             if (str != consumedFluids.Last())
                                 EveryItem[displayName]["fluidsUsed"] += ",";
@@ -268,9 +268,9 @@ namespace FZM.Wiki
                         foreach (string str in producedFluids)
                         {
                             if (str == producedFluids.First())
-                                EveryItem[displayName]["fluidsProduced"] = "{" + str;
+                                EveryItem[displayName]["fluidsProduced"] = "{" + Localizer.DoStr(str);
                             else
-                                EveryItem[displayName]["fluidsProduced"] += str;
+                                EveryItem[displayName]["fluidsProduced"] += Localizer.DoStr(str);
                             if (str != producedFluids.Last())
                                 EveryItem[displayName]["fluidsProduced"] += ",";
                             else
@@ -288,7 +288,7 @@ namespace FZM.Wiki
                             string fuelsString = "[[";
                             foreach (string t in fuelTags)
                             {
-                                fuelsString += t;
+                                fuelsString += Localizer.DoStr(t);
                                 if (t != fuelTags.Last())
                                     fuelsString += "]], [[";
                             }
@@ -303,7 +303,7 @@ namespace FZM.Wiki
                             var gridComponent = obj.GetComponent<PowerGridComponent>();
                             EveryItem[displayName]["energyProduced"] = "'" + gridComponent.EnergySupply.ToString() + "'";
                             EveryItem[displayName]["energyUsed"] = "'" + gridComponent.EnergyDemand.ToString() + "'";
-                            EveryItem[displayName]["energyType"] = "'" + gridComponent.EnergyType.Name.ToString() + "'";
+                            EveryItem[displayName]["energyType"] = "'" + gridComponent.EnergyType.Name + "'";
                             EveryItem[displayName]["gridRadius"] = "'" + gridComponent.Radius.ToString() + "'";
                         }
                         #endregion
@@ -321,7 +321,7 @@ namespace FZM.Wiki
                                 {
                                     if (a.GetType() == typeof(RequireRoomMaterialTierAttribute))
                                     {
-                                        EveryItem[displayName]["roomMatReq"] = "'Tier " + (a as RequireRoomMaterialTierAttribute).Tier + "'";
+                                        EveryItem[displayName]["roomMatReq"] = $"'{Localizer.DoStr("Tier")} " + (a as RequireRoomMaterialTierAttribute).Tier + "'";
                                     }
                                     if (a.GetType() == typeof(RequireRoomVolumeAttribute))
                                     {
@@ -329,7 +329,7 @@ namespace FZM.Wiki
                                     }
                                     if (a.GetType() == typeof(RequireRoomContainmentAttribute))
                                     {
-                                        EveryItem[displayName]["roomContainReq"] = "'Yes'";
+                                        EveryItem[displayName]["roomContainReq"] = $"'{Localizer.DoStr("Yes")}'";
                                     }
                                 }
                             }
@@ -389,7 +389,7 @@ namespace FZM.Wiki
                             string talentString = "{";
                             foreach (var talent in Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
                             {
-                                talentString += "'[[" + SplitName(talent.GetType().Name) + "]]'";
+                                talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
                                 if (talent != Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
                                     talentString += ", ";
                             }

@@ -4,6 +4,7 @@ using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.Chat;
+using Eco.Shared.Localization;
 using System;
 using System.Collections.Generic;
 
@@ -48,16 +49,16 @@ namespace FZM.Wiki
                     if (!EveryTalent.ContainsKey(displayName))
                     {
                         EveryTalent.Add(displayName, new Dictionary<string, string>(TalentDetails));
-                        EveryTalent[displayName]["category"] = string.Format($"'{talentGroup.Category}'");
-                        EveryTalent[displayName]["group"] = string.Format($"'{talentGroup.Group}'");
-                        EveryTalent[displayName]["name"] = string.Format($"'{talentGroup.DisplayName}'");
-                        EveryTalent[displayName]["description"] = string.Format($"'{talentGroup.DisplayDescription}'");
+                        EveryTalent[displayName]["category"] = $"'{Localizer.DoStr(talentGroup.Category)}'";
+                        EveryTalent[displayName]["group"] = $"'{Localizer.DoStr(talentGroup.Group)}'";
+                        EveryTalent[displayName]["name"] = $"'{talentGroup.DisplayName}'";
+                        EveryTalent[displayName]["description"] = $"'{talentGroup.DisplayDescription}'";
 
-                        EveryTalent[displayName]["talentType"] = string.Format($"'{SplitName(talent.TalentType.Name)}'");
+                        EveryTalent[displayName]["talentType"] = $"'{Localizer.DoStr(SplitName(talent.TalentType.Name))}'";
 
                         //Connected Skill and Level Unlock
-                        EveryTalent[displayName]["owningSkill"] = string.Format($"'{SplitName(talentGroup.OwningSkill.Name)}'");
-                        EveryTalent[displayName]["activeLevel"] = string.Format($"'{talentGroup.Level}'");
+                        EveryTalent[displayName]["owningSkill"] = $"'{Localizer.DoStr(SplitName(talentGroup.OwningSkill.Name))}'";
+                        EveryTalent[displayName]["activeLevel"] = $"'{talentGroup.Level}'";
                     }
                 }
             }

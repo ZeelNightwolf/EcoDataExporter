@@ -78,11 +78,11 @@ namespace FZM.Wiki
 
                     //INFO
                     if (skill.Title != "")
-                        EverySkill[friendlyName]["title"] = "'" + skill.Title + "'"; // The title conferred by this skill.
+                        EverySkill[friendlyName]["title"] = "'" + Localizer.DoStr(skill.Title) + "'"; // The title conferred by this skill.
 
                     Regex regex = new Regex("[\t\n\v\f\r]");
                     EverySkill[friendlyName]["description"] = "'" + regex.Replace(JSONStringSafe(skill.DisplayDescription), " ") + "'"; // The description of the skill.
-                    EverySkill[friendlyName]["skillID"] = "'" + skill.Type.Name + "'"; // For linking purposes in the wiki.
+                    EverySkill[friendlyName]["skillID"] = "'" + Localizer.DoStr(skill.Type.Name) + "'"; // For linking purposes in the wiki.
                     EverySkill[friendlyName]["skillIDNum"] = "'" + skill.TypeID + "'"; // For linking purposes in the wiki.
                     EverySkill[friendlyName]["maxLevel"] = "'" + skill.MaxLevel.ToString() + "'"; // The maximum level of this skill
 
@@ -132,7 +132,7 @@ namespace FZM.Wiki
                         StringBuilder sb = new StringBuilder();
                         foreach (Type type in skill.ItemTypesGiven)
                         {
-                            string t = RemoveItemTag(type.Name);
+                            string t = Localizer.DoStr(RemoveItemTag(type.Name));
                             sb.Append(string.Format("[[{0}]]", t));
                             track++;
                             if (track != skill.ItemTypesGiven.Count())
@@ -160,11 +160,11 @@ namespace FZM.Wiki
                             {
                                 if (!levelTalents.ContainsKey(key))
                                 {
-                                    levelTalents.Add(key, "'[[" + SplitName(group.TalentStrings.FirstOrDefault()) + "]]'");
+                                    levelTalents.Add(key, "'[[" + Localizer.DoStr(SplitName(group.TalentStrings.FirstOrDefault())) + "]]'");
                                 }
                                 else
                                 {
-                                    levelTalents[key] += ", '[[" + SplitName(group.TalentStrings.FirstOrDefault()) + "]]'";
+                                    levelTalents[key] += ", '[[" + Localizer.DoStr(SplitName(group.TalentStrings.FirstOrDefault())) + "]]'";
                                 }
                             }
 

@@ -6,46 +6,55 @@
 
   <ItemGroup>
     <Reference Include="Eco.Core">
-      <HintPath>..\..\..\EcoDeps\Eco.Core.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Core.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Gameplay">
-      <HintPath>..\..\..\EcoDeps\Eco.Gameplay.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Gameplay.dll</HintPath>
     </Reference>
     <Reference Include="Eco.ModKit">
-      <HintPath>..\..\..\EcoDeps\Eco.ModKit.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.ModKit.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Mods">
-      <HintPath>..\..\..\EcoDeps\Eco.Mods.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Mods.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Networking.ENet">
-      <HintPath>..\..\..\EcoDeps\Eco.Networking.ENet.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Networking.ENet.dll</HintPath>
+    </Reference>
+    <Reference Include="Eco.Networking.Lidgren">
+      <HintPath>..\..\..\EcoDump\Eco.Networking.Lidgren.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Plugins">
-      <HintPath>..\..\..\EcoDeps\Eco.Plugins.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Plugins.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Shared">
-      <HintPath>..\..\..\EcoDeps\Eco.Shared.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Simulation">
-      <HintPath>..\..\..\EcoDeps\Eco.Simulation.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Simulation.dll</HintPath>
     </Reference>
     <Reference Include="Eco.Stats">
-      <HintPath>..\..\..\EcoDeps\Eco.Stats.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.Stats.dll</HintPath>
+    </Reference>
+    <Reference Include="Eco.Tests">
+      <HintPath>..\..\..\EcoDump\Eco.Tests.dll</HintPath>
     </Reference>
     <Reference Include="Eco.WebServer">
-      <HintPath>..\..\..\EcoDeps\Eco.WebServer.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.WebServer.dll</HintPath>
     </Reference>
     <Reference Include="Eco.WindowsForms">
-      <HintPath>..\..\..\EcoDeps\Eco.WindowsForms.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="Eco.World">
-      <HintPath>..\..\..\EcoDeps\Eco.World.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.World.dll</HintPath>
     </Reference>
     <Reference Include="Eco.WorldGenerator">
-      <HintPath>..\..\..\EcoDeps\Eco.WorldGenerator.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\Eco.WorldGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="EcoServer">
+      <HintPath>..\..\..\EcoDump\EcoServer.dll</HintPath>
     </Reference>
     <Reference Include="NodeGraphControl">
-      <HintPath>..\..\..\EcoDeps\NodeGraphControl.dll</HintPath>
+      <HintPath>..\..\..\EcoDump\NodeGraphControl.dll</HintPath>
     </Reference>
   </ItemGroup>
 

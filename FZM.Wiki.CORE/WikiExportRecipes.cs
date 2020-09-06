@@ -150,13 +150,13 @@ namespace FZM.Wiki
                                 {
                                     ingredients.Append("'ITEM', ");
                                     element = e.Item.DisplayName;
+                                    AddItemRecipeRelation(e.Item.DisplayName, r.DisplayName);
                                 }
                                 else
                                 {
                                     ingredients.Append("'TAG', ");
                                     element = e.Tag.DisplayName;
                                 }
-
                                 ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "'}");
 
                                 if (e != r.Ingredients.Last())
@@ -164,7 +164,6 @@ namespace FZM.Wiki
                             }
                             ingredients.Append("}");
                             variant[recipe]["ingredients"] = ingredients.ToString();
-
                             // Products recieved
                             StringBuilder products = new StringBuilder();
                             products.Append("{");
@@ -200,7 +199,7 @@ namespace FZM.Wiki
             }
 
             // writes to WikiItems.txt to the Eco Server directory.
-            string path = AppDomain.CurrentDomain.BaseDirectory + "Wiki_Module_CraftingRecipes.txt";
+            string path = SaveLocation + "Wiki_Module_CraftingRecipes.txt";
             using (StreamWriter streamWriter = new StreamWriter(path, false))
             {
                 streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);
@@ -248,7 +247,6 @@ namespace FZM.Wiki
 
                 streamWriter.Write("    },\n}");
                 streamWriter.Close();
-                user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory} Wiki_Module_CraftingRecipes.txt"));
             }
         }
 

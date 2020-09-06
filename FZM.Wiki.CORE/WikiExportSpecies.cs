@@ -13,6 +13,7 @@ using Eco.World.Blocks;
 using Eco.Shared.Utils;
 using System.Linq;
 using Eco.Gameplay.Items;
+using Eco.Shared.Localization;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -359,8 +360,8 @@ namespace FZM.Wiki
                         EveryTree.Add(treeName, new Dictionary<string, string>(treeDetails));
 
                         #region INFO
-                        EveryTree[treeName]["isDecorative"] = tree.Decorative ? "'Decorative'" : "nil"; 
-                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? "'No Spread'" : "'Spread'"; 
+                        EveryTree[treeName]["isDecorative"] = tree.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
+                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? $"'{Localizer.DoStr("No Spread")}'" : $"'{Localizer.DoStr("Spread")}'"; 
                         #endregion
 
                         #region LIFETIME
@@ -370,7 +371,7 @@ namespace FZM.Wiki
                         #endregion
 
                         #region GENERATION
-                        EveryTree[treeName]["isWater"] = tree.Water ? "'Underwater'" : "nil"; 
+                        EveryTree[treeName]["isWater"] = tree.Water ? $"'{Localizer.DoStr("Underwater")}'" : "nil"; 
                         EveryTree[treeName]["height"] = "'" + tree.Height.ToString("F1") + "'"; 
                         #endregion
 
@@ -379,21 +380,21 @@ namespace FZM.Wiki
                         #endregion
 
                         #region RESOURCES
-                        EveryTree[treeName]["requireHarvestable"] = tree.RequireHarvestable ? "'Yes'" : "nil";
+                        EveryTree[treeName]["requireHarvestable"] = tree.RequireHarvestable ? $"'{Localizer.DoStr("Yes")}'" : "nil";
                         EveryTree[treeName]["pickableAtPercent"] = "'" + (tree.PickableAtPercent * 100).ToString("F0") + "'";
                         EveryTree[treeName]["experiencePerHarvest"] = "'" + (tree.ExperiencePerHarvest).ToString("F1") + "'";
 
                         if (tree.PostHarvestingGrowth == 0)
-                            EveryTree[treeName]["killOnHarvest"] = "'Yes'";
+                            EveryTree[treeName]["killOnHarvest"] = $"'{Localizer.DoStr("Yes")}'";
                         else
-                            EveryTree[treeName]["killOnHarvest"] = "'No'";
+                            EveryTree[treeName]["killOnHarvest"] = $"'{Localizer.DoStr("No")}'";
 
                         if (tree.PostHarvestingGrowth != 0)
                             EveryTree[treeName]["postHarvestGrowth"] = "'" + (tree.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
                         EveryTree[treeName]["scytheKills"] = tree.ScythingKills ? "'Yes'" : "nil";
 
-                        if (tree.ResourceItemType != null) { EveryTree[treeName]["resourceItem"] = "'[[" + SplitName(RemoveItemTag(tree.ResourceItemType.Name)) + "]]'"; }
+                        if (tree.ResourceItemType != null) { EveryTree[treeName]["resourceItem"] = "'[[" + Localizer.DoStr(SplitName(RemoveItemTag(tree.ResourceItemType.Name))) + "]]'"; }
 
                         EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1") + "'"; 
                         EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1") + "'"; 

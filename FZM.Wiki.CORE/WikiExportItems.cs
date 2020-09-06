@@ -188,13 +188,11 @@ namespace FZM.Wiki
                     #endregion
 
                     #region World Objects
-
                     // for world objects we need to get the object placed in world to access it's properties, each object is destroyed at the end of it's read.
                     if (allItem.Group == "World Object Items" || allItem.Group == "Road Items" || allItem.Group == "Modules") //&& allItem.Type != typeof(GasGeneratorItem)
                     {
-                        //Log.WriteLine(Localizer.DoStr(allItem.DisplayName));
                         WorldObjectItem i = allItem as WorldObjectItem;
-                        var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity);
+                        var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false);
 
                         // Couldn't Place the obj
                         if (obj == null)
@@ -210,12 +208,9 @@ namespace FZM.Wiki
                             }
                         }
 
-                        //PropertyInfo[] props = obj.GetType().GetProperties();
-
                         EveryItem[displayName]["mobile"] = obj.Mobile ? "'Yes'" : "nil";
 
                         #region World Object Liquid Components
-
                         // Checks the objectfor the three liquid components and returns the private fields of those components to the dictionary.
                         // first create a list item and rate strings to attach
                         List<string> consumedFluids = new List<string>();
@@ -414,7 +409,7 @@ namespace FZM.Wiki
 
             // Append Tag info
             string filename = "Wiki_Module_ItemData.txt";
-            string path = AppDomain.CurrentDomain.BaseDirectory + filename;
+            string path = SaveLocation + filename;
             using (StreamWriter streamWriter = new StreamWriter(path, true))
             {
                 streamWriter.WriteLine("\n    " + "tags = {");
@@ -427,7 +422,6 @@ namespace FZM.Wiki
                 }
                 streamWriter.WriteLine("    },\n}");
                 streamWriter.Close();
-                user.Player.Msg(Localizer.Do($"Tags appended to {AppDomain.CurrentDomain.BaseDirectory}{filename}"));
             }
         }
 

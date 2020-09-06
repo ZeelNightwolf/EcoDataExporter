@@ -206,7 +206,7 @@ namespace FZM.Wiki
                                     }
                                     else if (keyString.Length > 6 && keyString.Substring(keyString.Length - 6) == "Recipe")
                                     {
-                                        benefitTarget = "'[[" + SplitName(keyString.Substring(0, keyString.Length - 6)) + "]] Recipe'";
+                                        benefitTarget = "'[[" + SplitName(keyString.Substring(0, keyString.Length - 6)) + "]]'";
                                     }
                                     else
                                     {
@@ -250,7 +250,7 @@ namespace FZM.Wiki
                             // Formatting for the wiki.
                             if (s.ToString().StripTags().Length > 6 && s.ToString().StripTags().Substring(s.ToString().StripTags().Length - 6) == "Recipe")
                             {
-                                levelUnlocks["level" + kvp.Key.ToString()] += "'[[" + s.ToString().StripTags().Substring(0, s.ToString().StripTags().Length - 7) + "]] Recipe'";
+                                levelUnlocks["level" + kvp.Key.ToString()] += "'[[" + s.ToString().StripTags().Substring(0, s.ToString().StripTags().Length - 7) + "]]'";
                                 if (s != kvp.Value.Last())
                                 {
                                     levelUnlocks["level" + kvp.Key.ToString()] += ", ";

@@ -7,6 +7,7 @@ using Eco.Shared.Localization;
 using Eco.Shared.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -31,6 +32,17 @@ namespace FZM.Wiki
         private static string space2 = "        ";
         private static string space3 = "            ";
 
+        internal const string saveLocation = @"\FZM\DataExports\";
+        public static string SaveLocation => GetRelevantDirectory();
+        public static string AssemblyLocation => Directory.GetCurrentDirectory();
+
+        static string GetRelevantDirectory()
+        {
+            if (saveLocation.StartsWith(@"\"))
+                return AssemblyLocation + saveLocation;
+            return saveLocation;
+        }
+
         /// <summary>
         /// Get dumps of all the data
         /// </summary>
@@ -38,21 +50,43 @@ namespace FZM.Wiki
         [ChatCommand("Creates all 8 dump files", ChatAuthorizationLevel.Admin)]
         public static void DumpDetails(User user)
         {
-            try { DiscoverAll(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Discover All"); }
-            try { ItemDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Item Details"); }
-            try { RecipesDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Recipe Details"); }
-            try { SkillsDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Skills Details"); }
-            try { TalentDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Talent Details"); }
-            try { PlantDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Plant Details"); }
-            try { TreeDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Tree Details"); }
-            try { AnimalDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Animal Details"); }
-            try { CommandDetails(user); } catch (Exception e) { LogExceptionAndNotify(user, e, "Command Details"); }
+            StringBuilder alert = new StringBuilder();
+
+            alert.AppendLine("Errors: ");
+
+            try { DiscoverAll(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
+            try { ItemDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
+            try { RecipesDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
+            try { SkillsDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
+            try { TalentDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Talent Details")); }
+            try { PlantDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Plant Details")); }
+            try { TreeDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Tree Details")); }
+            try { AnimalDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Animal Details")); }
+            try { CommandDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
+
+            ProcessStartInfo info = new ProcessStartInfo
+            {
+                Arguments = SaveLocation,
+                FileName = "explorer.exe"
+            };
+
+            Process.Start(info);
+
+            alert.AppendLine("");
+            alert.AppendLine("INFO: ");
+            alert.AppendLine("Dump folder is open, alt-tab to check dumps."); 
+            alert.AppendLine("Check logs for error details.");
+            alert.AppendLine("");
+            alert.AppendLine("DUMP FOLDER: ");
+            alert.AppendLine($"{SaveLocation}");
+
+            user.Player.InfoBoxLocStr(alert.ToString());
         }
 
-        public static void LogExceptionAndNotify(User user, Exception e, string dump)
+        public static string LogExceptionAndNotify(User user, Exception e, string dump)
         {
             Log.WriteErrorLine(Localizer.DoStr(e.Message));
-            user.Player.MsgLocStr("ERROR: " + dump + " returned an error, check log for details, no dump generated!");
+            return $"{dump},  no dump generated!";
         }
 
         /// <summary>
@@ -191,7 +225,10 @@ namespace FZM.Wiki
         public static void WriteDictionaryToFile(User user, string filename, string type, SortedDictionary<string, Dictionary<string, string>> dictionary, bool final = true)
         {
             // writes to the Eco Server directory.
-            string path = AppDomain.CurrentDomain.BaseDirectory + filename;
+            if (!Directory.Exists(SaveLocation))
+                Directory.CreateDirectory(SaveLocation);
+
+            string path = SaveLocation + filename;
             using (StreamWriter streamWriter = new StreamWriter(path, false))
             {
                 streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);
@@ -208,7 +245,6 @@ namespace FZM.Wiki
                 if (final)
                     streamWriter.Write("\n}");
                 streamWriter.Close();
-                user.Player.Msg(Localizer.Do($"Dumped to {AppDomain.CurrentDomain.BaseDirectory}{filename}"));
             }
         }
     }

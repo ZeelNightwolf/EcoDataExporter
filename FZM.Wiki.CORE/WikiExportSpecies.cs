@@ -116,7 +116,7 @@ namespace FZM.Wiki
 
                         #region INFO
                         EveryPlant[plantName]["isDecorative"] = plant.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
-                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? $"'{Localizer.DoStr("No Spread")}'" : $"'{Localizer.DoStr("Spread")}'"; 
+                        EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? $"'{Localizer.DoStr("No")}'" : $"'{Localizer.DoStr("Yes")}'"; 
                         #endregion
 
                         #region LIFETIME

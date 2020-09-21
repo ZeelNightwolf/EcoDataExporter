@@ -1,6 +1,7 @@
 ﻿using Eco.Core.Utils;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
+using Eco.Gameplay.Systems;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared;
 using Eco.Shared.Localization;
@@ -224,11 +225,14 @@ namespace FZM.Wiki
         /// <param name="dictionary"> the dictionary to write</param>
         public static void WriteDictionaryToFile(User user, string filename, string type, SortedDictionary<string, Dictionary<string, string>> dictionary, bool final = true)
         {
-            // writes to the Eco Server directory.
-            if (!Directory.Exists(SaveLocation))
-                Directory.CreateDirectory(SaveLocation);
+            var lang = LocalizationPlugin.Config.Language;
 
-            string path = SaveLocation + filename;
+            // writes to the Eco Server directory.
+            if (!Directory.Exists(SaveLocation + $@"{lang}\"))
+                Directory.CreateDirectory(SaveLocation + $@"{lang}\");
+
+            string path = SaveLocation + $@"{lang}\" + filename;
+
             using (StreamWriter streamWriter = new StreamWriter(path, false))
             {
                 streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);

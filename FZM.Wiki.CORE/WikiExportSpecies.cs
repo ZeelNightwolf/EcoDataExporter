@@ -41,8 +41,9 @@ namespace FZM.Wiki
         {
             // dictionary of plant properties
             Dictionary<string, string> plantDetails = new Dictionary<string, string>()
-            {
+            {             
                 // INFO
+                { "untranslated","nil" },
                 { "isDecorative", "nil" }, // Is the plant considered decorative. Not simulated after spawn.
                 { "doesSpread", "nil" }, // The plant will spawn others like it nearby given enough time not dying and not harvested
 
@@ -115,6 +116,7 @@ namespace FZM.Wiki
                         EveryPlant.Add(plantName, new Dictionary<string, string>(plantDetails));
 
                         #region INFO
+                        EveryPlant[plantName]["untranslated"] = $"'{plant.DisplayName.NotTranslated}'";
                         EveryPlant[plantName]["isDecorative"] = plant.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
                         EveryPlant[plantName]["doesSpread"] = plant.NoSpread ? $"'{Localizer.DoStr("No")}'" : $"'{Localizer.DoStr("Yes")}'"; 
                         #endregion
@@ -283,6 +285,7 @@ namespace FZM.Wiki
             Dictionary<string, string> treeDetails = new Dictionary<string, string>()
             {
                 // INFO
+                { "untranslated", "nil" },
                 { "isDecorative", "nil" },
                 { "doesSpread", "nil" },
 
@@ -360,8 +363,9 @@ namespace FZM.Wiki
                         EveryTree.Add(treeName, new Dictionary<string, string>(treeDetails));
 
                         #region INFO
+                        EveryTree[treeName]["untranslated"] = $"'{tree.DisplayName.NotTranslated}'";
                         EveryTree[treeName]["isDecorative"] = tree.Decorative ? $"'{Localizer.DoStr("Decorative")}'" : "nil"; 
-                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? $"'{Localizer.DoStr("No Spread")}'" : $"'{Localizer.DoStr("Spread")}'"; 
+                        EveryTree[treeName]["doesSpread"] = tree.NoSpread ? $"'{Localizer.DoStr("No")}'" : $"'{Localizer.DoStr("Yes")}'";
                         #endregion
 
                         #region LIFETIME
@@ -540,7 +544,9 @@ namespace FZM.Wiki
             // dictionary of animal properties
             Dictionary<string, string> animalDetails = new Dictionary<string, string>()
             {
-                // LIFETIME
+                { "untranslated", "nil" },
+
+                // LIFETIME               
                 { "maturity", "nil" }, // Age for full maturity and reproduction.
 
                 // MOVEMENT
@@ -590,6 +596,8 @@ namespace FZM.Wiki
                     {
                         string animalName = animal.DisplayName;
                         EveryAnimal.Add(animalName, new Dictionary<string, string>(animalDetails));
+
+                        EveryAnimal[animalName]["untranslated"] = $"'{animal.DisplayName.NotTranslated}'";
 
                         #region LIFETIME
                         EveryAnimal[animalName]["maturity"] = "'" + animal.MaturityAgeDays.ToString("F1") + "'";

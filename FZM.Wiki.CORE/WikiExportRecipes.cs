@@ -4,6 +4,7 @@ using Eco.Gameplay.Items;
 using Eco.Gameplay.Objects;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
+using Eco.Gameplay.Systems;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared;
 using Eco.Shared.Localization;
@@ -44,8 +45,9 @@ namespace FZM.Wiki
                 // Legacy? Maybe OBSOLETE?
                 { "dispCraftStn", "'1'" },
                 { "checkImage", "'1'"},
-                
+
                 // Info
+                { "untranslated", "nil" },
                 { "craftStn", "nil"},
                 { "skillNeeds", "nil"},
                 { "moduleNeeds", "nil"},
@@ -55,6 +57,7 @@ namespace FZM.Wiki
 
                 // Variants
                 { "defaultVariant", "nil"},
+                { "defaultVariantUntranslated","nil" },
                 { "numberOfVariants", "nil"},
                 { "variants", "nil"},
 
@@ -62,6 +65,7 @@ namespace FZM.Wiki
 
             Dictionary<string, string> variantDetails = new Dictionary<string, string>()
             {
+                { "untranslated", "nil" },
                 { "ingredients", "nil" },
                 { "products", "nil" }
             };
@@ -76,7 +80,7 @@ namespace FZM.Wiki
                 {
                     EveryRecipe.Add(familyName, new Dictionary<string, string>(recipeDetails));
                     string table;
-
+                    EveryRecipe[familyName]["untranslated"] = $"'{family.DisplayName.NotTranslated}'";
                     // Crafting Stations.
                     StringBuilder tables = new StringBuilder();
                     tables.Append("{");             
@@ -128,6 +132,7 @@ namespace FZM.Wiki
 
                     // Default Recipe
                     EveryRecipe[familyName]["defaultVariant"] = "'" + family.DefaultRecipe.DisplayName + "'";
+                    EveryRecipe[familyName]["defaultVariantUntranslated"] = "'" + family.DefaultRecipe.DisplayName.NotTranslated + "'";
 
                     EveryRecipe[familyName]["numberOfVariants"] = "'" + family.Recipes.Count + "'";
 
@@ -138,7 +143,7 @@ namespace FZM.Wiki
                         if (!variant.ContainsKey(recipe))
                         {
                             variant.Add(recipe, new Dictionary<string, string>(variantDetails));
-                            
+                            variant[recipe]["untranslated"] = $"'{r.DisplayName.NotTranslated}'";
                             // Ingredients required
                             StringBuilder ingredients = new StringBuilder();
                             ingredients.Append("{");
@@ -198,8 +203,10 @@ namespace FZM.Wiki
                 }                   
             }
 
+            var lang = LocalizationPlugin.Config.Language;
+
             // writes to WikiItems.txt to the Eco Server directory.
-            string path = SaveLocation + "Wiki_Module_CraftingRecipes.txt";
+            string path = SaveLocation + $@"{lang}\" + "Wiki_Module_CraftingRecipes.txt";
             using (StreamWriter streamWriter = new StreamWriter(path, false))
             {
                 streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);

@@ -21,6 +21,7 @@ using Eco.World;
 using System.Text;
 using Eco.Gameplay.Skills;
 using System.IO;
+using Eco.Gameplay.Systems;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -47,6 +48,7 @@ namespace FZM.Wiki
             // dictionary of item properties
             Dictionary<string, string> itemDetails = new Dictionary<string, string>()
             {
+                { "untranslated", "nil" },
                 { "category", "nil" },
                 { "group", "nil" },
                 { "description", "nil" },
@@ -96,7 +98,8 @@ namespace FZM.Wiki
                 if (!EveryItem.ContainsKey(allItem.DisplayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents") && allItem.Group != "Actionbar Items")
                 {
                     string displayName = allItem.DisplayName;
-                    EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));
+                    EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));                   
+                    EveryItem[displayName]["untranslated"] = $"'{allItem.DisplayName.NotTranslated}'";
                     EveryItem[displayName]["category"] = "'" + Localizer.DoStr(allItem.Category) + "'";
                     EveryItem[displayName]["group"] = "'" + Localizer.DoStr(allItem.Group) + "'";
                     EveryItem[displayName]["type"] = "'" + allItem.Type.ToString().Substring(allItem.Type.ToString().LastIndexOf('.') + 1) + "'";
@@ -407,9 +410,11 @@ namespace FZM.Wiki
 
             WriteDictionaryToFile(user, "Wiki_Module_ItemData.txt", "items", EveryItem, false);
 
+            var lang = LocalizationPlugin.Config.Language;
+
             // Append Tag info
             string filename = "Wiki_Module_ItemData.txt";
-            string path = SaveLocation + filename;
+            string path = SaveLocation + $@"{lang}\" + filename;
             using (StreamWriter streamWriter = new StreamWriter(path, true))
             {
                 streamWriter.WriteLine("\n    " + "tags = {");

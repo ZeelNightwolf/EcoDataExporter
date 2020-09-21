@@ -34,6 +34,7 @@ namespace FZM.Wiki
             Dictionary<string, string> skillDetails = new Dictionary<string, string>()
             {
                 // INFO 
+                { "untranslated", "nil" },
                 { "title", "nil" },
                 { "description", "nil" },
                 { "skillID", "nil" },
@@ -77,6 +78,7 @@ namespace FZM.Wiki
                     EverySkill.Add(friendlyName, new Dictionary<string, string>(skillDetails));
 
                     //INFO
+                    EverySkill[friendlyName]["untranslated"] = $"'{skill.DisplayName.NotTranslated}'";
                     if (skill.Title != "")
                         EverySkill[friendlyName]["title"] = "'" + Localizer.DoStr(skill.Title) + "'"; // The title conferred by this skill.
 

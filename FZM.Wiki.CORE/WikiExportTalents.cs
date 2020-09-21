@@ -29,6 +29,8 @@ namespace FZM.Wiki
         {
             Dictionary<string, string> TalentDetails = new Dictionary<string, string>()
             {
+                { "untranslated", "nil" },
+
                 { "category", "nil" },
                 { "group", "nil" },
                 { "name" , "nil" },
@@ -49,6 +51,7 @@ namespace FZM.Wiki
                     if (!EveryTalent.ContainsKey(displayName))
                     {
                         EveryTalent.Add(displayName, new Dictionary<string, string>(TalentDetails));
+                        EveryTalent[displayName]["untranslated"] = $"'{talentGroup.DisplayName.NotTranslated}'";
                         EveryTalent[displayName]["category"] = $"'{Localizer.DoStr(talentGroup.Category)}'";
                         EveryTalent[displayName]["group"] = $"'{Localizer.DoStr(talentGroup.Group)}'";
                         EveryTalent[displayName]["name"] = $"'{talentGroup.DisplayName}'";

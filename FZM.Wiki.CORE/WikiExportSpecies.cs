@@ -676,15 +676,19 @@ namespace FZM.Wiki
                             int count = 0;
                             var sb = new StringBuilder();
                             sb.Append("[[");
+                            string itemName = "";
                             foreach (string str in itemNameSplit)
                             {
-                                sb.Append(str);
+                                
+                                itemName += str;
                                 count++;
                                 if (count != itemNameSplit.Length)
-                                    sb.Append(" ");
+                                    itemName += " ";
+                                else
+                                    sb.Append(Localizer.DoStr(itemName));                              
                             }
                             sb.Append("]]");
-                            EveryAnimal[animalName]["resourceItem"] = "'" + Localizer.DoStr(sb.ToString()) + "'";
+                            EveryAnimal[animalName]["resourceItem"] = "'" + sb.ToString() + "'";
                         }
                         #endregion
 

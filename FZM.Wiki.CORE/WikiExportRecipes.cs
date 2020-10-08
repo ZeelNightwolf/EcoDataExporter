@@ -162,7 +162,13 @@ namespace FZM.Wiki
                                     ingredients.Append("'TAG', ");
                                     element = e.Tag.DisplayName;
                                 }
-                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "'}");
+
+                                string isDynamic = "yes";
+
+                                if (e.Quantity is ConstantValue)
+                                    isDynamic = "no";
+
+                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isDynamic + "'}");
 
                                 if (e != r.Ingredients.Last())
                                     ingredients.Append(", ");

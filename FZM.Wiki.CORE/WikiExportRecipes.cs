@@ -163,12 +163,12 @@ namespace FZM.Wiki
                                     element = e.Tag.DisplayName;
                                 }
 
-                                string isDynamic = "yes";
+                                bool isStatic = false;
 
                                 if (e.Quantity is ConstantValue)
-                                    isDynamic = "no";
+                                    isStatic = true;
 
-                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isDynamic + "'}");
+                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isStatic.ToString() + "'}");
 
                                 if (e != r.Ingredients.Last())
                                     ingredients.Append(", ");

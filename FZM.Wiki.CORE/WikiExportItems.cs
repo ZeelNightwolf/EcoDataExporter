@@ -211,7 +211,7 @@ namespace FZM.Wiki
                             }
                         }
 
-                        EveryItem[displayName]["mobile"] = obj.Mobile ? "'Yes'" : "nil";
+                        EveryItem[displayName]["mobile"] = obj is PhysicsWorldObject ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
                         #region World Object Liquid Components
                         // Checks the objectfor the three liquid components and returns the private fields of those components to the dictionary.
@@ -361,7 +361,7 @@ namespace FZM.Wiki
 
                         #region World Object Occupancy
 
-                        if (!obj.Mobile || obj.DisplayName == "Wooden Elevator") // removes vehicles from getting a footprint as they don't have an occupancy
+                        if (!(obj is PhysicsWorldObject) || obj.DisplayName == "Wooden Elevator") // removes vehicles from getting a footprint as they don't have an occupancy
                         {
                             //Console.WriteLine("          Occupancy:");
                             List<BlockOccupancy> Occ = obj.Occupancy;

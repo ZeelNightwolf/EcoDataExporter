@@ -22,3 +22,5 @@ there are occasions where something may prevent placement.
 
 It is possible to produce Localized versions of the files by having your server language set appropriately, but the localizations are
 reliant on the ECO localization project, if the strings there are not localized, neither will the files produced.
+
+For a detailed document about this mod see: https://docs.google.com/document/d/1wMSBiHt4htns7pPiG5CJQDDzqHFxL8Pg_dn-h3BpDko/edit?usp=sharing

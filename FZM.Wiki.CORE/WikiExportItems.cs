@@ -107,7 +107,7 @@ namespace FZM.Wiki
                         EveryItem[displayName]["typeID"] = "'" + allItem.TypeID.ToString() + "'";
 
                         Regex regex = new Regex("[\t\n\v\f\r]");
-                        EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ");
+                        EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ") + "'";
                         //.Replace("'", "\\'") + "'";
 
                         StringBuilder tags = new StringBuilder();

@@ -213,8 +213,8 @@ namespace FZM.Wiki
                                     else
                                     {
                                         benefitTarget = "'[[" + SplitName(keyString) + "]]'";
-                                    }
-                                    
+                                    }                            
+
                                     string addLine = "\n" + space2 + space3 + space2 + space2 + "{" + benefitTarget + ", '" + smv.Verb + "', '" + (string)GetPropertyValue(smv, "BenefitsDescription") + "', '" + smv.ValueAt(i) + "'},";
                                     levelBenefits["level" + i.ToString()] += addLine;
 

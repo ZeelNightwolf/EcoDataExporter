@@ -107,8 +107,7 @@ namespace FZM.Wiki
                         EveryItem[displayName]["typeID"] = "'" + allItem.TypeID.ToString() + "'";
 
                         Regex regex = new Regex("[\t\n\v\f\r]");
-                        EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ") + "'";
-                        //.Replace("'", "\\'") + "'";
+                        EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ").Replace("'", "\\'") + "'";
 
                         StringBuilder tags = new StringBuilder();
                         tags.Append("{");
@@ -237,7 +236,7 @@ namespace FZM.Wiki
                                 Type acceptedType = lc.AcceptedType;
                                 float consumptionRate = (float)GetFieldValue(lc, "constantConsumptionRate");
 
-                                consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]], '" + consumptionRate + "'}"));
+                                consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]]', '" + consumptionRate + "'}"));
                             }
 
                             var lconv = obj.GetComponent<LiquidConverterComponent>();

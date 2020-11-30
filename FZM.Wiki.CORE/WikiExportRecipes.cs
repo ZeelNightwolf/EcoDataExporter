@@ -150,7 +150,7 @@ namespace FZM.Wiki
                             foreach (var e in r.Ingredients)
                             {
                                 ingredients.Append("{");
-                                string element;
+                                LocString element;
                                 if (e.IsSpecificItem)
                                 {
                                     ingredients.Append("'ITEM', ");
@@ -168,7 +168,7 @@ namespace FZM.Wiki
                                 if (e.Quantity is ConstantValue)
                                     isStatic = true;
 
-                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isStatic.ToString() + "'}");
+                                ingredients.Append("'" + element.NotTranslated + "', '" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isStatic.ToString() + "'}");
 
                                 if (e != r.Ingredients.Last())
                                     ingredients.Append(", ");
@@ -181,7 +181,7 @@ namespace FZM.Wiki
                             foreach (var e in r.Items)
                             {
                                 products.Append("{");
-                                products.Append("'" + e.Item.DisplayName + "', '" + e.Quantity.GetBaseValue + "'}");
+                                products.Append("'" + e.Item.DisplayName.NotTranslated + "', '" + e.Item.DisplayName + "', '" + e.Quantity.GetBaseValue + "'}");
 
                                 if (e != r.Items.Last())
                                     products.Append(", ");
@@ -210,6 +210,10 @@ namespace FZM.Wiki
             }
 
             var lang = LocalizationPlugin.Config.Language;
+
+            // writes to the Eco Server directory.
+            if (!Directory.Exists(SaveLocation + $@"{lang}\"))
+                Directory.CreateDirectory(SaveLocation + $@"{lang}\");
 
             // writes to WikiItems.txt to the Eco Server directory.
             string path = SaveLocation + $@"{lang}\" + "Wiki_Module_CraftingRecipes.txt";

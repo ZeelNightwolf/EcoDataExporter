@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -173,6 +174,13 @@ namespace FZM.Wiki
 
         private static string CleanTags(string hasTags)
         {
+            Regex regex = new Regex("<[^>]*>");
+            return regex.Replace(hasTags, "");
+        }
+
+        /*
+        private static string CleanTags(string hasTags)
+        {
             string str;
             StringBuilder stringBuilder1;
             for (str = hasTags; str.Contains(" <b>"); str = stringBuilder1.ToString())
@@ -194,6 +202,7 @@ namespace FZM.Wiki
             }
             return str;
         }
+        */
 
         // wrties out a Dictionary To be used as a Next Level Object
         public static string WriteDictionaryAsSubObject(Dictionary<string, string> dict, int depth)

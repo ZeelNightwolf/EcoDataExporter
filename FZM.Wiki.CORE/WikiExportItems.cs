@@ -93,318 +93,330 @@ namespace FZM.Wiki
             PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
 
             foreach (Item allItem in Item.AllItems)
-            {
-                //Console.WriteLine("Item: " + allItem.DisplayName);
-                if (!EveryItem.ContainsKey(allItem.DisplayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents") && allItem.Group != "Actionbar Items")
+            {                
+                try
                 {
-                    string displayName = allItem.DisplayName;
-                    EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));                   
-                    EveryItem[displayName]["untranslated"] = $"'{allItem.DisplayName.NotTranslated}'";
-                    EveryItem[displayName]["category"] = "'" + Localizer.DoStr(allItem.Category) + "'";
-                    EveryItem[displayName]["group"] = "'" + Localizer.DoStr(allItem.Group) + "'";
-                    EveryItem[displayName]["type"] = "'" + allItem.Type.ToString().Substring(allItem.Type.ToString().LastIndexOf('.') + 1) + "'";
-                    EveryItem[displayName]["typeID"] = "'" + allItem.TypeID.ToString() + "'";
-
-                    Regex regex = new Regex("[\t\n\v\f\r]");
-                    EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ").Replace("'", "\\'") + "'";
-
-                    StringBuilder tags = new StringBuilder();
-                    tags.Append("{");
-                    foreach (Tag tag in allItem.Tags())
+                    if (!EveryItem.ContainsKey(allItem.DisplayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents") && allItem.Group != "Actionbar Items")
                     {
-                        tags.Append("'" + SplitName(tag.DisplayName) + "'");
+                        string displayName = allItem.DisplayName;
+                        EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));
+                        EveryItem[displayName]["untranslated"] = $"'{allItem.DisplayName.NotTranslated}'";
+                        EveryItem[displayName]["category"] = "'" + Localizer.DoStr(allItem.Category) + "'";
+                        EveryItem[displayName]["group"] = "'" + Localizer.DoStr(allItem.Group) + "'";
+                        EveryItem[displayName]["type"] = "'" + allItem.Type.ToString().Substring(allItem.Type.ToString().LastIndexOf('.') + 1) + "'";
+                        EveryItem[displayName]["typeID"] = "'" + allItem.TypeID.ToString() + "'";
 
-                        if (tag != allItem.Tags().Last())
-                            tags.Append(", ");
+                        Regex regex = new Regex("[\t\n\v\f\r]");
+                        EveryItem[displayName]["description"] = "'" + regex.Replace(CleanTags(allItem.DisplayDescription), " ");
+                        //.Replace("'", "\\'") + "'";
 
-                        AddTagItemRelation(tag.DisplayName, allItem.DisplayName);
-                    }
-                    tags.Append("}");
-                    EveryItem[displayName]["tagGroups"] = tags.ToString();
-
-                    EveryItem[displayName]["maxStack"] = "'" + allItem.MaxStackSize.ToString() + "'";
-                    EveryItem[displayName]["carried"] = allItem.IsCarried ? $"'{Localizer.DoStr("Hands")}'" : $"'{Localizer.DoStr("Backpack")}'";
-                    EveryItem[displayName]["currency"] = allItem.CanBeCurrency ? $"'{Localizer.DoStr("Yes")}'" : "nil";
-                    if (allItem.HasWeight) { EveryItem[displayName]["weight"] = "'" + ((Decimal)allItem.Weight / 1000).ToString() + "'"; }
-                    if (allItem.IsFuel) { EveryItem[displayName]["fuel"] = "'" + allItem.Fuel.ToString() + "'"; }
-                    if (allItem.HasYield) { EveryItem[displayName]["yield"] = "'[[" + allItem.Yield.Skill.DisplayName + "]]'"; }
-
-                    #region Food Items
-
-                    // if the item is also a food item get the nutrient values
-                    if (allItem is FoodItem)
-                    {
-                        FoodItem foodItem = allItem as FoodItem;
-                        EveryItem[displayName]["calories"] = "'" + foodItem.Calories.ToString("F1") + "'";
-                        EveryItem[displayName]["carbs"] = "'" + foodItem.Nutrition.Carbs.ToString("F1") + "'";
-                        EveryItem[displayName]["protein"] = "'" + foodItem.Nutrition.Protein.ToString("F1") + "'";
-                        EveryItem[displayName]["fat"] = "'" + foodItem.Nutrition.Fat.ToString("F1") + "'";
-                        EveryItem[displayName]["vitamins"] = "'" + foodItem.Nutrition.Vitamins.ToString("F1") + "'";
-                        if (float.IsNaN(foodItem.Nutrition.Values.Sum() / foodItem.Calories))
-                            EveryItem[displayName]["density"] = "'0.0'";
-                        else
-                            EveryItem[displayName]["density"] = "'" + ((foodItem.Nutrition.Values.Sum() / foodItem.Calories) * 100).ToString("F1") + "'";
-                    }
-
-                    #endregion
-
-                    #region Housing Values
-
-                    // if the item is a world item that has a housing category, housing value details still sit on the item so needs to be seperated from Object properties
-                    if (allItem.Group == "World Object Items" || allItem.Group == "Modules") //&& allItem.Type != typeof(GasGeneratorItem)?
-                    {
-                        PropertyInfo[] props = allItem.Type.GetProperties();
-                        foreach (var prop in props)
+                        StringBuilder tags = new StringBuilder();
+                        tags.Append("{");
+                        foreach (Tag tag in allItem.Tags())
                         {
-                            //if (prop.GetValue(allItem) != null) { Console.WriteLine("ItemProperties - " + prop.Name + ": " + prop.GetValue(allItem).ToString()); }
-                            if (prop.Name == "HousingVal")
+                            tags.Append("'" + SplitName(tag.DisplayName) + "'");
+
+                            if (tag != allItem.Tags().Last())
+                                tags.Append(", ");
+
+                            AddTagItemRelation(tag.DisplayName, allItem.DisplayName);
+                        }
+                        tags.Append("}");
+                        EveryItem[displayName]["tagGroups"] = tags.ToString();
+
+                        EveryItem[displayName]["maxStack"] = "'" + allItem.MaxStackSize.ToString() + "'";
+                        EveryItem[displayName]["carried"] = allItem.IsCarried ? $"'{Localizer.DoStr("Hands")}'" : $"'{Localizer.DoStr("Backpack")}'";
+                        EveryItem[displayName]["currency"] = allItem.CanBeCurrency ? $"'{Localizer.DoStr("Yes")}'" : "nil";
+                        if (allItem.HasWeight) { EveryItem[displayName]["weight"] = "'" + ((Decimal)allItem.Weight / 1000).ToString() + "'"; }
+                        if (allItem.IsFuel) { EveryItem[displayName]["fuel"] = "'" + allItem.Fuel.ToString() + "'"; }
+                        if (allItem.HasYield) { EveryItem[displayName]["yield"] = "'[[" + allItem.Yield.Skill.DisplayName + "]]'"; }
+
+                        #region Food Items
+
+                        // if the item is also a food item get the nutrient values
+                        if (allItem is FoodItem)
+                        {
+                            FoodItem foodItem = allItem as FoodItem;
+                            EveryItem[displayName]["calories"] = "'" + foodItem.Calories.ToString("F1") + "'";
+                            EveryItem[displayName]["carbs"] = "'" + foodItem.Nutrition.Carbs.ToString("F1") + "'";
+                            EveryItem[displayName]["protein"] = "'" + foodItem.Nutrition.Protein.ToString("F1") + "'";
+                            EveryItem[displayName]["fat"] = "'" + foodItem.Nutrition.Fat.ToString("F1") + "'";
+                            EveryItem[displayName]["vitamins"] = "'" + foodItem.Nutrition.Vitamins.ToString("F1") + "'";
+                            if (float.IsNaN(foodItem.Nutrition.Values.Sum() / foodItem.Calories))
+                                EveryItem[displayName]["density"] = "'0.0'";
+                            else
+                                EveryItem[displayName]["density"] = "'" + ((foodItem.Nutrition.Values.Sum() / foodItem.Calories) * 100).ToString("F1") + "'";
+                        }
+
+                        #endregion
+
+                        #region Housing Values
+
+                        // if the item is a world item that has a housing category, housing value details still sit on the item so needs to be seperated from Object properties
+                        if (allItem.Group == "World Object Items" || allItem.Group == "Modules") //&& allItem.Type != typeof(GasGeneratorItem)?
+                        {
+                            PropertyInfo[] props = allItem.Type.GetProperties();
+                            foreach (var prop in props)
                             {
-                                HousingValue v = prop.GetValue(allItem) as HousingValue;
-                                EveryItem[displayName]["skillValue"] = "'" + v.Val.ToString() + "'";
-                                EveryItem[displayName]["roomCategory"] = "'" + Localizer.DoStr(v.Category) + "'";
-                                if (v.Category.ToString() != "Industrial")
+                                //if (prop.GetValue(allItem) != null) { Console.WriteLine("ItemProperties - " + prop.Name + ": " + prop.GetValue(allItem).ToString()); }
+                                if (prop.Name == "HousingVal")
                                 {
-                                    EveryItem[displayName]["furnitureType"] = "'" + Localizer.DoStr(v.TypeForRoomLimit) + "'";
-                                    EveryItem[displayName]["repeatsDepreciation"] = "'" + v.DiminishingReturnPercent.ToString() + "'";
+                                    HousingValue v = prop.GetValue(allItem) as HousingValue;
+                                    EveryItem[displayName]["skillValue"] = "'" + v.Val.ToString() + "'";
+                                    EveryItem[displayName]["roomCategory"] = "'" + Localizer.DoStr(v.Category) + "'";
+                                    if (v.Category.ToString() != "Industrial")
+                                    {
+                                        EveryItem[displayName]["furnitureType"] = "'" + Localizer.DoStr(v.TypeForRoomLimit) + "'";
+                                        EveryItem[displayName]["repeatsDepreciation"] = "'" + v.DiminishingReturnPercent.ToString() + "'";
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    #endregion
+                        #endregion
 
-                    #region Materials & Tiers
+                        #region Materials & Tiers
 
-                    // if the item is a block then add it's tier
-                    if (allItem.Group == "Block Items")
-                    {
-                        PropertyInfo[] props = allItem.Type.GetProperties();
-                        foreach (var prop in props)
+                        // if the item is a block then add it's tier
+                        if (allItem.Group == "Block Items")
                         {
-                            if (prop.Name == "Tier")
+                            PropertyInfo[] props = allItem.Type.GetProperties();
+                            foreach (var prop in props)
                             {
-                                int t = (int)prop.GetValue(allItem);
-                                EveryItem[displayName]["materialTier"] = "'" + t.ToString() + "'";
+                                if (prop.Name == "Tier")
+                                {
+                                    int t = (int)prop.GetValue(allItem);
+                                    EveryItem[displayName]["materialTier"] = "'" + t.ToString() + "'";
+                                }
                             }
                         }
-                    }
-                    #endregion
+                        #endregion
 
-                    #region World Objects
-                    // for world objects we need to get the object placed in world to access it's properties, each object is destroyed at the end of it's read.
-                    if (allItem.Group == "World Object Items" || allItem.Group == "Road Items" || allItem.Group == "Modules") //&& allItem.Type != typeof(GasGeneratorItem)
-                    {
-                        WorldObjectItem i = allItem as WorldObjectItem;
-                        var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false);
-
-                        // Couldn't Place the obj
-                        if (obj == null)
+                        #region World Objects
+                        // for world objects we need to get the object placed in world to access it's properties, each object is destroyed at the end of it's read.
+                        if (allItem.Group == "World Object Items" || allItem.Group == "Road Items" || allItem.Group == "Modules") //&& allItem.Type != typeof(GasGeneratorItem)
                         {
-                            // Attempt a special placement
-                            obj = SpecialPlacement(user, i.WorldObjectType);
+                            WorldObjectItem i = allItem as WorldObjectItem;
+                            var obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false);
 
-                            // Still couldn't place the obj
+                            // Couldn't Place the obj
                             if (obj == null)
                             {
-                                Log.WriteLine(Localizer.DoStr("Unable to create instance of " + i.WorldObjectType.Name));
-                                continue;
-                            }
-                        }
+                                // Attempt a special placement
+                                obj = SpecialPlacement(user, i.WorldObjectType);
 
-                        EveryItem[displayName]["mobile"] = obj is PhysicsWorldObject ? $"'{Localizer.DoStr("Yes")}'" : "nil";
-
-                        #region World Object Liquid Components
-                        // Checks the objectfor the three liquid components and returns the private fields of those components to the dictionary.
-                        // first create a list item and rate strings to attach
-                        List<string> consumedFluids = new List<string>();
-                        List<string> producedFluids = new List<string>();
-
-                        // We assume each component will only be on the WorldObject once... dangerous with SLG devs.
-                        var lp = obj.GetComponent<LiquidProducerComponent>();
-                        if (lp != null)
-                        {
-                            Type producesType = (Type)GetFieldValue(lp, "producesType");
-                            float productionRate = (float)GetFieldValue(lp, "constantProductionRate");
-
-                            producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', '" + productionRate + "'}"));
-                        }
-
-                        var lc = obj.GetComponent<LiquidConsumerComponent>();
-                        if (lc != null)
-                        {
-                            Type acceptedType = lc.AcceptedType;
-                            float consumptionRate = (float)GetFieldValue(lc, "constantConsumptionRate");
-
-                            consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]], '" + consumptionRate + "'}"));
-                        }
-
-                        var lconv = obj.GetComponent<LiquidConverterComponent>();
-                        if (lconv != null)
-                        {
-                            LiquidProducerComponent convLP = (LiquidProducerComponent)GetFieldValue(lconv, "producer");
-                            LiquidConsumerComponent convLC = (LiquidConsumerComponent)GetFieldValue(lconv, "consumer");
-
-                            Type producesType = (Type)GetFieldValue(convLP, "producesType");
-                            float productionRate = (float)GetFieldValue(convLP, "constantProductionRate");
-
-                            producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', '" + productionRate + "'}"));
-
-                            Type acceptedType = convLC.AcceptedType;
-                            float consumptionRate = (float)GetFieldValue(convLC, "constantConsumptionRate");
-                            consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]]', '" + consumptionRate + "'}"));
-                        }
-
-                        // combine the strings to add to the dictionary
-                        foreach (string str in consumedFluids)
-                        {
-                            if (str == consumedFluids.First())
-                                EveryItem[displayName]["fluidsUsed"] = "{" + Localizer.DoStr(str);
-                            else
-                                EveryItem[displayName]["fluidsUsed"] += Localizer.DoStr(str);
-
-                            if (str != consumedFluids.Last())
-                                EveryItem[displayName]["fluidsUsed"] += ",";
-                            else
-                                EveryItem[displayName]["fluidsUsed"] += "}";
-                        }
-
-                        foreach (string str in producedFluids)
-                        {
-                            if (str == producedFluids.First())
-                                EveryItem[displayName]["fluidsProduced"] = "{" + Localizer.DoStr(str);
-                            else
-                                EveryItem[displayName]["fluidsProduced"] += Localizer.DoStr(str);
-                            if (str != producedFluids.Last())
-                                EveryItem[displayName]["fluidsProduced"] += ",";
-                            else
-                                EveryItem[displayName]["fluidsProduced"] += "}";
-                        }
-
-                        #endregion
-
-                        #region World Object Fuel Supply
-
-                        if (obj.HasComponent<FuelSupplyComponent>())
-                        {
-                            var fuelComponent = obj.GetComponent<FuelSupplyComponent>();
-                            var fuelTags = GetFieldValue(fuelComponent, "fuelTags") as string[];
-                            string fuelsString = "[[";
-                            foreach (string t in fuelTags)
-                            {
-                                fuelsString += Localizer.DoStr(t);
-                                if (t != fuelTags.Last())
-                                    fuelsString += "]], [[";
-                            }
-                            EveryItem[displayName]["fuelsUsed"] = "'" + fuelsString + "]]'";
-                        }
-                        #endregion
-
-                        #region World Object Power Grid
-
-                        if (obj.HasComponent<PowerGridComponent>())
-                        {
-                            var gridComponent = obj.GetComponent<PowerGridComponent>();
-                            EveryItem[displayName]["energyProduced"] = "'" + gridComponent.EnergySupply.ToString() + "'";
-                            EveryItem[displayName]["energyUsed"] = "'" + gridComponent.EnergyDemand.ToString() + "'";
-                            EveryItem[displayName]["energyType"] = "'" + gridComponent.EnergyType.Name + "'";
-                            EveryItem[displayName]["gridRadius"] = "'" + gridComponent.Radius.ToString() + "'";
-                        }
-                        #endregion
-
-                        #region World Object Room Requirements
-
-
-                        if (obj.HasComponent<RoomRequirementsComponent>())
-                        {
-                            var roomRequirementsComponent = obj.GetComponent<RoomRequirementsComponent>();
-                            var requirements = RoomRequirements.Get(obj.GetType());
-                            if (requirements != null)
-                            {
-                                foreach (RoomRequirementAttribute a in requirements.Requirements)
+                                // Still couldn't place the obj
+                                if (obj == null)
                                 {
-                                    if (a.GetType() == typeof(RequireRoomMaterialTierAttribute))
+                                    Log.WriteLine(Localizer.DoStr("Unable to create instance of " + i.WorldObjectType.Name));
+                                    continue;
+                                }
+                            }
+
+                            EveryItem[displayName]["mobile"] = obj is PhysicsWorldObject ? $"'{Localizer.DoStr("Yes")}'" : "nil";
+
+                            #region World Object Liquid Components
+                            // Checks the objectfor the three liquid components and returns the private fields of those components to the dictionary.
+                            // first create a list item and rate strings to attach
+                            List<string> consumedFluids = new List<string>();
+                            List<string> producedFluids = new List<string>();
+
+                            // We assume each component will only be on the WorldObject once... dangerous with SLG devs.
+                            var lp = obj.GetComponent<LiquidProducerComponent>();
+                            if (lp != null)
+                            {
+                                Type producesType = (Type)GetFieldValue(lp, "producesType");
+                                float productionRate = (float)GetFieldValue(lp, "constantProductionRate");
+
+                                producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', '" + productionRate + "'}"));
+                            }
+
+                            var lc = obj.GetComponent<LiquidConsumerComponent>();
+                            if (lc != null)
+                            {
+                                Type acceptedType = lc.AcceptedType;
+                                float consumptionRate = (float)GetFieldValue(lc, "constantConsumptionRate");
+
+                                consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]], '" + consumptionRate + "'}"));
+                            }
+
+                            var lconv = obj.GetComponent<LiquidConverterComponent>();
+                            if (lconv != null)
+                            {
+                                LiquidProducerComponent convLP = (LiquidProducerComponent)GetFieldValue(lconv, "producer");
+                                LiquidConsumerComponent convLC = (LiquidConsumerComponent)GetFieldValue(lconv, "consumer");
+
+                                Type producesType = (Type)GetFieldValue(convLP, "producesType");
+                                float productionRate = (float)GetFieldValue(convLP, "constantProductionRate");
+
+                                producedFluids.Add("{'[[" + SplitName(RemoveItemTag(producesType.Name) + "]]', '" + productionRate + "'}"));
+
+                                Type acceptedType = convLC.AcceptedType;
+                                float consumptionRate = (float)GetFieldValue(convLC, "constantConsumptionRate");
+                                consumedFluids.Add("{'[[" + SplitName(RemoveItemTag(acceptedType.Name) + "]]', '" + consumptionRate + "'}"));
+                            }
+
+                            // combine the strings to add to the dictionary
+                            foreach (string str in consumedFluids)
+                            {
+                                if (str == consumedFluids.First())
+                                    EveryItem[displayName]["fluidsUsed"] = "{" + Localizer.DoStr(str);
+                                else
+                                    EveryItem[displayName]["fluidsUsed"] += Localizer.DoStr(str);
+
+                                if (str != consumedFluids.Last())
+                                    EveryItem[displayName]["fluidsUsed"] += ",";
+                                else
+                                    EveryItem[displayName]["fluidsUsed"] += "}";
+                            }
+
+                            foreach (string str in producedFluids)
+                            {
+                                if (str == producedFluids.First())
+                                    EveryItem[displayName]["fluidsProduced"] = "{" + Localizer.DoStr(str);
+                                else
+                                    EveryItem[displayName]["fluidsProduced"] += Localizer.DoStr(str);
+                                if (str != producedFluids.Last())
+                                    EveryItem[displayName]["fluidsProduced"] += ",";
+                                else
+                                    EveryItem[displayName]["fluidsProduced"] += "}";
+                            }
+
+                            #endregion
+
+                            #region World Object Fuel Supply
+
+                            if (obj.HasComponent<FuelSupplyComponent>())
+                            {
+                                var fuelComponent = obj.GetComponent<FuelSupplyComponent>();
+                                var fuelTags = GetFieldValue(fuelComponent, "fuelTags") as string[];
+                                string fuelsString = "[[";
+                                foreach (string t in fuelTags)
+                                {
+                                    fuelsString += Localizer.DoStr(t);
+                                    if (t != fuelTags.Last())
+                                        fuelsString += "]], [[";
+                                }
+                                EveryItem[displayName]["fuelsUsed"] = "'" + fuelsString + "]]'";
+                            }
+                            #endregion
+
+                            #region World Object Power Grid
+
+                            if (obj.HasComponent<PowerGridComponent>())
+                            {
+                                var gridComponent = obj.GetComponent<PowerGridComponent>();
+                                EveryItem[displayName]["energyProduced"] = "'" + gridComponent.EnergySupply.ToString() + "'";
+                                EveryItem[displayName]["energyUsed"] = "'" + gridComponent.EnergyDemand.ToString() + "'";
+                                EveryItem[displayName]["energyType"] = "'" + gridComponent.EnergyType.Name + "'";
+                                EveryItem[displayName]["gridRadius"] = "'" + gridComponent.Radius.ToString() + "'";
+                            }
+                            #endregion
+
+                            #region World Object Room Requirements
+
+
+                            if (obj.HasComponent<RoomRequirementsComponent>())
+                            {
+                                var roomRequirementsComponent = obj.GetComponent<RoomRequirementsComponent>();
+                                var requirements = RoomRequirements.Get(obj.GetType());
+                                if (requirements != null)
+                                {
+                                    foreach (RoomRequirementAttribute a in requirements.Requirements)
                                     {
-                                        EveryItem[displayName]["roomMatReq"] = $"'{Localizer.DoStr("Tier")} " + (a as RequireRoomMaterialTierAttribute).Tier + "'";
-                                    }
-                                    if (a.GetType() == typeof(RequireRoomVolumeAttribute))
-                                    {
-                                        EveryItem[displayName]["roomSizeReq"] = "'" + (a as RequireRoomVolumeAttribute).Volume + "'";
-                                    }
-                                    if (a.GetType() == typeof(RequireRoomContainmentAttribute))
-                                    {
-                                        EveryItem[displayName]["roomContainReq"] = $"'{Localizer.DoStr("Yes")}'";
+                                        if (a.GetType() == typeof(RequireRoomMaterialTierAttribute))
+                                        {
+                                            EveryItem[displayName]["roomMatReq"] = $"'{Localizer.DoStr("Tier")} " + (a as RequireRoomMaterialTierAttribute).Tier + "'";
+                                        }
+                                        if (a.GetType() == typeof(RequireRoomVolumeAttribute))
+                                        {
+                                            EveryItem[displayName]["roomSizeReq"] = "'" + (a as RequireRoomVolumeAttribute).Volume + "'";
+                                        }
+                                        if (a.GetType() == typeof(RequireRoomContainmentAttribute))
+                                        {
+                                            EveryItem[displayName]["roomContainReq"] = $"'{Localizer.DoStr("Yes")}'";
+                                        }
                                     }
                                 }
                             }
-                        }
-                        #endregion
+                            #endregion
 
-                        #region World Object Storage Components
+                            #region World Object Storage Components
 
-                        if (obj.HasComponent<PublicStorageComponent>())
-                        {
-                            var psc = obj.GetComponent<PublicStorageComponent>();
-                            EveryItem[displayName]["inventorySlots"] = "'" + psc.Inventory.Stacks.Count().ToString() + "'";
-
-                            foreach (InventoryRestriction res in psc.Inventory.Restrictions)
+                            if (obj.HasComponent<PublicStorageComponent>())
                             {
-                                if (res is WeightRestriction)
+                                var psc = obj.GetComponent<PublicStorageComponent>();
+                                EveryItem[displayName]["inventorySlots"] = "'" + psc.Inventory.Stacks.Count().ToString() + "'";
+
+                                foreach (InventoryRestriction res in psc.Inventory.Restrictions)
                                 {
-                                    WeightRestriction wres = res as WeightRestriction;
-                                    WeightComponent wc = (WeightComponent)GetFieldValue(wres, "weightComponent");
-                                    EveryItem[displayName]["inventoryMaxWeight"] = "'" + wc.MaxWeight.ToString() + "'";
+                                    if (res is WeightRestriction)
+                                    {
+                                        WeightRestriction wres = res as WeightRestriction;
+                                        WeightComponent wc = (WeightComponent)GetFieldValue(wres, "weightComponent");
+                                        EveryItem[displayName]["inventoryMaxWeight"] = "'" + wc.MaxWeight.ToString() + "'";
+                                    }
                                 }
                             }
-                        }
 
-                        #endregion
+                            #endregion
 
-                        #region World Object Occupancy
+                            #region World Object Occupancy
 
-                        if (!(obj is PhysicsWorldObject) || obj.DisplayName == "Wooden Elevator") // removes vehicles from getting a footprint as they don't have an occupancy
-                        {
-                            //Console.WriteLine("          Occupancy:");
-                            List<BlockOccupancy> Occ = obj.Occupancy;
-                            List<int> xList = new List<int>();
-                            List<int> yList = new List<int>();
-                            List<int> zList = new List<int>();
-
-                            // add the int values of all the blocks of the object to the lists
-                            foreach (BlockOccupancy bo in Occ)
+                            if (!(obj is PhysicsWorldObject) || obj.DisplayName == "Wooden Elevator") // removes vehicles from getting a footprint as they don't have an occupancy
                             {
-                                xList.Add(bo.Offset.X);
-                                yList.Add(bo.Offset.Y);
-                                zList.Add(bo.Offset.Z);
+                                //Console.WriteLine("          Occupancy:");
+                                List<BlockOccupancy> Occ = obj.Occupancy;
+                                List<int> xList = new List<int>();
+                                List<int> yList = new List<int>();
+                                List<int> zList = new List<int>();
+
+                                // add the int values of all the blocks of the object to the lists
+                                foreach (BlockOccupancy bo in Occ)
+                                {
+                                    xList.Add(bo.Offset.X);
+                                    yList.Add(bo.Offset.Y);
+                                    zList.Add(bo.Offset.Z);
+                                }
+
+                                // as position 0 is a block we need to add '1' to the range to see the correct footprint size
+                                string footprint = (xList.Max() - xList.Min() + 1).ToString() + " X " + (yList.Max() - yList.Min() + 1).ToString() + " X " + (zList.Max() - zList.Min() + 1).ToString();
+                                EveryItem[displayName]["footprint"] = "'" + footprint + "'";
                             }
 
-                            // as position 0 is a block we need to add '1' to the range to see the correct footprint size
-                            string footprint = (xList.Max() - xList.Min() + 1).ToString() + " X " + (yList.Max() - yList.Min() + 1).ToString() + " X " + (zList.Max() - zList.Min() + 1).ToString();
-                            EveryItem[displayName]["footprint"] = "'" + footprint + "'";
-                        }
+                            #endregion
 
-                        #endregion
+                            #region Talents
 
-                        #region Talents
-
-                        if (obj.HasComponent<CraftingComponent>())
-                        {
-                            var cc = obj.GetComponent<CraftingComponent>();
-                            string talentString = "{";
-                            foreach (var talent in Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
+                            if (obj.HasComponent<CraftingComponent>())
                             {
-                                talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
-                                if (talent != Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
-                                    talentString += ", ";
+                                var cc = obj.GetComponent<CraftingComponent>();
+                                string talentString = "{";
+                                foreach (var talent in Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
+                                {
+                                    talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
+                                    if (talent != Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
+                                        talentString += ", ";
+                                }
+                                talentString += "}";
+                                EveryItem[displayName]["validTalents"] = talentString;
                             }
-                            talentString += "}";
-                            EveryItem[displayName]["validTalents"] = talentString;
-                        }
-                        #endregion
+                            #endregion
 
-                        obj.Destroy();
+                            obj.Destroy();
+                        }
+
+                        #endregion
                     }
-
-                    #endregion
+                }
+                catch
+                {
+                    Console.WriteLine("Item: " + allItem.DisplayName);
+                    EveryItem[allItem.DisplayName].ForEach(x =>
+                    {
+                        Console.WriteLine($"    {x.Key} : {x.Value}");
+                    });
+                    throw;
                 }
             }
 

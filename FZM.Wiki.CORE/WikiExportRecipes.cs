@@ -168,7 +168,7 @@ namespace FZM.Wiki
                                 if (e.Quantity is ConstantValue)
                                     isStatic = true;
 
-                                ingredients.Append("'" + element.NotTranslated + "', '" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isStatic.ToString() + "'}");
+                                ingredients.Append("'" + element + "', '" + e.Quantity.GetBaseValue + "', '" + isStatic.ToString() + "', '" + element.NotTranslated + "'}");
 
                                 if (e != r.Ingredients.Last())
                                     ingredients.Append(", ");
@@ -181,7 +181,7 @@ namespace FZM.Wiki
                             foreach (var e in r.Items)
                             {
                                 products.Append("{");
-                                products.Append("'" + e.Item.DisplayName.NotTranslated + "', '" + e.Item.DisplayName + "', '" + e.Quantity.GetBaseValue + "'}");
+                                products.Append("'" + e.Item.DisplayName + "', '" + e.Quantity.GetBaseValue + "', '" + e.Item.DisplayName.NotTranslated + "'}");
 
                                 if (e != r.Items.Last())
                                     products.Append(", ");

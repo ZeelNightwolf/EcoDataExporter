@@ -162,7 +162,7 @@ namespace FZM.Wiki
                                 {
                                     HousingValue v = prop.GetValue(allItem) as HousingValue;
                                     EveryItem[displayName]["skillValue"] = "'" + v.Val.ToString() + "'";
-                                    EveryItem[displayName]["roomCategory"] = "'" + Localizer.DoStr(v.Category) + "'";
+                                    EveryItem[displayName]["roomCategory"] = "'" + Localizer.DoStr(v.Category.ToString()) + "'";
                                     if (v.Category.ToString() != "Industrial")
                                     {
                                         EveryItem[displayName]["furnitureType"] = "'" + Localizer.DoStr(v.TypeForRoomLimit) + "'";

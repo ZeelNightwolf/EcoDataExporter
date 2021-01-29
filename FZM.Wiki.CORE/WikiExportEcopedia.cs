@@ -38,18 +38,9 @@ namespace FZM.Wiki
                 { "parent", "nil" },
             };
 
-            Ecopedia.Obj.Chapters
-            
-            // TODO:
-            // load worldgen.eco
-            // parse, sort and categorise json
-            // populate list of Biomes data
-            // interrogate modules
-
-
 
             // writes to WikiItems.txt to the Eco Server directory.
-            WriteDictionaryToFile(user, "Wiki_Module_Ecopedia.txt", "ecopedia", Ecopedia);
+            WriteDictionaryToFile(user, "Wiki_Module_Ecopedia.txt", "ecopedia", EcopediaDict);
         }
     }
 }

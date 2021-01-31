@@ -14,6 +14,7 @@ using Eco.Shared.Utils;
 using System.Linq;
 using Eco.Gameplay.Items;
 using Eco.Shared.Localization;
+using Eco.Gameplay.Systems;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -651,7 +652,10 @@ namespace FZM.Wiki
                                     if (count != foodNameSplit.Length)
                                         foodName += " ";
                                 }
-                                sb.Append(Localizer.DoStr(foodName));
+                                if (LocalizationPlugin.Config.Language == SupportedLanguage.English)
+                                    sb.Append(Localizer.DoStr(foodName));
+                                else
+                                    sb.Append(Localizer.DoStr(meal.Name));
                                 sb.Append("]]");
                                 sourceCount++;
                                 if (sourceCount != animal.FoodSources.Count)

@@ -31,7 +31,8 @@ namespace FZM.Wiki
         private static SortedDictionary<string, Dictionary<string, string>> EveryRecipe = new SortedDictionary<string, Dictionary<string, string>>();
 
         private static SortedDictionary<string, StringBuilder> recipeBuilder = new SortedDictionary<string, StringBuilder>();
-        private static SortedDictionary<string, SortedDictionary<string, string>> itemRecipeVariantDic = new SortedDictionary<string, SortedDictionary<string, string>>();
+        private static SortedDictionary<string, SortedDictionary<string, string>> RecipeIngedientVariantDic = new SortedDictionary<string, SortedDictionary<string, string>>();
+        private static SortedDictionary<string, SortedDictionary<string, string>> RecipeProductVariantDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         private static SortedDictionary<string, SortedDictionary<string, string>> tableRecipeFamilyDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         private static SortedDictionary<string, SortedDictionary<string, string>> groupRecipeDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         // Extracting Recipes is complex and requires collection and sorting.
@@ -155,7 +156,7 @@ namespace FZM.Wiki
                                 {
                                     ingredients.Append("'ITEM', ");
                                     element = e.Item.DisplayName;
-                                    AddItemRecipeRelation(e.Item.DisplayName, r.DisplayName);
+                                    AddRecipeIngredientRelation(e.Item.DisplayName, r.DisplayName);
                                 }
                                 else
                                 {
@@ -185,7 +186,7 @@ namespace FZM.Wiki
 
                                 if (e != r.Items.Last())
                                     products.Append(", ");
-                                AddItemRecipeRelation(e.Item.DisplayName, r.DisplayName);
+                                AddRecipeProductRelation(e.Item.DisplayName, r.DisplayName);
                             }
                             products.Append("}");
                             variant[recipe]["products"] = products.ToString();
@@ -230,13 +231,33 @@ namespace FZM.Wiki
                     streamWriter.WriteLine(string.Format("{0}}},", space2));
                 }
                 
-                // write the items to recipe variant data
-                streamWriter.WriteLine("    },\n    items = {");
-                foreach (string key1 in itemRecipeVariantDic.Keys)
+                // write the recipe ingredients to recipe variant data
+                streamWriter.WriteLine("    },\n    ingredients = {");
+                foreach (string key1 in RecipeIngedientVariantDic.Keys)
                 {
                     streamWriter.Write(string.Format("{0}['{1}'] = {{ ", space2, key1));
-                    foreach (string key2 in itemRecipeVariantDic[key1].Keys)
-                        streamWriter.Write(string.Format("'{0}', ", key2));
+                    foreach (string key2 in RecipeIngedientVariantDic[key1].Keys)
+                    {
+                        if (key2 != RecipeIngedientVariantDic[key1].Keys.Last())
+                            streamWriter.Write(string.Format("'{0}', ", key2));
+                        else
+                            streamWriter.Write(string.Format("'{0}'", key2));
+                    }                      
+                    streamWriter.WriteLine("},");
+                }
+
+                // write the recipe products to recipe variant data
+                streamWriter.WriteLine("    },\n    products = {");
+                foreach (string key1 in RecipeProductVariantDic.Keys)
+                {
+                    streamWriter.Write(string.Format("{0}['{1}'] = {{ ", space2, key1));
+                    foreach (string key2 in RecipeProductVariantDic[key1].Keys)
+                    {                     
+                        if (key2 != RecipeProductVariantDic[key1].Keys.Last())                       
+                            streamWriter.Write(string.Format("'{0}', ", key2));
+                        else
+                            streamWriter.Write(string.Format("'{0}'", key2));
+                    }                       
                     streamWriter.WriteLine("},");
                 }
 
@@ -246,7 +267,12 @@ namespace FZM.Wiki
                 {
                     streamWriter.Write(string.Format("{0}['{1}'] = {{ ", space2, key1));
                     foreach (string key2 in tableRecipeFamilyDic[key1].Keys)
-                        streamWriter.Write(string.Format("'{0}', ", key2));
+                    {
+                        if (key2 != tableRecipeFamilyDic[key1].Keys.Last())
+                            streamWriter.Write(string.Format("'{0}', ", key2));
+                        else
+                            streamWriter.Write(string.Format("'{0}'", key2));
+                    }
                     streamWriter.WriteLine("},");
                 }
 
@@ -267,13 +293,22 @@ namespace FZM.Wiki
             }
         }
 
-        private static void AddItemRecipeRelation(string item, string recipeVariant)
+        private static void AddRecipeIngredientRelation(string item, string recipeVariant)
         {
-            if (!itemRecipeVariantDic.ContainsKey(item))
-                itemRecipeVariantDic.Add(item, new SortedDictionary<string, string>());
-            if (itemRecipeVariantDic[item].ContainsKey(recipeVariant))
+            if (!RecipeIngedientVariantDic.ContainsKey(item))
+                RecipeIngedientVariantDic.Add(item, new SortedDictionary<string, string>());
+            if (RecipeIngedientVariantDic[item].ContainsKey(recipeVariant))
                 return;
-            itemRecipeVariantDic[item].Add(recipeVariant, recipeVariant);
+            RecipeIngedientVariantDic[item].Add(recipeVariant, recipeVariant);
+        }
+
+        private static void AddRecipeProductRelation(string item, string recipeVariant)
+        {
+            if (!RecipeProductVariantDic.ContainsKey(item))
+                RecipeProductVariantDic.Add(item, new SortedDictionary<string, string>());
+            if (RecipeProductVariantDic[item].ContainsKey(recipeVariant))
+                return;
+            RecipeProductVariantDic[item].Add(recipeVariant, recipeVariant);
         }
 
         private static void AddTableRecipeRelation(string table, string recipeFamily)

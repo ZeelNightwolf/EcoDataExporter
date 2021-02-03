@@ -49,7 +49,7 @@ namespace FZM.Wiki
         /// Get dumps of all the data
         /// </summary>
         /// <param name="user"></param>
-        [ChatCommand("Creates all 8 dump files", ChatAuthorizationLevel.Admin)]
+        [ChatCommand("Creates all dump files", ChatAuthorizationLevel.Admin)]
         public static void DumpDetails(User user)
         {
             StringBuilder alert = new StringBuilder();
@@ -65,6 +65,7 @@ namespace FZM.Wiki
             try { TreeDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Tree Details")); }
             try { AnimalDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Animal Details")); }
             try { CommandDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
+            try { EcopediaDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Ecopedia Details")); }
 
             ProcessStartInfo info = new ProcessStartInfo
             {

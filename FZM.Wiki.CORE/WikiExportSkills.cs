@@ -27,7 +27,6 @@ namespace FZM.Wiki
         // dictionary of skills and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EverySkill = new SortedDictionary<string, Dictionary<string, string>>();
 
-        [ChatCommand("Creates a dump file of all discovered skills", ChatAuthorizationLevel.Admin)]
         public static void SkillsDetails(User user)
         {
             // dictionary of item properties

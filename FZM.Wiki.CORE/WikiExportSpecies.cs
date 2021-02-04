@@ -37,7 +37,6 @@ namespace FZM.Wiki
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryAnimal = new SortedDictionary<string, Dictionary<string, string>>();
 
-        [ChatCommand("Creates a dump file of all plant conditions", ChatAuthorizationLevel.Admin)]
         public static void PlantDetails(User user)
         {
             // dictionary of plant properties
@@ -279,7 +278,6 @@ namespace FZM.Wiki
 
         }
 
-        [ChatCommand("Creates a dump file of all Tree conditions", ChatAuthorizationLevel.Admin)]
         public static void TreeDetails(User user)
         {
             // dictionary of plant properties
@@ -539,7 +537,6 @@ namespace FZM.Wiki
             WriteDictionaryToFile(user, "Wiki_Module_TreeData.txt", "trees", EveryTree);
         }
 
-        [ChatCommand("Creates a dump file of all Animal conditions", ChatAuthorizationLevel.Admin)]
         public static void AnimalDetails(User user)
         {
             // dictionary of animal properties

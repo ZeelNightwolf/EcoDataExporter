@@ -1,7 +1,6 @@
 ﻿using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared.Localization;
-using Eco.Shared.Utils;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -21,11 +20,6 @@ namespace FZM.Wiki
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryCommand = new SortedDictionary<string, Dictionary<string, string>>();
 
-        /// <summary>
-        /// Retrieves the commands from Eco.
-        /// </summary>
-        /// <param name="user"></param>
-        [ChatCommand("Creates a dump file of all commands", ChatAuthorizationLevel.Admin)]
         public static void CommandDetails(User user)
         {
             // dictionary of commands
@@ -49,6 +43,9 @@ namespace FZM.Wiki
 
             foreach (var com in commands)
             {
+                if (com.Key == "dumpdetails")
+                    continue;
+
                 var command = Localizer.DoStr(com.Name);
                 if (!EveryCommand.ContainsKey(command))
                 {

@@ -37,7 +37,6 @@ namespace FZM.Wiki
         private static SortedDictionary<string, SortedDictionary<string, string>> groupRecipeDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         // Extracting Recipes is complex and requires collection and sorting.
 
-        [ChatCommand("Creates a dump file of all discovered recipes", ChatAuthorizationLevel.Admin)]
         public static void RecipesDetails(User user)
         {
             // dictionary of recipe properties

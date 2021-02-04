@@ -14,7 +14,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -57,6 +56,7 @@ namespace FZM.Wiki
             alert.AppendLine("Errors: ");
 
             try { DiscoverAll(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
+            try { EcoDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Eco Details")); }
             try { ItemDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
             try { RecipesDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
             try { SkillsDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
@@ -105,6 +105,7 @@ namespace FZM.Wiki
             user.Player.Msg(Localizer.Do($"All discovered"));
         }
 
+        #region StringMethods
         /// <summary>
         /// Split up the Pascal Case to something readable
         /// </summary>
@@ -151,8 +152,14 @@ namespace FZM.Wiki
             return cleanItem;
         }
 
+        private static string CleanTags(string hasTags)
+        {
+            Regex regex = new Regex("<[^>]*>");
+            return regex.Replace(hasTags, "");
+        }
+        #endregion
 
-
+        #region ReflectionMethods
         /// <summary>
         /// Helper method as reflection is used a number of times to get private fields
         /// </summary>
@@ -172,39 +179,9 @@ namespace FZM.Wiki
 
             return _value;
         }
+        #endregion
 
-        private static string CleanTags(string hasTags)
-        {
-            Regex regex = new Regex("<[^>]*>");
-            return regex.Replace(hasTags, "");
-        }
-
-        /*
-        private static string CleanTags(string hasTags)
-        {
-            string str;
-            StringBuilder stringBuilder1;
-            for (str = hasTags; str.Contains(" <b>"); str = stringBuilder1.ToString())
-            {
-                stringBuilder1 = new StringBuilder();
-                stringBuilder1.Append(str.Substring(0, str.IndexOf(" <b>") + 1));
-                stringBuilder1.Append(str.Substring(str.IndexOf("'>") + 2, str.IndexOf("</") - (str.IndexOf("'>") + 2)));
-                if (str.IndexOf("</b>") != str.Length - 4)
-                    stringBuilder1.Append(str.Substring(str.IndexOf("</b>") + 4));
-            }
-            StringBuilder stringBuilder2;
-            for (; str.Contains(" <style="); str = stringBuilder2.ToString())
-            {
-                stringBuilder2 = new StringBuilder();
-                stringBuilder2.Append(str.Substring(0, str.IndexOf(" <style=") + 1));
-                stringBuilder2.Append(str.Substring(str.IndexOf("\">") + 2, str.IndexOf("</") - (str.IndexOf("\">") + 2)));
-                if (str.IndexOf("</style>") != str.Length - 8)
-                    stringBuilder2.Append(str.Substring(str.IndexOf("</style>") + 8));
-            }
-            return str;
-        }
-        */
-
+        #region Writers
         // wrties out a Dictionary To be used as a Next Level Object
         public static string WriteDictionaryAsSubObject(Dictionary<string, string> dict, int depth)
         {
@@ -261,6 +238,7 @@ namespace FZM.Wiki
                 streamWriter.Close();
             }
         }
+        #endregion
     }
 
 }

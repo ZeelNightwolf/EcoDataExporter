@@ -21,11 +21,6 @@ namespace FZM.Wiki
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> WorldGen = new SortedDictionary<string, Dictionary<string, string>>();
 
-        /// <summary>
-        /// Retrieves the commands from Eco.
-        /// </summary>
-        /// <param name="user"></param>
-        [ChatCommand("Creates a dump file of all world generation details", ChatAuthorizationLevel.Admin)]
         public static void WorldGenDetails(User user)
         {
             // dictionary of commands

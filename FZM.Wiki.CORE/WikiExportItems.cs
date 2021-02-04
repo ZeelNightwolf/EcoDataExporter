@@ -42,7 +42,6 @@ namespace FZM.Wiki
         private static SortedDictionary<string, Dictionary<string, string>> EveryItem = new SortedDictionary<string, Dictionary<string, string>>();
         private static SortedDictionary<string, Dictionary<string, string>> tagItemDic = new SortedDictionary<string, Dictionary<string, string>>();
 
-        [ChatCommand("Creates a dump file of all discovered items", ChatAuthorizationLevel.Admin)]
         public static void ItemDetails(User user)
         {
             // dictionary of item properties

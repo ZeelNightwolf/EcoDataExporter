@@ -1,15 +1,11 @@
 ﻿using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Chat;
-using Eco.Shared.Localization;
-using Eco.Shared.Utils;
 using System.Collections.Generic;
-using Eco.Core.Ecopedia;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using Eco.Gameplay.EcopediaRoot;
 using System.Text;
 using System.Linq;
 using System;
+using System.Text.RegularExpressions;
 
 namespace FZM.Wiki
 {
@@ -17,12 +13,6 @@ namespace FZM.Wiki
     {
         // dictionary of pages and their entries
         private static SortedDictionary<string, Dictionary<string, string>> EveryPage = new SortedDictionary<string, Dictionary<string, string>>();
-
-        /// <summary>
-        /// Retrieves the commands from Eco.
-        /// </summary>
-        /// <param name="user"></param>
-        [ChatCommand("Creates a dump file of all Ecopaedia details", ChatAuthorizationLevel.Admin)]
 
         public static void EcopediaDetails(User user)
         {
@@ -52,11 +42,11 @@ namespace FZM.Wiki
                         if (p.Sections != null)
                         {
                             foreach (var sec in p.Sections)
-                            {
+                            {                                
                                 if (sec is EcopediaBanner || sec is EcopediaButton)
-                                    continue;
-                                
-                                sb.Append($"{{'{sec.GetType().Name}, {CleanTags(sec.Text)}'}}");
+                                    continue;                               
+
+                                sb.Append($"{{'{sec.GetType().Name}', '{Regex.Replace(JSONStringSafe(CleanTags(sec.Text)),"[\n\r]+", "\\n\\n")}'}}");
 
                                 if (sec != p.Sections.Last())
                                     sb.Append(", ");

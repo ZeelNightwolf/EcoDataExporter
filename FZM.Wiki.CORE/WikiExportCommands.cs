@@ -20,7 +20,7 @@ namespace FZM.Wiki
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryCommand = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void CommandDetails(User user)
+        public static void CommandDetails()
         {
             // dictionary of commands
             Dictionary<string, string> commandDetails = new Dictionary<string, string>()
@@ -87,7 +87,7 @@ namespace FZM.Wiki
             }
 
             // writes to WikiItems.txt to the Eco Server directory.
-            WriteDictionaryToFile(user, "Wiki_Module_CommandData.txt", "commands", EveryCommand);
+            WriteDictionaryToFile("Wiki_Module_CommandData.txt", "commands", EveryCommand);
         }      
     }
 }

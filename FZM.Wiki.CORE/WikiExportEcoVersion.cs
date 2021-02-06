@@ -12,7 +12,7 @@ namespace FZM.Wiki
 
         private static SortedDictionary<string, Dictionary<string, string>> Details = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void EcoDetails(User user)
+        public static void EcoDetails()
         {
             // dictionary of commands
             Dictionary<string, string> EcoDetails = new Dictionary<string, string>()
@@ -28,7 +28,7 @@ namespace FZM.Wiki
             Details["eco"]["fullInfo"] = $"'{EcoVersion.FullInfo}'";
             Details["eco"]["dataExportDate"] = $"'{DateTime.Now.Date}'";
 
-            WriteDictionaryToFile(user, "Wiki_Module_EcoVersion.txt", "eco", Details);
+            WriteDictionaryToFile("Wiki_Module_EcoVersion.txt", "eco", Details);
         }
     }
 }

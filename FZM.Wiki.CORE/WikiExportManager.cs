@@ -29,6 +29,8 @@ namespace FZM.Wiki
     {
         public static NLogWrapper logger = NLogWriter.GetConcreteLogger("WikiExporter");
 
+        private static User dummy;
+
         // outputting formats
         private static string space2 = "        ";
         private static string space3 = "            ";
@@ -51,21 +53,36 @@ namespace FZM.Wiki
         [ChatCommand("Creates all dump files", ChatAuthorizationLevel.Admin)]
         public static void DumpDetails(User user)
         {
+            User choice;
+            
+            if (user == null)
+            {
+                UserManager.RequireAuthentication = false;
+                dummy = UserManager.GetOrCreateUser("1234", "1234", "Dummy");
+                dummy.RealUser = false;
+                UserManager.RequireAuthentication = true;
+                choice = dummy;
+            }
+            else
+            {
+                choice = user;
+            }
+
             StringBuilder alert = new StringBuilder();
 
             alert.AppendLine("Errors: ");
 
-            try { DiscoverAll(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
-            try { EcoDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Eco Details")); }
-            try { ItemDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
-            try { RecipesDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
-            try { SkillsDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
-            try { TalentDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Talent Details")); }
-            try { PlantDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Plant Details")); }
-            try { TreeDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Tree Details")); }
-            try { AnimalDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Animal Details")); }
-            try { CommandDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
-            try { EcopediaDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Ecopedia Details")); }
+            try { DiscoverAll(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
+            try { EcoDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Eco Details")); }
+            try { ItemDetails(choice); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
+            try { RecipesDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
+            try { SkillsDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
+            try { TalentDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Talent Details")); }
+            try { PlantDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Plant Details")); }
+            try { TreeDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Tree Details")); }
+            try { AnimalDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Animal Details")); }
+            try { CommandDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
+            try { EcopediaDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Ecopedia Details")); }
 
             ProcessStartInfo info = new ProcessStartInfo
             {
@@ -83,7 +100,8 @@ namespace FZM.Wiki
             alert.AppendLine("DUMP FOLDER: ");
             alert.AppendLine($"{SaveLocation}");
 
-            user.Player.InfoBoxLocStr(alert.ToString());
+            if (choice == user)
+                user.Player.InfoBoxLocStr(alert.ToString());
         }
 
         public static string LogExceptionAndNotify(User user, Exception e, string dump)
@@ -97,12 +115,11 @@ namespace FZM.Wiki
         /// </summary>
         /// <param name="user"></param>
         [ChatCommand("Discovers all items in game", ChatAuthorizationLevel.Admin)]
-        public static void DiscoverAll(User user)
+        public static void DiscoverAll()
         {
             IEnumerable<Type> types = ((IEnumerable<Item>)Item.AllItems).Select<Item, Type>(item => item.Type);
             DiscoveryManager.Obj.DiscoveredThings.UnionWith(types);
             DiscoveryManager.Obj.UpdateDiscoveredItems();
-            user.Player.Msg(Localizer.Do($"All discovered"));
         }
 
         #region StringMethods
@@ -210,7 +227,7 @@ namespace FZM.Wiki
         /// <param name="filename"> filename to dump to</param>
         /// <param name="type"> for the lua table initial name</param>
         /// <param name="dictionary"> the dictionary to write</param>
-        public static void WriteDictionaryToFile(User user, string filename, string type, SortedDictionary<string, Dictionary<string, string>> dictionary, bool final = true)
+        public static void WriteDictionaryToFile(string filename, string type, SortedDictionary<string, Dictionary<string, string>> dictionary, bool final = true)
         {
             var lang = LocalizationPlugin.Config.Language;
 

@@ -37,7 +37,7 @@ namespace FZM.Wiki
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryAnimal = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void PlantDetails(User user)
+        public static void PlantDetails()
         {
             // dictionary of plant properties
             Dictionary<string, string> plantDetails = new Dictionary<string, string>()
@@ -274,11 +274,11 @@ namespace FZM.Wiki
                     }
                 }
             }
-            WriteDictionaryToFile(user, "Wiki_Module_PlantData.txt", "plants", EveryPlant);
+            WriteDictionaryToFile("Wiki_Module_PlantData.txt", "plants", EveryPlant);
 
         }
 
-        public static void TreeDetails(User user)
+        public static void TreeDetails()
         {
             // dictionary of plant properties
             Dictionary<string, string> treeDetails = new Dictionary<string, string>()
@@ -534,10 +534,10 @@ namespace FZM.Wiki
                     }
                 }
             }
-            WriteDictionaryToFile(user, "Wiki_Module_TreeData.txt", "trees", EveryTree);
+            WriteDictionaryToFile("Wiki_Module_TreeData.txt", "trees", EveryTree);
         }
 
-        public static void AnimalDetails(User user)
+        public static void AnimalDetails()
         {
             // dictionary of animal properties
             Dictionary<string, string> animalDetails = new Dictionary<string, string>()
@@ -699,7 +699,7 @@ namespace FZM.Wiki
                     }
                 }
             }
-            WriteDictionaryToFile(user, "Wiki_Module_AnimalData.txt", "animals", EveryAnimal);
+            WriteDictionaryToFile("Wiki_Module_AnimalData.txt", "animals", EveryAnimal);
         }
     }
 }

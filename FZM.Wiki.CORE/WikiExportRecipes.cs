@@ -37,7 +37,7 @@ namespace FZM.Wiki
         private static SortedDictionary<string, SortedDictionary<string, string>> groupRecipeDic = new SortedDictionary<string, SortedDictionary<string, string>>();
         // Extracting Recipes is complex and requires collection and sorting.
 
-        public static void RecipesDetails(User user)
+        public static void RecipesDetails()
         {
             // dictionary of recipe properties
             Dictionary<string, string> recipeDetails = new Dictionary<string, string>()

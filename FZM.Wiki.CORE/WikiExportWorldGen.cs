@@ -21,7 +21,7 @@ namespace FZM.Wiki
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> WorldGen = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void WorldGenDetails(User user)
+        public static void WorldGenDetails()
         {
             // dictionary of commands
             Dictionary<string, string> biomeDetails = new Dictionary<string, string>()
@@ -40,7 +40,7 @@ namespace FZM.Wiki
 
 
             // writes to WikiItems.txt to the Eco Server directory.
-            WriteDictionaryToFile(user, "Wiki_Module_WorldGenData.txt", "worldgen", WorldGen);
+            WriteDictionaryToFile("Wiki_Module_WorldGenData.txt", "worldgen", WorldGen);
         }
     }
 }

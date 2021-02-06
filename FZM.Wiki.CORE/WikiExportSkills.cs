@@ -27,7 +27,7 @@ namespace FZM.Wiki
         // dictionary of skills and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EverySkill = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void SkillsDetails(User user)
+        public static void SkillsDetails()
         {
             // dictionary of item properties
             Dictionary<string, string> skillDetails = new Dictionary<string, string>()
@@ -262,7 +262,7 @@ namespace FZM.Wiki
                     EverySkill[friendlyName]["recipes"] = WriteDictionaryAsSubObject(levelUnlocks,1);
                 }
             }
-            WriteDictionaryToFile(user, "Wiki_Module_Skills.txt", "skills", EverySkill);
+            WriteDictionaryToFile("Wiki_Module_Skills.txt", "skills", EverySkill);
         }
     }
 }

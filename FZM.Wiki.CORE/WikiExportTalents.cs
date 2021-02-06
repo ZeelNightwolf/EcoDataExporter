@@ -24,7 +24,7 @@ namespace FZM.Wiki
         // dictionary of skills and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryTalent = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void TalentDetails(User user)
+        public static void TalentDetails()
         {
             Dictionary<string, string> TalentDetails = new Dictionary<string, string>()
             {
@@ -65,7 +65,7 @@ namespace FZM.Wiki
                 }
             }
 
-            WriteDictionaryToFile(user, "Wiki_Module_TalentData.txt", "talents", EveryTalent);
+            WriteDictionaryToFile("Wiki_Module_TalentData.txt", "talents", EveryTalent);
         }
     }
 }

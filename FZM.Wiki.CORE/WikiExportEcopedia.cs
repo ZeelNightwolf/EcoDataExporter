@@ -14,7 +14,7 @@ namespace FZM.Wiki
         // dictionary of pages and their entries
         private static SortedDictionary<string, Dictionary<string, string>> EveryPage = new SortedDictionary<string, Dictionary<string, string>>();
 
-        public static void EcopediaDetails(User user)
+        public static void EcopediaDetails()
         {
             // dictionary of page details
             Dictionary<string, string> entry = new Dictionary<string, string>()
@@ -110,7 +110,7 @@ namespace FZM.Wiki
             }
 
             // writes to WikiItems.txt to the Eco Server directory.
-            WriteDictionaryToFile(user, "Wiki_Module_Ecopedia.txt", "ecopedia", EveryPage);
+            WriteDictionaryToFile("Wiki_Module_Ecopedia.txt", "ecopedia", EveryPage);
         }
     }
 }

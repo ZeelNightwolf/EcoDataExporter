@@ -96,13 +96,18 @@ namespace FZM.Wiki
                 PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
             }
 
+            string displayName;
             foreach (Item allItem in Item.AllItems)
             {
+
+                if (allItem.DisplayName == "" && allItem is ToolItem)
+                    displayName = SplitName(RemoveItemTag(allItem.Type.Name));
+                else
+                    displayName = allItem.DisplayName;
                 try
                 {
-                    if (!EveryItem.ContainsKey(allItem.DisplayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents") && allItem.Group != "Actionbar Items")
+                    if (!EveryItem.ContainsKey(displayName) && (allItem.DisplayName != "Chat Log") && (allItem.DisplayName != "Vehicle Tool Toggle") && (allItem.Group != "Skills") && (allItem.Group != "Talents") && allItem.Group != "Actionbar Items")
                     {
-                        string displayName = allItem.DisplayName;
                         EveryItem.Add(displayName, new Dictionary<string, string>(itemDetails));
                         EveryItem[displayName]["untranslated"] = $"'{allItem.DisplayName.NotTranslated}'";
                         EveryItem[displayName]["category"] = "'" + Localizer.DoStr(allItem.Category) + "'";
@@ -511,6 +516,8 @@ namespace FZM.Wiki
 
         private static void AddTagItemRelation(string tag, string item)
         {
+            tag = SplitName(tag);
+            
             if (!tagItemDic.ContainsKey(tag))
                 tagItemDic.Add(tag, new Dictionary<string, string>());
             if (tagItemDic[tag].ContainsKey(item))

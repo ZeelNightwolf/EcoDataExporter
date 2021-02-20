@@ -1,4 +1,5 @@
-﻿using Eco.Gameplay.Components;
+﻿using Eco.Core.IoC;
+using Eco.Gameplay.Components;
 using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Objects;
@@ -75,22 +76,24 @@ namespace FZM.Wiki
 
             foreach (RecipeFamily family in famalies)
             {
-                string familyName = family.RecipeName;
-                if (!EveryRecipe.ContainsKey(family.RecipeName))
+                string familyName = Localizer.DoStr(family.RecipeName);
+                string familyNameUntrans = family.RecipeName;
+                if (!EveryRecipe.ContainsKey(familyName))
                 {
                     EveryRecipe.Add(familyName, new Dictionary<string, string>(recipeDetails));
-                    string table;
-                    EveryRecipe[familyName]["untranslated"] = $"'{family.DisplayName.NotTranslated}'";
+                    
+                    EveryRecipe[familyName]["untranslated"] = $"'{familyNameUntrans}'";
+
                     // Crafting Stations.
                     StringBuilder tables = new StringBuilder();
                     tables.Append("{");             
                     foreach (Type type in CraftingComponent.TablesForRecipe(family.GetType()))
                     {
-                        string str = WorldObject.UILink(type, false);
-                        int startIndex1 = str.IndexOf("</");
-                        int startIndex2 = str.LastIndexOf(">", startIndex1) + 1;
-                        table = str.Substring(startIndex2, startIndex1 - startIndex2);
-                        tables.Append("'" + table + "'");
+                        WorldObjectItem creatingItem = WorldObjectItem.GetCreatingItemTemplateFromType(type);
+
+                        string table = creatingItem.DisplayName;
+                        string untransTable= creatingItem.DisplayName.NotTranslated;                      
+                        tables.Append($"{{'{table}', '{untransTable}'}}");
                         AddTableRecipeRelation(table, familyName);
 
                         if (type != CraftingComponent.TablesForRecipe(family.GetType()).Last())
@@ -104,7 +107,7 @@ namespace FZM.Wiki
                     skillNeeds.Append("{");
                     foreach (RequiresSkillAttribute req in family.RequiredSkills)
                     {
-                        skillNeeds.Append("{'" + req.SkillItem.DisplayName + "','" + req.Level.ToString() + "'}");
+                        skillNeeds.Append("{'" + req.SkillItem.DisplayName + "','" + req.Level.ToString() + "','" + req.SkillItem.DisplayName.NotTranslated + "'}");
                         if (req != family.RequiredSkills.Last())
                             skillNeeds.Append(", ");
                     }
@@ -131,8 +134,8 @@ namespace FZM.Wiki
                     EveryRecipe[familyName]["baseXPGain"] = "'" + family.ExperienceOnCraft.ToString() + "'";
 
                     // Default Recipe
-                    EveryRecipe[familyName]["defaultVariant"] = "'" + family.DefaultRecipe.DisplayName + "'";
-                    EveryRecipe[familyName]["defaultVariantUntranslated"] = "'" + family.DefaultRecipe.DisplayName.NotTranslated + "'";
+                    EveryRecipe[familyName]["defaultVariant"] = "'" + Localizer.DoStr(family.DefaultRecipe.Name) + "'";
+                    EveryRecipe[familyName]["defaultVariantUntranslated"] = "'" + family.DefaultRecipe.Name + "'";
 
                     EveryRecipe[familyName]["numberOfVariants"] = "'" + family.Recipes.Count + "'";
 

@@ -240,6 +240,7 @@ namespace FZM.Wiki
             using (StreamWriter streamWriter = new StreamWriter(path, false))
             {
                 streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);
+                streamWriter.WriteLine("-- Export Language: " + lang);
                 streamWriter.WriteLine();
                 streamWriter.WriteLine("return {\n    " + type + " = {");
                 foreach (string key in dictionary.Keys)

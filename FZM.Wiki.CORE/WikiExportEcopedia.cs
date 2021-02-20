@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using System;
 using System.Text.RegularExpressions;
+using Eco.Shared.Localization;
 
 namespace FZM.Wiki
 {
@@ -60,7 +61,7 @@ namespace FZM.Wiki
                             sb = new StringBuilder();
                             foreach (var sp in p.SubPages)
                             {
-                                sb.Append($"'{sp.Key}'");
+                                sb.Append($"'{Localizer.DoStr(sp.Key)}'");
 
                                 if (sp.Key != p.SubPages.Last().Key)
                                     sb.Append(", ");
@@ -72,7 +73,11 @@ namespace FZM.Wiki
                         EveryPage[pageName]["displayNameUntranslated"] = $"'{p.DisplayName.NotTranslated}'";
 
                         if (p.Summary != "")
-                            EveryPage[pageName]["summary"] = $"'{p.Summary}'";                      
+                        {
+                            var sum = p.Summary.Trim().TrimEnd('\r', '\n').Trim();
+                            EveryPage[pageName]["summary"] = $"'{sum}'";
+                        }
+                                                
 
                         // There appears to be no need for the generated data as it's world specific info
                         /*
@@ -98,7 +103,7 @@ namespace FZM.Wiki
                             sb = new StringBuilder();
                             foreach (var (Type, Display) in p.AssociatedTypes)
                             {
-                                sb.Append($"'{Type.Name}'");
+                                sb.Append($"'{Localizer.DoStr(Type.Name)}'");
 
                                 if (Type.Name != p.AssociatedTypes.Last().Type.Name)
                                     sb.Append(", ");

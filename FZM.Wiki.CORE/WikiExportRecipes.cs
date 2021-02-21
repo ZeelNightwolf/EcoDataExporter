@@ -134,8 +134,8 @@ namespace FZM.Wiki
                     EveryRecipe[familyName]["baseXPGain"] = "'" + family.ExperienceOnCraft.ToString() + "'";
 
                     // Default Recipe
-                    EveryRecipe[familyName]["defaultVariant"] = "'" + Localizer.DoStr(family.DefaultRecipe.Name) + "'";
-                    EveryRecipe[familyName]["defaultVariantUntranslated"] = "'" + family.DefaultRecipe.Name + "'";
+                    EveryRecipe[familyName]["defaultVariant"] = "'" + Localizer.DoStr(SplitName(family.DefaultRecipe.Name)) + "'";
+                    EveryRecipe[familyName]["defaultVariantUntranslated"] = "'" + SplitName(family.DefaultRecipe.Name) + "'";
 
                     EveryRecipe[familyName]["numberOfVariants"] = "'" + family.Recipes.Count + "'";
 

@@ -163,7 +163,7 @@ namespace FZM.Wiki
                                 else
                                 {
                                     ingredients.Append("'TAG', ");
-                                    element = e.Tag.DisplayName;
+                                    element = Localizer.DoStr(SplitName(e.Tag.DisplayName));
                                 }
 
                                 bool isStatic = false;

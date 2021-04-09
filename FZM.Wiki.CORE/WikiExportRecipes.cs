@@ -123,6 +123,8 @@ namespace FZM.Wiki
                         if (module != family.RequiredModules.Last())
                             moduleNeeds.Append(", ");
                     }
+                    moduleNeeds.Append("}");
+                    EveryRecipe[familyName]["moduleNeeds"] = moduleNeeds.ToString();
 
                     // Base craft time.
                     EveryRecipe[familyName]["baseCraftTime"] = (family.CraftMinutes != null) ? "'" + family.CraftMinutes.GetBaseValue.ToString() + "'" : "'0'" ;

@@ -46,7 +46,7 @@ namespace FZM.Wiki
                 if (com.Key == "dumpdetails")
                     continue;
 
-                var command = $"/{Localizer.DoStr(com.ParentKey)} {Localizer.DoStr(com.Name)}";
+                var command = $"/{Localizer.DoStr(com.ParentKey)}{(Localizer.DoStr(com.ParentKey) == "" ? Localizer.DoStr(com.Name) : " " + Localizer.DoStr(com.Name))}";
                 if (!EveryCommand.ContainsKey(command))
                 {
                     EveryCommand.Add(command, new Dictionary<string, string>(commandDetails));

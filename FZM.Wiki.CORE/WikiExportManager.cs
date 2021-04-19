@@ -143,7 +143,9 @@ namespace FZM.Wiki
                     sb.Append(" ");
             }
 
-            return sb.ToString();
+            Regex regex = new Regex("[ ]{2,}");
+
+            return regex.Replace(sb.ToString(), " ");
         }
 
         public static string JSONStringSafe(string s)

@@ -1,9 +1,7 @@
-﻿using Eco.Gameplay.Players;
-using Eco.Gameplay.Systems.Chat;
+﻿using Eco.Gameplay.Systems.Chat;
 using Eco.Shared;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FZM.Wiki
 {
@@ -25,7 +23,7 @@ namespace FZM.Wiki
             Details["eco"] = EcoDetails;
 
             Details["eco"]["ecoVersion"] = $"'{EcoVersion.Version}'";
-            Details["eco"]["fullInfo"] = $"'{EcoVersion.FullInfo}'";
+            Details["eco"]["fullInfo"] = $"'{EcoVersion.FullInfo.Replace("\r\n", " ")}'";
             Details["eco"]["dataExportDate"] = $"'{DateTime.Now.Date}'";
 
             WriteDictionaryToFile("Wiki_Module_EcoVersion.txt", "eco", Details);

@@ -1,5 +1,4 @@
-﻿using Eco.Gameplay.Players;
-using Eco.Gameplay.Systems.Chat;
+﻿using Eco.Gameplay.Systems.Chat;
 using System.Collections.Generic;
 using Eco.Gameplay.EcopediaRoot;
 using System.Text;
@@ -31,10 +30,9 @@ namespace FZM.Wiki
             foreach (var cat in Ecopedia.Obj.Categories.Values)
             {
                 foreach (var page in cat.Pages)
-                {
+                {                 
                     EcopediaPage p = page.Value;
                     string pageName = p.DisplayName;
-
                     if (!EveryPage.ContainsKey(p.DisplayName))
                     {
                         EveryPage.Add(pageName, new Dictionary<string, string>(entry));
@@ -69,15 +67,14 @@ namespace FZM.Wiki
                             EveryPage[pageName]["subpages"] = $"{{{sb}}}";
                         }
 
-                        EveryPage[pageName]["displayName"] = $"'{p.DisplayName}'";
-                        EveryPage[pageName]["displayNameUntranslated"] = $"'{p.DisplayName.NotTranslated}'";
+                        EveryPage[pageName]["displayName"] = p.DisplayName != null ? $"'{p.DisplayName}'" : $"nil";
+                        EveryPage[pageName]["displayNameUntranslated"] = p.DisplayName.NotTranslated != null ? $"'{p.DisplayName.NotTranslated}'" : $"nil";
 
-                        if (p.Summary != "")
+                        if (p.Summary != null && p.Summary != "")
                         {
                             var sum = p.Summary.Trim().TrimEnd('\r', '\n').Trim();
                             EveryPage[pageName]["summary"] = $"'{sum}'";
                         }
-                                                
 
                         // There appears to be no need for the generated data as it's world specific info
                         /*

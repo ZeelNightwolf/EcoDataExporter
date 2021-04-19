@@ -110,6 +110,8 @@ namespace FZM.Wiki
             return $"{dump},  no dump generated!";
         }
 
+        public static void Debug(string s) { Log.WriteLine(Localizer.DoStr($"{s}")); }
+        
         /// <summary>
         /// Discover all items and skills in the game to enable query.
         /// </summary>
@@ -130,7 +132,7 @@ namespace FZM.Wiki
         /// <returns></returns>
         public static string SplitName(string name)
         {
-            string[] NameSplit = Regex.Split(name, @"(?<!(^|[A-Z0-9]))(?=[A-Z0-9])|(?<!(^|[^A-Z]))(?=[0-9])|(?<!(^|[^0-9]))(?=[A-Za-z])|(?<!^)(?=[A-Z][a-z])");
+            string[] NameSplit = Regex.Split(name, @"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
             int count = 0;
             var sb = new StringBuilder();
             foreach (string str in NameSplit)

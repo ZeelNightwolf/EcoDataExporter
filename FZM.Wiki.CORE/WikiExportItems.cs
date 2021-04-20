@@ -86,6 +86,8 @@ namespace FZM.Wiki
                 { "roomContainReq", "nil" },
                 { "inventorySlots", "nil" },
                 { "inventoryMaxWeight", "nil" },
+                { "inventoryRestrictions", "nil" },
+                { "fertilizerNutrients", "nil" },
                 { "type", "nil" },
                 { "typeID", "nil" }
             };
@@ -156,6 +158,24 @@ namespace FZM.Wiki
                                 EveryItem[displayName]["density"] = "'" + ((foodItem.Nutrition.Values.Sum() / foodItem.Calories) * 100).ToString("F1") + "'";
                         }
 
+                        #endregion
+
+                        #region Fertilizers
+                        if (IsInstanceOfGenericType(typeof(FertilizerItem<>), allItem))
+                        {
+                            var nutrients = (List<NutrientElement>)GetFieldValue(allItem, "nutrients");
+
+                            StringBuilder sb = new StringBuilder();
+                            foreach (var n in nutrients)
+                            {                               
+                                var layer = (string)GetFieldValue(n, "layerName");
+                                var value = (float)GetFieldValue(n, "value");
+                                sb.Append($"{{'{Localizer.DoStr(layer)}','{value}'}}");
+                                if (n != nutrients.Last()) sb.Append($", ");                               
+                            }
+
+                            EveryItem[displayName]["fertilizerNutrients"] = $"{{{sb}}}";                           
+                        }
                         #endregion
 
                         #region Housing Values
@@ -363,6 +383,7 @@ namespace FZM.Wiki
                                 var psc = obj.GetComponent<PublicStorageComponent>();
                                 EveryItem[displayName]["inventorySlots"] = "'" + psc.Inventory.Stacks.Count().ToString() + "'";
 
+                                StringBuilder restrictions = new StringBuilder();
                                 foreach (InventoryRestriction res in psc.Inventory.Restrictions)
                                 {
                                     if (res is WeightRestriction)
@@ -371,7 +392,13 @@ namespace FZM.Wiki
                                         WeightComponent wc = (WeightComponent)GetFieldValue(wres, "weightComponent");
                                         EveryItem[displayName]["inventoryMaxWeight"] = "'" + wc.MaxWeight.ToString() + "'";
                                     }
+
+                                    restrictions.Append($"{{'{Localizer.DoStr(SplitName(res.GetType().Name))}', '{JSONStringSafe(Localizer.DoStr(res.Message))}'}}");
+                                    if (res != psc.Inventory.Restrictions.Last())
+                                        restrictions.Append(", ");
                                 }
+
+                                EveryItem[displayName]["inventoryRestrictions"] = $"{{{restrictions}}}";
                             }
 
                             #endregion

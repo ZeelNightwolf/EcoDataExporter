@@ -200,6 +200,21 @@ namespace FZM.Wiki
 
             return _value;
         }
+
+        public static bool IsInstanceOfGenericType(Type genericType, object instance)
+        {
+            Type type = instance.GetType();
+            while (type != null)
+            {
+                if (type.IsGenericType &&
+                    type.GetGenericTypeDefinition() == genericType)
+                {
+                    return true;
+                }
+                type = type.BaseType;
+            }
+            return false;
+        }
         #endregion
 
         #region Writers

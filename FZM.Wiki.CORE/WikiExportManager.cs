@@ -132,7 +132,7 @@ namespace FZM.Wiki
         /// <returns></returns>
         public static string SplitName(string name)
         {
-            string[] NameSplit = Regex.Split(name, @"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+            string[] NameSplit = Regex.Split(name, @"(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z]|(?<!^|[0-9])(?=[0-9]))");
             int count = 0;
             var sb = new StringBuilder();
             foreach (string str in NameSplit)

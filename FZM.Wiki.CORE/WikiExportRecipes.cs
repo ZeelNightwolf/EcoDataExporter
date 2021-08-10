@@ -1,15 +1,12 @@
-﻿using Eco.Core.IoC;
-using Eco.Gameplay.Components;
+﻿using Eco.Gameplay.Components;
 using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
-using Eco.Gameplay.Objects;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared;
 using Eco.Shared.Localization;
-using Eco.Shared.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;

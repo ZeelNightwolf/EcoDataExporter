@@ -126,6 +126,7 @@ namespace FZM.Wiki
                         EverySkill[friendlyName]["specialtySkillScroll"] = "'[[" + Item.Get(skillBook.SkillScrollType).DisplayName + "]]'";
                     }
 
+                    /* OBSOLETE??
                     // Check if the skill has items given and create a string to list them out.
                     if (skill.ItemTypesGiven != null && skill.ItemTypesGiven.Count() != 0)
                     {
@@ -144,6 +145,7 @@ namespace FZM.Wiki
 
                         EverySkill[friendlyName]["itemsGiven"] = "'" + sb.ToString() + "'";
                     }
+                    */
 
                     // TALENTS
 

@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Eco.ActorsFramework">
+      <HintPath>..\..\..\EcoDump\Eco.ActorsFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Eco.Core">
       <HintPath>..\..\..\EcoDump\Eco.Core.dll</HintPath>
     </Reference>
@@ -20,9 +27,6 @@
     <Reference Include="Eco.Networking.ENet">
       <HintPath>..\..\..\EcoDump\Eco.Networking.ENet.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.Networking.Lidgren">
-      <HintPath>..\..\..\EcoDump\Eco.Networking.Lidgren.dll</HintPath>
-    </Reference>
     <Reference Include="Eco.Plugins">
       <HintPath>..\..\..\EcoDump\Eco.Plugins.dll</HintPath>
     </Reference>
@@ -35,8 +39,8 @@
     <Reference Include="Eco.Stats">
       <HintPath>..\..\..\EcoDump\Eco.Stats.dll</HintPath>
     </Reference>
-    <Reference Include="Eco.Tests">
-      <HintPath>..\..\..\EcoDump\Eco.Tests.dll</HintPath>
+    <Reference Include="Eco.TechTree">
+      <HintPath>..\..\..\EcoDump\Eco.TechTree.dll</HintPath>
     </Reference>
     <Reference Include="Eco.WebServer">
       <HintPath>..\..\..\EcoDump\Eco.WebServer.dll</HintPath>

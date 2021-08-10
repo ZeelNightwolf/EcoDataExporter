@@ -1,5 +1,4 @@
-﻿using Eco.Gameplay.Players;
-using Eco.Gameplay.Systems.Chat;
+﻿using Eco.Gameplay.Systems.Chat;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,14 +6,13 @@ using System.Text.RegularExpressions;
 using Eco.Simulation.Types;
 using Eco.Simulation;
 using static Eco.Simulation.Types.PlantSpecies;
-using Eco.World;
-using Eco.Gameplay.Plants;
 using Eco.World.Blocks;
 using Eco.Shared.Utils;
 using System.Linq;
 using Eco.Gameplay.Items;
 using Eco.Shared.Localization;
 using Eco.Gameplay.Systems;
+using Eco.Gameplay.Blocks;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.

@@ -1,6 +1,5 @@
 ﻿using Eco.Gameplay;
 using Eco.Gameplay.Components;
-using Eco.Gameplay.Housing;
 using Eco.Gameplay.Items;
 using Eco.Gameplay.Objects;
 using Eco.Gameplay.Players;
@@ -12,7 +11,6 @@ using Eco.Gameplay.Systems;
 using Eco.Shared.Localization;
 using Eco.Shared.Utils;
 using Eco.Mods.TechTree;
-using Eco.Core.IoC;
 using Eco.Shared.Math;
 using Eco.World;
 using System;
@@ -23,6 +21,8 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.IO;
 using Eco.World.Blocks;
+using Eco.Gameplay.Housing.PropertyValues;
+using Eco.Shared.IoC;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -92,7 +92,7 @@ namespace FZM.Wiki
                 { "typeID", "nil" }
             };
 
-            if (user.RealUser)
+            if (user.IsInternal)
             {
                 PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12));
                 PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
@@ -152,10 +152,10 @@ namespace FZM.Wiki
                             EveryItem[displayName]["protein"] = "'" + foodItem.Nutrition.Protein.ToString("F1") + "'";
                             EveryItem[displayName]["fat"] = "'" + foodItem.Nutrition.Fat.ToString("F1") + "'";
                             EveryItem[displayName]["vitamins"] = "'" + foodItem.Nutrition.Vitamins.ToString("F1") + "'";
-                            if (float.IsNaN(foodItem.Nutrition.Values.Sum() / foodItem.Calories))
+                            if (float.IsNaN(foodItem.Nutrition.Values().Sum() / foodItem.Calories))
                                 EveryItem[displayName]["density"] = "'0.0'";
                             else
-                                EveryItem[displayName]["density"] = "'" + ((foodItem.Nutrition.Values.Sum() / foodItem.Calories) * 100).ToString("F1") + "'";
+                                EveryItem[displayName]["density"] = "'" + ((foodItem.Nutrition.Values().Sum() / foodItem.Calories) * 100).ToString("F1") + "'";
                         }
 
                         #endregion
@@ -189,12 +189,12 @@ namespace FZM.Wiki
                                 //if (prop.GetValue(allItem) != null) { Console.WriteLine("ItemProperties - " + prop.Name + ": " + prop.GetValue(allItem).ToString()); }
                                 if (prop.Name == "HousingVal")
                                 {
-                                    HousingValue v = prop.GetValue(allItem) as HousingValue;
-                                    EveryItem[displayName]["skillValue"] = "'" + v.Val.ToString() + "'";
+                                    HomeFurnishingValue v = prop.GetValue(allItem) as HomeFurnishingValue;
+                                    EveryItem[displayName]["skillValue"] = "'" + v.SkillValue.ToString() + "'";
                                     EveryItem[displayName]["roomCategory"] = "'" + Localizer.DoStr(v.Category.ToString()) + "'";
                                     if (v.Category.ToString() != "Industrial")
                                     {
-                                        EveryItem[displayName]["furnitureType"] = "'" + Localizer.DoStr(v.TypeForRoomLimit) + "'";
+                                        EveryItem[displayName]["furnitureType"] = "'" + v.TypeForRoomLimit + "'";
                                         EveryItem[displayName]["repeatsDepreciation"] = "'" + v.DiminishingReturnPercent.ToString() + "'";
                                     }
                                 }
@@ -226,7 +226,7 @@ namespace FZM.Wiki
                         {
                             WorldObjectItem i = allItem as WorldObjectItem;
                             WorldObject obj;
-                            if (user.RealUser)
+                            if (user.IsInternal)
                                 obj = WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false);
                             else
                             {
@@ -488,7 +488,7 @@ namespace FZM.Wiki
         {
             Vector3i placePos;
 
-            if (!user.RealUser)
+            if (!user.IsInternal)
                 placePos = spawnPoint;
             else
                 placePos = (Vector3i)user.Player.Position;

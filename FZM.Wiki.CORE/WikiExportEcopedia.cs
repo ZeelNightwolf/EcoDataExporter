@@ -67,7 +67,7 @@ namespace FZM.Wiki
                             EveryPage[pageName]["subpages"] = $"{{{sb}}}";
                         }
 
-                        EveryPage[pageName]["displayName"] = p.DisplayName != null ? $"'{p.DisplayName}'" : $"nil";
+                        EveryPage[pageName]["displayName"] =  $"'{p.DisplayName}'";
                         EveryPage[pageName]["displayNameUntranslated"] = p.DisplayName.NotTranslated != null ? $"'{p.DisplayName.NotTranslated}'" : $"nil";
 
                         if (p.Summary != null && p.Summary != "")

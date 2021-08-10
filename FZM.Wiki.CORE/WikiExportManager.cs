@@ -27,7 +27,7 @@ namespace FZM.Wiki
 {
     public partial class WikiDetails : IChatCommandHandler
     {
-        public static NLogWrapper logger = NLogWriter.GetConcreteLogger("WikiExporter");
+        //public static NLogWrapper logger => NLogWriter.GetConcreteLogger("WikiExporter");
 
         private static User dummy;
 
@@ -58,8 +58,7 @@ namespace FZM.Wiki
             if (user == null)
             {
                 UserManager.RequireAuthentication = false;
-                dummy = UserManager.GetOrCreateUser("1234", "1234", "Dummy");
-                dummy.RealUser = false;
+                dummy = UserManager.GetOrCreateUser("1234", "1234", "Dummy", false);
                 UserManager.RequireAuthentication = true;
                 choice = dummy;
             }

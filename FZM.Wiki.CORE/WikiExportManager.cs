@@ -71,17 +71,17 @@ namespace FZM.Wiki
 
             alert.AppendLine("Errors: ");
 
-            try { DiscoverAll(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
-            try { EcoDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Eco Details")); }
+            try { DiscoverAll(); }       catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
+            try { EcoDetails(); }        catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Eco Details")); }
             try { ItemDetails(choice); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
-            try { RecipesDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
-            try { SkillsDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
-            try { TalentDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Talent Details")); }
-            try { PlantDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Plant Details")); }
-            try { TreeDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Tree Details")); }
-            try { AnimalDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Animal Details")); }
-            try { CommandDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
-            try { EcopediaDetails(); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Ecopedia Details")); }
+            try { RecipesDetails(); }    catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
+            try { SkillsDetails(); }     catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
+            try { TalentDetails(); }     catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Talent Details")); }
+            try { PlantDetails(); }      catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Plant Details")); }
+            try { TreeDetails(); }       catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Tree Details")); }
+            try { AnimalDetails(); }     catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Animal Details")); }
+            try { CommandDetails(); }    catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
+            try { EcopediaDetails(); }   catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Ecopedia Details")); }
 
             ProcessStartInfo info = new ProcessStartInfo
             {
@@ -193,16 +193,12 @@ namespace FZM.Wiki
         /// <returns></returns>
         public static object GetFieldValue(object obj, string field)
         {
-            var _value = obj.GetType().GetField(field, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
-
-            return _value;
+            return obj.GetType().GetField(field, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
         }
 
         public static object GetPropertyValue(object obj, string property)
         {
-            var _value = obj.GetType().GetProperty(property, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
-
-            return _value;
+            return obj.GetType().GetProperty(property, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).GetValue(obj);
         }
 
         public static bool IsInstanceOfGenericType(Type genericType, object instance)
@@ -243,6 +239,11 @@ namespace FZM.Wiki
             return sb.ToString();
         }
 
+        private static void AddToErrorLog(ref Dictionary<string, (string, Exception)> log, string key, string prop, Exception ex)
+        {
+            log.Add(key, (prop, ex));
+        }
+
         /// <summary>
         /// Method for writing the created dictionaries to file
         /// </summary>
@@ -276,6 +277,35 @@ namespace FZM.Wiki
                 streamWriter.Write("    },");
                 if (final)
                     streamWriter.Write("\n}");
+                streamWriter.Close();
+            }
+        }
+
+        /// <summary>
+        /// Method for writing the created error dictionaries to file
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="filename"> filename to dump to</param>
+        /// <param name="type"> for the export type name</param>
+        /// <param name="errors"> the dictionary to write</param>
+        public static void WriteErrorLogToFile(string filename, string type, Dictionary<string,(string,Exception)> errors)
+        {           
+            // writes to the Eco Server directory.
+            if (!Directory.Exists(SaveLocation + $@"Errors\"))
+                Directory.CreateDirectory(SaveLocation + $@"Errors\");
+
+            string path = SaveLocation + $@"Errors\" + filename;
+
+            using (StreamWriter streamWriter = new StreamWriter(path, false))
+            {
+                streamWriter.WriteLine("-- Eco Version : " + EcoVersion.Version);
+                streamWriter.WriteLine("-- Export Date: " + DateTime.Today);
+                streamWriter.WriteLine();
+                streamWriter.WriteLine($"Errors for {type}");
+                foreach (KeyValuePair<string,(string,Exception)> kvp in errors)
+                {
+                    streamWriter.WriteLine($"{kvp.Key} failed at property {kvp.Value.Item1}. Error: {kvp.Value.Item2.Message}");
+                }
                 streamWriter.Close();
             }
         }

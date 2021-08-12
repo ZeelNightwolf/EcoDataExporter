@@ -115,21 +115,21 @@ namespace FZM.Wiki
                     {
                         var itemD = new Dictionary<string, string>(itemDetails);
 
-                        prop = "untranslated"; itemD[prop] = $"'{item.DisplayName.NotTranslated}'";
-                        prop = "category"; itemD[prop] = $"'{Localizer.DoStr(item.Category)}'";
-                        prop = "group"; itemD[prop] = $"'{Localizer.DoStr(item.Group)}'";
-                        prop = "type"; itemD[prop] = $"'{item.Type.ToString().Substring(item.Type.ToString().LastIndexOf('.') + 1)}'";
-                        prop = "typeID"; itemD[prop] = $"'{item.TypeID}'";
+                        prop = "untranslated";                 itemD[prop] = $"'{item.DisplayName.NotTranslated}'";
+                        prop = "category";                     itemD[prop] = $"'{Localizer.DoStr(item.Category)}'";
+                        prop = "group";                        itemD[prop] = $"'{Localizer.DoStr(item.Group)}'";
+                        prop = "type";                         itemD[prop] = $"'{item.Type.ToString().Substring(item.Type.ToString().LastIndexOf('.') + 1)}'";
+                        prop = "typeID";                       itemD[prop] = $"'{item.TypeID}'";
 
                         Regex regex = new Regex("[\t\n\v\f\r]");
-                        prop = "description"; itemD[prop] = $"'{regex.Replace(CleanTags(item.DisplayDescription), " ").Replace("'", "\\'")}'";
-                        prop = "tagGroups"; itemD[prop] = GetItemTags(item);
-                        prop = "maxStack"; itemD[prop] = $"'{item.MaxStackSize}'";
-                        prop = "carried"; itemD[prop] = item.IsCarried ? $"'{Localizer.DoStr("Hands")}'" : $"'{Localizer.DoStr("Backpack")}'";
-                        prop = "currency"; itemD[prop] = item.CanBeCurrency ? $"'{Localizer.DoStr("Yes")}'" : "nil";
-                        prop = "weight"; if (item.HasWeight) itemD[prop] = $"'{(decimal)item.Weight / 1000}'";
-                        prop = "fuel"; if (item.IsFuel) itemD[prop] = $"'{item.Fuel}'";
-                        prop = "yield"; if (item.HasYield) itemD[prop] = $"'[[{item.Yield.Skill.DisplayName}]]'";
+                        prop = "description";                  itemD[prop] = $"'{regex.Replace(CleanTags(item.DisplayDescription), " ").Replace("'", "\\'")}'";
+                        prop = "tagGroups";                    itemD[prop] = GetItemTags(item);
+                        prop = "maxStack";                     itemD[prop] = $"'{item.MaxStackSize}'";
+                        prop = "carried";                      itemD[prop] = item.IsCarried ? $"'{Localizer.DoStr("Hands")}'" : $"'{Localizer.DoStr("Backpack")}'";
+                        prop = "currency";                     itemD[prop] = item.CanBeCurrency ? $"'{Localizer.DoStr("Yes")}'" : "nil";
+                        prop = "weight"; if (item.HasWeight)   itemD[prop] = $"'{(decimal)item.Weight / 1000}'";
+                        prop = "fuel";   if (item.IsFuel)      itemD[prop] = $"'{item.Fuel}'";
+                        prop = "yield";  if (item.HasYield)    itemD[prop] = $"'[[{item.Yield.Skill.DisplayName}]]'";
 
                         // if the item is a block then add it's tier
                         prop = "materialTier"; if (item.Group == "Block Items") itemD[prop] = $"'{(int)GetPropertyValue(item, "Tier")}'";
@@ -139,12 +139,11 @@ namespace FZM.Wiki
                         if (item is FoodItem foodItem)
                         {
                             prop = "calories"; itemD[prop] = $"'{foodItem.Calories:F1}'";
-                            prop = "carbs"; itemD[prop] = $"'{foodItem.Nutrition.Carbs:F1}'";
-                            prop = "protein"; itemD[prop] = $"'{foodItem.Nutrition.Protein:F1}'";
-                            prop = "fat"; itemD[prop] = $"'{foodItem.Nutrition.Fat:F1}'";
+                            prop = "carbs";    itemD[prop] = $"'{foodItem.Nutrition.Carbs:F1}'";
+                            prop = "protein";  itemD[prop] = $"'{foodItem.Nutrition.Protein:F1}'";
+                            prop = "fat";      itemD[prop] = $"'{foodItem.Nutrition.Fat:F1}'";
                             prop = "vitamins"; itemD[prop] = $"'{foodItem.Nutrition.Vitamins:F1}'";
-                            prop = "density";
-                            itemD[prop] = float.IsNaN(foodItem.Nutrition.Values().Sum() / foodItem.Calories)
+                            prop = "density";  itemD[prop] = float.IsNaN(foodItem.Nutrition.Values().Sum() / foodItem.Calories)
                             ? "'0.0'"
                             : $"'{(foodItem.Nutrition.Values().Sum() / foodItem.Calories) * 100:F1}'";
                         }
@@ -188,34 +187,34 @@ namespace FZM.Wiki
                             }
 
                             prop = "mobile"; if (obj is PhysicsWorldObject) itemD[prop] = $"'{Localizer.DoStr("Yes")}'";
-                            prop = "fluidsUded"; itemD[prop] = $"'{GetConsumedFluids(obj)}'";
-                            prop = "fluidsProduced"; itemD[prop] = $"'{GetProducedFluids(obj)}'";
-                            prop = "fuelsUsed"; itemD[prop] = $"'{GetFuelsUsed(obj)}'";
+                            prop = "fluidsUded";                            itemD[prop] = $"'{GetConsumedFluids(obj)}'";
+                            prop = "fluidsProduced";                        itemD[prop] = $"'{GetProducedFluids(obj)}'";
+                            prop = "fuelsUsed";                             itemD[prop] = $"'{GetFuelsUsed(obj)}'";
 
                             if (!(obj is PhysicsWorldObject) || obj.DisplayName == "Wooden Elevator")
-                            { prop = "footprint"; itemD[prop] = $"'{GetFootprint(obj)}'"; }
+                            { prop = "footprint";                           itemD[prop] = $"'{GetFootprint(obj)}'"; }
 
                             if (obj.HasComponent<CraftingComponent>())
-                            { prop = "validTalents"; itemD[prop] = $"{GetTalentString(obj)}"; }
+                            { prop = "validTalents";                        itemD[prop] = $"{GetTalentString(obj)}"; }
 
                             if (obj.HasComponent<PowerGridComponent>())
                             {
                                 var gridComponent = obj.GetComponent<PowerGridComponent>();
-                                prop = "energyProduced"; itemD[prop] = $"'{gridComponent.EnergySupply}'";
-                                prop = "energyUsed"; itemD[prop] = $"'{gridComponent.EnergyDemand}'";
-                                prop = "energyType"; itemD[prop] = $"'{gridComponent.EnergyType.Name}'";
-                                prop = "gridRadius"; itemD[prop] = $"'{gridComponent.Radius}'";
+                                prop = "energyProduced";                    itemD[prop] = $"'{gridComponent.EnergySupply}'";
+                                prop = "energyUsed";                        itemD[prop] = $"'{gridComponent.EnergyDemand}'";
+                                prop = "energyType";                        itemD[prop] = $"'{gridComponent.EnergyType.Name}'";
+                                prop = "gridRadius";                        itemD[prop] = $"'{gridComponent.Radius}'";
                             }
 
                             if (obj.HasComponent<HousingComponent>())
                             {
                                 var v = obj.GetComponent<HousingComponent>().HomeValue;
-                                prop = "roomCategory"; itemD[prop] = $"'{Localizer.DoStr(v.Category.ToString())}'";
+                                prop = "roomCategory";                      itemD[prop] = $"'{Localizer.DoStr(v.Category.ToString())}'";
                                 if (v.Category != HomeFurnishingValue.RoomCategory.Industrial)
                                 {
-                                    prop = "skillValue"; itemD[prop] = $"'{v.SkillValue}'";
-                                    prop = "furnitureType"; itemD[prop] = $"'{v.TypeForRoomLimit}'";
-                                    prop = "repeatsDepreciation"; itemD[prop] = $"'{v.DiminishingReturnPercent}'";
+                                    prop = "skillValue";                    itemD[prop] = $"'{v.SkillValue}'";
+                                    prop = "furnitureType";                 itemD[prop] = $"'{v.TypeForRoomLimit}'";
+                                    prop = "repeatsDepreciation";           itemD[prop] = $"'{v.DiminishingReturnPercent}'";
                                 }
                             }
 

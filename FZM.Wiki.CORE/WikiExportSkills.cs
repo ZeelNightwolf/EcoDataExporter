@@ -1,6 +1,5 @@
 ﻿using Eco.Gameplay.DynamicValues;
 using Eco.Gameplay.Items;
-using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.Chat;
 using Eco.Shared.Utils;
@@ -26,6 +25,7 @@ namespace FZM.Wiki
     {
         // dictionary of skills and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EverySkill = new SortedDictionary<string, Dictionary<string, string>>();
+        private static Dictionary<string, (string, Exception)> ErrorSkills = new();
 
         public static void SkillsDetails()
         {
@@ -62,44 +62,35 @@ namespace FZM.Wiki
 
             };
 
-            //var itemsAndRecipes = typeof(Recipe).DerivedTypes().Concat(typeof(Item).DerivedTypes());     
-            // used to get the recipe unlocks from each skill
             FieldInfo skillUnlocksField = typeof(SkillTooltips).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
             var skillUnlocks = skillUnlocksField.GetValue(typeof(SkillTooltips)) as Dictionary<Type, Dictionary<int, List<LocString>>>;
 
             foreach (Skill skill in Item.AllItems.OfType<Skill>())
             {
+                string displayName = skill.DisplayName;
+                string prop = "";
                 try
                 {
                     if (!EverySkill.ContainsKey(skill.DisplayName))
                     {
-                        string displayName = skill.DisplayName;
-                        //Log.WriteLine(Localizer.DoStr(friendlyName));
-                        EverySkill.Add(displayName, new Dictionary<string, string>(skillDetails));
-
+                        var skillD = new Dictionary<string, string>(skillDetails);
                         //INFO
-                        EverySkill[displayName]["untranslated"] = $"'{skill.DisplayName.NotTranslated}'";
-                        if (skill.Title != "")
-                            EverySkill[displayName]["title"] = "'" + Localizer.DoStr(skill.Title) + "'"; // The title conferred by this skill.
+                        prop = "untranslated";                                            skillD[prop] = $"'{skill.DisplayName.NotTranslated}'";
+                        prop = "title";          if (skill.Title != "")                   skillD[prop] = $"'{Localizer.DoStr(skill.Title)}'"; // The title conferred by this skill.
 
                         Regex regex = new Regex("[\t\n\v\f\r]");
-                        EverySkill[displayName]["description"] = "'" + regex.Replace(JSONStringSafe(skill.DisplayDescription), " ") + "'"; // The description of the skill.
-                        EverySkill[displayName]["skillID"] = "'" + Localizer.DoStr(skill.Type.Name) + "'"; // For linking purposes in the wiki.
-                        EverySkill[displayName]["skillIDNum"] = "'" + skill.TypeID + "'"; // For linking purposes in the wiki.
-                        EverySkill[displayName]["maxLevel"] = "'" + skill.MaxLevel.ToString() + "'"; // The maximum level of this skill
-
-                        EverySkill[displayName]["root"] = skill.IsRoot.ToString().ToLower(); // If the skill is a ROOT Skill, these are overarching categories that house the actual learnable skills.                 
-                        if (!skill.IsRoot)
-                            EverySkill[displayName]["rootSkill"] = "'[[" + skill.RootSkillTree.StaticSkill.ToString() + "]]'"; // What is the skills root skill if this is not one.
-
-                        EverySkill[displayName]["specialty"] = skill.IsSpecialty.ToString().ToLower(); // Skills under ROOT skills, these are learnable.
-                        if (!skill.IsSpecialty)
-                            EverySkill[displayName]["specialtySkill"] = "'[[" + skill.SpecialtySkillTree.StaticSkill.ToString() + "]]'"; // This property is likely OBSOLETE, but currently still exists in the SLG code. May be useful to modders.
-
-                        if (!skill.IsRoot && !skill.IsSpecialty)
-                            EverySkill[displayName]["prerequisites"] = "'" + skill.SkillTree.Parent.StaticSkill.ToString() + "'"; // This property is likely OBSOLETE, but currently still exists in the SLG code. May be useful to modders.
+                        prop = "description";                                             skillD[prop] = $"'{regex.Replace(JSONStringSafe(skill.DisplayDescription), " ")}'"; // The description of the skill.
+                        prop = "skillID";                                                 skillD[prop] = $"'{Localizer.DoStr(skill.Type.Name)}'"; // For linking purposes in the wiki.
+                        prop = "skillIDNum";                                              skillD[prop] = $"'{skill.TypeID}'"; // For linking purposes in the wiki.
+                        prop = "maxLevel";                                                skillD[prop] = $"'{skill.MaxLevel}'"; // The maximum level of this skill
+                        prop = "root";                                                    skillD[prop] = skill.IsRoot.ToString().ToLower(); // If the skill is a ROOT Skill, these are overarching categories that house the actual learnable skills.                 
+                        prop = "rootSkill";      if (!skill.IsRoot)                       skillD[prop] = $"'[[{skill.RootSkillTree.StaticSkill}]]'"; // What is the skills root skill if this is not one.
+                        prop = "specialty";                                               skillD[prop] = skill.IsSpecialty.ToString().ToLower(); // Skills under ROOT skills, these are learnable.
+                        prop = "specialtySkill"; if (!skill.IsSpecialty)                  skillD[prop] = $"'[[{skill.SpecialtySkillTree.StaticSkill}]]'"; // This property is likely OBSOLETE, but currently still exists in the SLG code. May be useful to modders.
+                        prop = "prerequisites";  if (!skill.IsRoot && !skill.IsSpecialty) skillD[prop] = $"'{skill.SkillTree.Parent.StaticSkill}'"; // This property is likely OBSOLETE, but currently still exists in the SLG code. May be useful to modders.
 
                         // Check if the skill has child skills (common with ROOT skills) and create a string to list them out.
+                        prop = "childSkills";
                         if (skill.SkillTree.Children != null && skill.SkillTree.Children.Count() != 0)
                         {
                             int track = 0;
@@ -114,17 +105,15 @@ namespace FZM.Wiki
                                     sb.Append(",");
                                 }
                             }
-
-                            EverySkill[displayName]["childSkills"] = "{" + sb.ToString() + "}";
+                             skillD[prop] = "{" + sb.ToString() + "}";
                         }
 
                         //RESEARCH                   
-
                         // check the skill is a speciality (can be learned) and has a SkillBook associated with it.
                         if (skill.IsSpecialty && (Item.GetSkillbookForSkillType(skill.Type) is SkillBook skillBook))
                         {
-                            EverySkill[displayName]["specialtySkillBook"] = "'[[" + skillBook.DisplayName + "]]'";
-                            EverySkill[displayName]["specialtySkillScroll"] = "'[[" + Item.Get(skillBook.SkillScrollType).DisplayName + "]]'";
+                            prop = "specialtySkillBook";   skillD[prop] = $"'[[{skillBook.DisplayName}]]'";
+                            prop = "specialtySkillScroll"; skillD[prop] = $"'[[{Item.Get(skillBook.SkillScrollType).DisplayName}]]'";
                         }
 
                         /* OBSOLETE??
@@ -144,15 +133,14 @@ namespace FZM.Wiki
                                 }
                             }
 
-                            EverySkill[friendlyName]["itemsGiven"] = "'" + sb.ToString() + "'";
+                            EverySkill[friendlyName]["itemsGiven"]; skillD[prop] = "'" + sb.ToString() + "'";
                         }
                         */
 
                         // TALENTS
-
                         // sub dictionary for data building
                         Dictionary<string, string> levelTalents = new Dictionary<string, string>();
-
+                        prop = "talents";
                         if (skill.Talents != null)
                         {
                             skill.Talents.ForEach(group =>
@@ -160,7 +148,7 @@ namespace FZM.Wiki
                                 string key = "level" + group.Level.ToString();
 
                             // We really only want the levels the talents are at (3 and 6 currently but this should protect if that changes)
-                            if (group.TalentStrings.Count() == 1)
+                                if (group.TalentStrings.Count() == 1)
                                 {
                                     if (!levelTalents.ContainsKey(key))
                                     {
@@ -173,8 +161,8 @@ namespace FZM.Wiki
                                 }
 
                             //TODO: Currently there are no TalentGroups that have more than 1 Talents, but this assumedly could change and thus this it will need to be built eventually to accept it.
-                        });
-                            EverySkill[displayName]["talents"] = WriteDictionaryAsSubObject(levelTalents, 1);
+                            });
+                            skillD[prop] = WriteDictionaryAsSubObject(levelTalents, 1);
                         }
 
                         // BENEFITS BY LEVEL
@@ -191,6 +179,7 @@ namespace FZM.Wiki
                             { "level7", "" }
                         };
 
+                        prop = "benefits";
                         var benefits = SkillModifiedValueManager.GetBenefitsFor(skill);
                         if (benefits != null)
                         {
@@ -226,7 +215,7 @@ namespace FZM.Wiki
                                 }
                             }
                         }
-                        EverySkill[displayName]["benefits"] = WriteDictionaryAsSubObject(levelBenefits, 1);
+                        skillD[prop] = WriteDictionaryAsSubObject(levelBenefits, 1);
 
                         // UNLOCKS BY LEVEL
                         Dictionary<string, string> levelUnlocks = new Dictionary<string, string>()
@@ -240,7 +229,7 @@ namespace FZM.Wiki
                             { "level6", "" },
                             { "level7", "" }
                         };
-
+                        prop = "recipes";
                         // if we can't get unlocks or there is 0 listed or this is a root skill we move on
                         if (!skillUnlocks.TryGetValue(skill.GetType(), out var unlocks)) continue;
                         if (unlocks.Count() == 0) continue;
@@ -262,19 +251,16 @@ namespace FZM.Wiki
                                 }
                             }
                         }
-                        EverySkill[displayName]["recipes"] = WriteDictionaryAsSubObject(levelUnlocks, 1);
-                    }
+                        skillD[prop] = WriteDictionaryAsSubObject(levelUnlocks, 1);
+                        EverySkill.Add(displayName, skillD);
+                    }              
                 }
-                catch 
+                catch (Exception e)
                 {
-                    Console.WriteLine("Skill: " + skill.DisplayName);
-                    EverySkill[skill.DisplayName].ForEach(x =>
-                    {
-                        Console.WriteLine($"    {x.Key} : {x.Value}");
-                    });
-                    throw;
+                    AddToErrorLog(ref ErrorItems, displayName, prop, e);
                 }
             }
+            WriteErrorLogToFile("Wiki_Module_Skills_Errors.txt", "skills", ErrorItems);
             WriteDictionaryToFile("Wiki_Module_Skills.txt", "skills", EverySkill);
         }
     }

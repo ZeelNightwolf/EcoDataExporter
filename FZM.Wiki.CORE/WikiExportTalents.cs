@@ -4,6 +4,7 @@ using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Skills;
 using Eco.Gameplay.Systems.Chat;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using System.Collections.Generic;
 namespace FZM.Wiki
 {
 
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // dictionary of skills and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryTalent = new SortedDictionary<string, Dictionary<string, string>>();
@@ -40,12 +41,12 @@ namespace FZM.Wiki
 
             };
 
-            foreach (Talent talent in Talent.AllTalents)
+            foreach (Talent talent in TalentManager.AllTalents)
             {
                 TalentGroup talentGroup;
                 if (talent.TalentGroupType != null)
                 {
-                    talentGroup = Item.Get(Talent.TypeToTalent[talent.GetType()].TalentGroupType) as TalentGroup;
+                    talentGroup = Item.Get(TalentManager.TypeToTalent[talent.GetType()].TalentGroupType) as TalentGroup;
                     string displayName = talentGroup.DisplayName.ToString();
                     if (!EveryTalent.ContainsKey(displayName))
                     {

@@ -13,6 +13,7 @@ using Eco.Gameplay.Items;
 using Eco.Shared.Localization;
 using Eco.Gameplay.Systems;
 using Eco.Gameplay.Blocks;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -24,7 +25,7 @@ using Eco.Gameplay.Blocks;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // dictionary of plants and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryPlant = new SortedDictionary<string, Dictionary<string, string>>();

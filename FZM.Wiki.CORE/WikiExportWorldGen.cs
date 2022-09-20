@@ -1,5 +1,6 @@
 ﻿using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Chat;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared.Localization;
 using Eco.Shared.Utils;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ using System.Text.RegularExpressions;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> WorldGen = new SortedDictionary<string, Dictionary<string, string>>();

@@ -3,6 +3,7 @@ using Eco.Gameplay.Items;
 using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems;
 using Eco.Gameplay.Systems.Chat;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 using Eco.Shared;
 using Eco.Shared.Localization;
 using Eco.Shared.Utils;
@@ -25,7 +26,7 @@ using System.Text.RegularExpressions;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         //public static NLogWrapper logger => NLogWriter.GetConcreteLogger("WikiExporter");
 
@@ -58,7 +59,7 @@ namespace FZM.Wiki
             if (user == null)
             {
                 UserManager.RequireAuthentication = false;
-                dummy = UserManager.GetOrCreateUser("1234", "1234", "Dummy", false);
+                dummy = UserManager.GetOrCreateUser("1234", "1234", "Dummy");
                 UserManager.RequireAuthentication = true;
                 choice = dummy;
             }

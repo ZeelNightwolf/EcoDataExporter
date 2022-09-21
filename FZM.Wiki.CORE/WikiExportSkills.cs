@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using Eco.Shared.Localization;
 using System.Text.RegularExpressions;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -21,7 +22,7 @@ using System.Text.RegularExpressions;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // dictionary of skills and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EverySkill = new SortedDictionary<string, Dictionary<string, string>>();
@@ -62,8 +63,8 @@ namespace FZM.Wiki
 
             };
 
-            FieldInfo skillUnlocksField = typeof(SkillTooltips).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
-            var skillUnlocks = skillUnlocksField.GetValue(typeof(SkillTooltips)) as Dictionary<Type, Dictionary<int, List<LocString>>>;
+            FieldInfo skillUnlocksField = typeof(Skill).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
+            var skillUnlocks = skillUnlocksField.GetValue(typeof(Skill)) as Dictionary<Type, Dictionary<int, List<LocString>>>;
 
             foreach (Skill skill in Item.AllItems.OfType<Skill>())
             {
@@ -91,16 +92,16 @@ namespace FZM.Wiki
 
                         // Check if the skill has child skills (common with ROOT skills) and create a string to list them out.
                         prop = "childSkills";
-                        if (skill.SkillTree.Children != null && skill.SkillTree.Children.Count() != 0)
+                        if (skill.SkillTree.ProfessionChildren != null && skill.SkillTree.ProfessionChildren.Count() != 0)
                         {
                             int track = 0;
                             StringBuilder sb = new StringBuilder();
-                            foreach (SkillTree child in skill.SkillTree.Children)
+                            foreach (SkillTree child in skill.SkillTree.ProfessionChildren)
                             {
                                 Skill childSkill = child.StaticSkill;
                                 sb.Append(string.Format("'[[{0}]]'", childSkill));
                                 track++;
-                                if (track != skill.SkillTree.Children.Count())
+                                if (track != skill.SkillTree.ProfessionChildren.Count())
                                 {
                                     sb.Append(",");
                                 }
@@ -183,9 +184,10 @@ namespace FZM.Wiki
                         var benefits = SkillModifiedValueManager.GetBenefitsFor(skill);
                         if (benefits != null)
                         {
-                            foreach (KeyValuePair<LocString, List<SkillModifiedValue>> kvp in benefits)
+                            foreach (KeyValuePair<Type, List<SkillModifiedValue>> kvp in benefits)
                             {
-                                string keyString = kvp.Key.ToString().StripTags().Replace(" ", "");
+                                LocString locString = SkillModifiedValueManager.GetBenefitNameForType(kvp.Key);
+                                string keyString = locString.ToString().StripTags().Replace(" ", "");
                                 foreach (SkillModifiedValue smv in kvp.Value)
                                 {
                                     for (int i = 1; i <= skill.MaxLevel; i++)

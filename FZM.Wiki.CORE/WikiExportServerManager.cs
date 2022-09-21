@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace FZM.Wiki
 {
     [LocDisplayName("FZM Wiki Export")]
-    public partial class WikiDetails : IModKitPlugin, ICommandablePlugin
+    public partial class WikiDetails
     {  
         public void GetCommands(Dictionary<string, Action> nameToFunction)
         {

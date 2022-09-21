@@ -23,6 +23,7 @@ using Eco.World.Blocks;
 using Eco.Gameplay.Housing.PropertyValues;
 using Eco.Shared.IoC;
 using Eco.Gameplay.Housing;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 
 /*
  * This script is an extension by FZM based on the work done by Pradoxzon.
@@ -34,7 +35,7 @@ using Eco.Gameplay.Housing;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // required for clearing space for objects
         static Vector3i cellSize = new Vector3i(10, 10, 10);
@@ -93,7 +94,7 @@ namespace FZM.Wiki
                 { "typeID", "nil" }
             };
 
-            if (user.IsInternal)
+            if (user.IsOnline)
             {
                 PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12));
                 PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
@@ -175,7 +176,7 @@ namespace FZM.Wiki
                         if (item.Group == "World Object Items" || item.Group == "Road Items" || item.Group == "Modules")
                         {
                             WorldObjectItem i = item as WorldObjectItem;
-                            WorldObject obj = user.IsInternal
+                            WorldObject obj = user.IsOnline
                                 ? WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false)
                                 : SpawnOnFlattenedGround(i.WorldObjectType, user, spawnPoint);
 
@@ -293,10 +294,10 @@ namespace FZM.Wiki
         {
             var cc = obj.GetComponent<CraftingComponent>();
             string talentString = "{";
-            foreach (var talent in Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
+            foreach (var talent in TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
             {
                 talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
-                if (talent != Talent.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
+                if (talent != TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
                     talentString += ", ";
             }
             talentString += "}";
@@ -348,7 +349,7 @@ namespace FZM.Wiki
 
         private static WorldObject SpecialPlacement(User user, Type worldObjectType)
         {
-            Vector3i placePos = !user.IsInternal ? spawnPoint : (Vector3i)user.Player.Position;
+            Vector3i placePos = !user.IsOnline ? spawnPoint : (Vector3i)user.Player.Position;
             return worldObjectType == typeof(WoodenElevatorObject)
                 ? PlaceWoodenElevator(placePos)
                 : worldObjectType == typeof(WindmillObject) || worldObjectType == typeof(WaterwheelObject)

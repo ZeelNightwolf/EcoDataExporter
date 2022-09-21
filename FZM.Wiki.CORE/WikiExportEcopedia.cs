@@ -6,10 +6,11 @@ using System.Linq;
 using System;
 using System.Text.RegularExpressions;
 using Eco.Shared.Localization;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // dictionary of pages and their entries
         private static SortedDictionary<string, Dictionary<string, string>> EveryPage = new SortedDictionary<string, Dictionary<string, string>>();

@@ -1,5 +1,8 @@
 ﻿using Eco.Gameplay.Players;
 using Eco.Gameplay.Systems.Chat;
+using Eco.Gameplay.Systems.Messaging.Chat;
+using Eco.Gameplay.Systems.Messaging.Chat.Commands;
+using Eco.Shared.IoC;
 using Eco.Shared.Localization;
 using System.Collections.Generic;
 using System.Reflection;
@@ -15,7 +18,7 @@ using System.Text.RegularExpressions;
 
 namespace FZM.Wiki
 {
-    public partial class WikiDetails : IChatCommandHandler
+    public partial class WikiDetails
     {
         // dictionary of animals and their dictionary of stats
         private static SortedDictionary<string, Dictionary<string, string>> EveryCommand = new SortedDictionary<string, Dictionary<string, string>>();
@@ -35,8 +38,9 @@ namespace FZM.Wiki
 
             Regex regex = new Regex("\t\n\v\f\r");
 
-            var chatServer = ChatServer.Obj;
-            var chatManager = GetFieldValue(chatServer, "netChatManager");
+            //var chatServer = ChatServer.Obj;
+            //var chatManager = GetFieldValue(chatServer, "netChatManager");
+            ChatManager chatManager = ServiceHolder<IChatManager>.Obj as ChatManager;
             ChatCommandService chatCommandService = (ChatCommandService)GetFieldValue(chatManager, "chatCommandService");
 
             IEnumerable<ChatCommand> commands = chatCommandService.GetAllCommands();

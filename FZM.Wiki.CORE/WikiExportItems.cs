@@ -303,7 +303,6 @@ namespace FZM.Wiki
                 }
                 talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
             }
-            talentString += "";
 
             return "{" + talentString + "}";
         }

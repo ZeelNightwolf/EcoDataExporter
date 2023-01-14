@@ -613,7 +613,7 @@ namespace FZM.Wiki
                                     }
                                     sb.Append($"'{Localizer.DoStr(type.Name)}'");
                                 }
-                                EveryPage[pageName]["associatedTypes"] = $"{sb}";
+                                EveryPage[pageName]["associatedTypes"] = $"{{{sb}}}";
                             }
                         }
                     }
@@ -2015,10 +2015,16 @@ namespace FZM.Wiki
                                 var nutrients = r.Split(stringDesc);
 
                                 string final = "";
-                                for (int i = 0; i < nutrients.Length; i++)
+                                for (int i = 0; i < nutrients.Length - 1; i++)
                                 {
-                                    final += $"{{'{nutrients[i].Replace(":", "")}','{nutrients[++i].Replace("\r", "").Replace("\n", "")}'}}";
-                                    if (nutrients[i + 1] != "") final += ", "; else break;
+                                    string currentLine = nutrients[i];
+                                    string nextLine = nutrients[++i];
+                                    if(final.Length > 0)
+                                    {
+                                        final += ", ";
+                                    }
+
+                                    final += $"{{'{currentLine.Replace(":", "")}','{nextLine.Replace("\r", "").Replace("\n", "")}'}}";
                                 }
                                 itemD[prop] = $"{{{final}}}";
                             }

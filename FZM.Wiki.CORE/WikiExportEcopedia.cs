@@ -90,7 +90,7 @@ namespace FZM.Wiki
 
                                 sb.Append($"'{Localizer.DoStr(type.Name)}'");
                             }
-                            EveryPage[pageName]["associatedTypes"] = $"{sb}";
+                            EveryPage[pageName]["associatedTypes"] = $"{{{sb}}}";
                         }
                     }
                 }

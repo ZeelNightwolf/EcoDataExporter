@@ -293,16 +293,19 @@ namespace FZM.Wiki
         private static string GetTalentString(WorldObject obj)
         {
             var cc = obj.GetComponent<CraftingComponent>();
-            string talentString = "{";
+            string talentString = "";
+
             foreach (var talent in TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
             {
-                talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
-                if (talent != TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
+                if (talentString.Length > 0)
+                {
                     talentString += ", ";
+                }
+                talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
             }
-            talentString += "}";
+            talentString += "";
 
-            return talentString;
+            return "{" + talentString + "}";
         }
 
         private static string GetFootprint(WorldObject obj)

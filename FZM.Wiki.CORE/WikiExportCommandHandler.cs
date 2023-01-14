@@ -316,7 +316,7 @@ namespace FZM.Wiki
 
             private static WorldObject SpecialPlacement(User user, Type worldObjectType)
             {
-                Vector3i placePos = !user.IsOnline ? spawnPoint : (Vector3i)user.Player.Position;
+                Vector3i placePos = !user.IsOnline ? spawnPoint : (Vector3i)user.Position;
                 return worldObjectType == typeof(WoodenElevatorObject)
                     ? PlaceWoodenElevator(placePos)
                     : worldObjectType == typeof(WindmillObject) || worldObjectType == typeof(WaterwheelObject)
@@ -601,36 +601,19 @@ namespace FZM.Wiki
                                 EveryPage[pageName]["summary"] = $"'{sum}'";
                             }
 
-                            // There appears to be no need for the generated data as it's world specific info
-                            /*
-                            EveryPage[pageName]["hasGeneratedData"] = p.HasGeneratedData? Localizer.DoStr("Yes") : Localizer.DoStr("No");
-
-                            sb = new StringBuilder();
-                            var genData = (List<IEcopediaGeneratedData>)GetFieldValue(p, "generatedData");
-                            if (genData != null)
-                            {
-                                foreach (var gd in genData)
-                                {
-                                    sb.Append(gd.GetEcopediaData(user.Player, p));
-
-                                    if (gd != genData.Last())
-                                        sb.Append(", ");
-                                }
-                                EveryPage[pageName]["generatedData"] = $"{sb}";
-                            }
-                            */
-
-                            if (p.AssociatedTypes != null && p.AssociatedTypes.Count > 0)
+                            var types = p.TypesForThisPage?.ToList();
+                            if (types != null && types?.Count > 0)
                             {
                                 sb = new StringBuilder();
-                                foreach (var (Type, Display) in p.AssociatedTypes)
+                                foreach (var type in types)
                                 {
-                                    sb.Append($"'{Localizer.DoStr(Type.Name)}'");
-
-                                    if (Type.Name != p.AssociatedTypes.Last().Type.Name)
+                                    if (sb.Length > 0)
+                                    {
                                         sb.Append(", ");
+                                    }
+                                    sb.Append($"'{Localizer.DoStr(type.Name)}'");
                                 }
-                                EveryPage[pageName]["associatedTypes"] = $"{{{sb}}}";
+                                EveryPage[pageName]["associatedTypes"] = $"{sb}";
                             }
                         }
                     }
@@ -1966,8 +1949,8 @@ namespace FZM.Wiki
 
                 if (user.IsOnline)
                 {
-                    PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12));
-                    PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
+                    PrepGround(user, (Vector3i)user.Position + new Vector3i(12, 0, 12));
+                    PrepGround(user, (Vector3i)user.Position + new Vector3i(-12, 0, -12));
                 }
 
                 string displayName;
@@ -2047,7 +2030,7 @@ namespace FZM.Wiki
                             {
                                 WorldObjectItem i = item as WorldObjectItem;
                                 WorldObject obj = user.IsOnline
-                                    ? WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false)
+                                    ? WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false)
                                     : SpawnOnFlattenedGround(i.WorldObjectType, user, spawnPoint);
 
                                 // Couldn't Place the obj
@@ -2081,9 +2064,9 @@ namespace FZM.Wiki
                                 {
                                     var v = obj.GetComponent<HousingComponent>().HomeValue;
                                     prop = "roomCategory"; itemD[prop] = $"'{Localizer.DoStr(v.Category.ToString())}'";
-                                    if (v.Category != HomeFurnishingValue.RoomCategory.Industrial)
+                                    if (v.Category != RoomCategory.Industrial)
                                     {
-                                        prop = "skillValue"; itemD[prop] = $"'{v.SkillValue}'";
+                                        prop = "skillValue"; itemD[prop] = $"'{v.HouseValue}'";
                                         prop = "furnitureType"; itemD[prop] = $"'{v.TypeForRoomLimit}'";
                                         prop = "repeatsDepreciation"; itemD[prop] = $"'{v.DiminishingReturnPercent}'";
                                     }

@@ -54,27 +54,13 @@ namespace FZM.Wiki
         [ChatCommand("Creates all dump files", ChatAuthorizationLevel.Admin)]
         public static void DumpDetails(User user)
         {
-            User choice;
-            
-            if (user == null)
-            {
-                UserManager.RequireAuthentication = false;
-                dummy = UserManager.GetOrCreateUser("1234", "1234", "Dummy");
-                UserManager.RequireAuthentication = true;
-                choice = dummy;
-            }
-            else
-            {
-                choice = user;
-            }
-
             StringBuilder alert = new StringBuilder();
 
             alert.AppendLine("Errors: ");
 
             try { DiscoverAll(); }       catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Discover All")); }
             try { EcoDetails(); }        catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Eco Details")); }
-            try { ItemDetails(choice); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
+            try { ItemDetails(user); } catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Item Details")); }
             try { RecipesDetails(); }    catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Recipe Details")); }
             try { SkillsDetails(); }     catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Skills Details")); }
             try { TalentDetails(); }     catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Talent Details")); }
@@ -84,14 +70,6 @@ namespace FZM.Wiki
             try { CommandDetails(); }    catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Command Details")); }
             try { EcopediaDetails(); }   catch (Exception e) { alert.AppendLine(LogExceptionAndNotify(user, e, "Ecopedia Details")); }
 
-            ProcessStartInfo info = new ProcessStartInfo
-            {
-                Arguments = SaveLocation,
-                FileName = "explorer.exe"
-            };
-
-            Process.Start(info);
-
             alert.AppendLine("");
             alert.AppendLine("INFO: ");
             alert.AppendLine("Dump folder is open, alt-tab to check dumps."); 
@@ -100,8 +78,7 @@ namespace FZM.Wiki
             alert.AppendLine("DUMP FOLDER: ");
             alert.AppendLine($"{SaveLocation}");
 
-            if (choice == user)
-                user.Player.InfoBoxLocStr(alert.ToString());
+            user.Player.InfoBoxLocStr(alert.ToString());
         }
 
         public static string LogExceptionAndNotify(User user, Exception e, string dump)

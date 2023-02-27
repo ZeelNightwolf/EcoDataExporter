@@ -96,8 +96,8 @@ namespace FZM.Wiki
 
             if (user.IsOnline)
             {
-                PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12));
-                PrepGround(user, (Vector3i)user.Player.Position + new Vector3i(-12, 0, -12));
+                PrepGround(user, (Vector3i)user.Position + new Vector3i(12, 0, 12));
+                PrepGround(user, (Vector3i)user.Position + new Vector3i(-12, 0, -12));
             }
 
             string displayName;
@@ -177,7 +177,7 @@ namespace FZM.Wiki
                         {
                             WorldObjectItem i = item as WorldObjectItem;
                             WorldObject obj = user.IsOnline
-                                ? WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Player.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false)
+                                ? WorldObjectManager.ForceAdd(i.WorldObjectType, user, (Vector3i)user.Position + new Vector3i(12, 0, 12), Quaternion.Identity, false)
                                 : SpawnOnFlattenedGround(i.WorldObjectType, user, spawnPoint);
 
                             // Couldn't Place the obj
@@ -211,9 +211,9 @@ namespace FZM.Wiki
                             {
                                 var v = obj.GetComponent<HousingComponent>().HomeValue;
                                 prop = "roomCategory";                      itemD[prop] = $"'{Localizer.DoStr(v.Category.ToString())}'";
-                                if (v.Category != HomeFurnishingValue.RoomCategory.Industrial)
+                                if (v.Category != RoomCategory.Industrial)
                                 {
-                                    prop = "skillValue";                    itemD[prop] = $"'{v.SkillValue}'";
+                                    prop = "skillValue";                    itemD[prop] = $"'{v.HouseValue}'";
                                     prop = "furnitureType";                 itemD[prop] = $"'{v.TypeForRoomLimit}'";
                                     prop = "repeatsDepreciation";           itemD[prop] = $"'{v.DiminishingReturnPercent}'";
                                 }
@@ -293,16 +293,18 @@ namespace FZM.Wiki
         private static string GetTalentString(WorldObject obj)
         {
             var cc = obj.GetComponent<CraftingComponent>();
-            string talentString = "{";
+            string talentString = "";
+
             foreach (var talent in TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
             {
-                talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
-                if (talent != TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
+                if (talentString.Length > 0)
+                {
                     talentString += ", ";
+                }
+                talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
             }
-            talentString += "}";
 
-            return talentString;
+            return "{" + talentString + "}";
         }
 
         private static string GetFootprint(WorldObject obj)
@@ -349,7 +351,7 @@ namespace FZM.Wiki
 
         private static WorldObject SpecialPlacement(User user, Type worldObjectType)
         {
-            Vector3i placePos = !user.IsOnline ? spawnPoint : (Vector3i)user.Player.Position;
+            Vector3i placePos = !user.IsOnline ? spawnPoint : (Vector3i)user.Position;
             return worldObjectType == typeof(WoodenElevatorObject)
                 ? PlaceWoodenElevator(placePos)
                 : worldObjectType == typeof(WindmillObject) || worldObjectType == typeof(WaterwheelObject)

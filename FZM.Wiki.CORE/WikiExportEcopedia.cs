@@ -77,34 +77,18 @@ namespace FZM.Wiki
                             EveryPage[pageName]["summary"] = $"'{sum}'";
                         }
 
-                        // There appears to be no need for the generated data as it's world specific info
-                        /*
-                        EveryPage[pageName]["hasGeneratedData"] = p.HasGeneratedData? Localizer.DoStr("Yes") : Localizer.DoStr("No");
-
-                        sb = new StringBuilder();
-                        var genData = (List<IEcopediaGeneratedData>)GetFieldValue(p, "generatedData");
-                        if (genData != null)
-                        {
-                            foreach (var gd in genData)
-                            {
-                                sb.Append(gd.GetEcopediaData(user.Player, p));
-
-                                if (gd != genData.Last())
-                                    sb.Append(", ");
-                            }
-                            EveryPage[pageName]["generatedData"] = $"{sb}";
-                        }
-                        */
-
-                        if (p.AssociatedTypes != null && p.AssociatedTypes.Count > 0)
+                        var types = p.TypesForThisPage?.ToList();
+                        if (types != null && types.Count > 0)
                         {
                             sb = new StringBuilder();
-                            foreach (var (Type, Display) in p.AssociatedTypes)
+                            foreach (var type in types)
                             {
-                                sb.Append($"'{Localizer.DoStr(Type.Name)}'");
-
-                                if (Type.Name != p.AssociatedTypes.Last().Type.Name)
+                                if(sb.Length > 0)
+                                {
                                     sb.Append(", ");
+                                }
+
+                                sb.Append($"'{Localizer.DoStr(type.Name)}'");
                             }
                             EveryPage[pageName]["associatedTypes"] = $"{{{sb}}}";
                         }

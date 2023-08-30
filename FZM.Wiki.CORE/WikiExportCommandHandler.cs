@@ -39,6 +39,7 @@ using Eco.Gameplay;
 using Eco.World;
 using System.Runtime.CompilerServices;
 using Eco.Gameplay.Pipes.LiquidComponents;
+using Eco.Gameplay.Systems.NewTooltip.TooltipLibraryFiles;
 
 namespace FZM.Wiki
 {
@@ -638,12 +639,7 @@ namespace FZM.Wiki
 
                 Regex regex = new Regex("\t\n\v\f\r");
 
-                //var chatServer = ChatServer.Obj;
-                //var chatManager = GetFieldValue(chatServer, "netChatManager");
-                ChatManager chatManager = ServiceHolder<IChatManager>.Obj as ChatManager;
-                ChatCommandService chatCommandService = (ChatCommandService)GetFieldValue(chatManager, "chatCommandService");
-
-                IEnumerable<ChatCommand> commands = chatCommandService.GetAllCommands();
+                IEnumerable<ChatCommand> commands = Singleton<ChatManager>.Obj.ChatCommandService.GetAllCommands();
 
                 foreach (var com in commands)
                 {
@@ -1437,10 +1433,10 @@ namespace FZM.Wiki
 
             };
 
-                FieldInfo skillUnlocksField = typeof(Skill).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
+                FieldInfo skillUnlocksField = typeof(SkillTooltipLibrary).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
                 var skillUnlocks = skillUnlocksField.GetValue(typeof(Skill)) as Dictionary<Type, Dictionary<int, List<LocString>>>;
 
-                foreach (Skill skill in Item.AllItems.OfType<Skill>())
+                foreach (Skill skill in Skill.AllSkills)
                 {
                     string displayName = skill.DisplayName;
                     string prop = "";

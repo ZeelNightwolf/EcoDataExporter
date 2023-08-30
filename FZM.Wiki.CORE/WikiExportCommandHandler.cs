@@ -1705,7 +1705,7 @@ namespace FZM.Wiki
                         skillNeeds.Append("{");
                         foreach (RequiresSkillAttribute req in family.RequiredSkills)
                         {
-                            skillNeeds.Append("{'" + req.SkillItem.DisplayName + "','" + req.Level.ToString() + "','" + req.SkillItem.DisplayName.NotTranslated + "'}");
+                            skillNeeds.Append("{'" + req.SkillItem.DisplayName.ToString() + "','" + req.Level.ToString() + "','" + req.SkillItem.DisplayName.NotTranslated + "'}");
                             if (req != family.RequiredSkills.Last())
                                 skillNeeds.Append(", ");
                         }

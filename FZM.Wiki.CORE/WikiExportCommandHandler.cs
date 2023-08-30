@@ -470,13 +470,13 @@ namespace FZM.Wiki
             }
 
 
-            [ChatCommand("Lists All Commands", "we", ChatAuthorizationLevel.Admin)]
+            //[ChatCommand("Lists All Commands", "we", ChatAuthorizationLevel.Admin)]
             public static void WikiExport(User user)
             {
 
             }
 
-            [ChatSubCommand("WikiExport", "Discovers all in game items", "discoverall", ChatAuthorizationLevel.Admin)]
+            //[ChatSubCommand("WikiExport", "Discovers all in game items", "discoverall", ChatAuthorizationLevel.Admin)]
             public static void discoverall(User user)
             {
                 IEnumerable<Type> types = ((IEnumerable<Item>)Item.AllItems).Select<Item, Type>(item => item.Type);
@@ -485,7 +485,7 @@ namespace FZM.Wiki
 
             }
 
-            [ChatSubCommand("WikiExport", "Export All Data", "dumpdetails", ChatAuthorizationLevel.Admin)]
+            //[ChatSubCommand("WikiExport", "Export All Data", "dumpdetails", ChatAuthorizationLevel.Admin)]
             public static void dumpdetails(User user)
             {
 

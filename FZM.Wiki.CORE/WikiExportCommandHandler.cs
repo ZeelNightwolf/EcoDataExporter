@@ -39,6 +39,8 @@ using Eco.Gameplay;
 using Eco.World;
 using System.Runtime.CompilerServices;
 using Eco.Gameplay.Pipes.LiquidComponents;
+using Eco.Gameplay.Systems.NewTooltip.TooltipLibraryFiles;
+using Eco.Core.Utils.Logging;
 
 namespace FZM.Wiki
 {
@@ -256,7 +258,7 @@ namespace FZM.Wiki
                 string talentString = "{";
                 foreach (var talent in TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
                 {
-                    talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
+                   talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)).ToString() + "]]'";
                     if (talent != TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
                         talentString += ", ";
                 }
@@ -469,13 +471,13 @@ namespace FZM.Wiki
             }
 
 
-            [ChatCommand("Lists All Commands", "we", ChatAuthorizationLevel.Admin)]
+            //[ChatCommand("Lists All Commands", "we", ChatAuthorizationLevel.Admin)]
             public static void WikiExport(User user)
             {
 
             }
 
-            [ChatSubCommand("WikiExport", "Discovers all in game items", "discoverall", ChatAuthorizationLevel.Admin)]
+            //[ChatSubCommand("WikiExport", "Discovers all in game items", "discoverall", ChatAuthorizationLevel.Admin)]
             public static void discoverall(User user)
             {
                 IEnumerable<Type> types = ((IEnumerable<Item>)Item.AllItems).Select<Item, Type>(item => item.Type);
@@ -484,7 +486,7 @@ namespace FZM.Wiki
 
             }
 
-            [ChatSubCommand("WikiExport", "Export All Data", "dumpdetails", ChatAuthorizationLevel.Admin)]
+            //[ChatSubCommand("WikiExport", "Export All Data", "dumpdetails", ChatAuthorizationLevel.Admin)]
             public static void dumpdetails(User user)
             {
 
@@ -638,12 +640,7 @@ namespace FZM.Wiki
 
                 Regex regex = new Regex("\t\n\v\f\r");
 
-                //var chatServer = ChatServer.Obj;
-                //var chatManager = GetFieldValue(chatServer, "netChatManager");
-                ChatManager chatManager = ServiceHolder<IChatManager>.Obj as ChatManager;
-                ChatCommandService chatCommandService = (ChatCommandService)GetFieldValue(chatManager, "chatCommandService");
-
-                IEnumerable<ChatCommand> commands = chatCommandService.GetAllCommands();
+                IEnumerable<ChatCommand> commands = Singleton<ChatManager>.Obj.ChatCommandService.GetAllCommands();
 
                 foreach (var com in commands)
                 {
@@ -1437,10 +1434,10 @@ namespace FZM.Wiki
 
             };
 
-                FieldInfo skillUnlocksField = typeof(Skill).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
+                FieldInfo skillUnlocksField = typeof(SkillTooltipLibrary).GetField("skillUnlocksTooltips", BindingFlags.Static | BindingFlags.NonPublic);
                 var skillUnlocks = skillUnlocksField.GetValue(typeof(Skill)) as Dictionary<Type, Dictionary<int, List<LocString>>>;
 
-                foreach (Skill skill in Item.AllItems.OfType<Skill>())
+                foreach (Skill skill in Skill.AllSkills)
                 {
                     string displayName = skill.DisplayName;
                     string prop = "";
@@ -1634,6 +1631,7 @@ namespace FZM.Wiki
                     catch (Exception e)
                     {
                         AddToErrorLog(ref ErrorItems, displayName, prop, e);
+                        
                     }
                 }
                 WriteErrorLogToFile("Wiki_Module_Skills_Errors.txt", "skills", ErrorItems);
@@ -1709,7 +1707,7 @@ namespace FZM.Wiki
                         skillNeeds.Append("{");
                         foreach (RequiresSkillAttribute req in family.RequiredSkills)
                         {
-                            skillNeeds.Append("{'" + req.SkillItem.DisplayName + "','" + req.Level.ToString() + "','" + req.SkillItem.DisplayName.NotTranslated + "'}");
+                            skillNeeds.Append("{'" + req.SkillItem.DisplayName.ToString() + "','" + req.Level.ToString() + "','" + req.SkillItem.DisplayName.NotTranslated + "'}");
                             if (req != family.RequiredSkills.Last())
                                 skillNeeds.Append(", ");
                         }
@@ -2124,6 +2122,7 @@ namespace FZM.Wiki
                     catch (Exception e)
                     {
                         AddToErrorLog(ref ErrorItems, displayName, prop, e);
+                        ConsoleLogWriter.Instance.Write("displayName: " + displayName + "|prop: " + prop + "|e: " + e + ".\n");
                     }
                 }
                 WriteErrorLogToFile("Wiki_Module_ItemData_Errors.txt", "items", ErrorItems);

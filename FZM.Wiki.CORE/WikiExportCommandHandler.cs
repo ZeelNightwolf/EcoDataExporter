@@ -522,7 +522,7 @@ namespace FZM.Wiki
 
                 ProcessStartInfo info = new ProcessStartInfo
                 {
-                    Arguments = @"FZM\DataExports",
+                    Arguments = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + "\\FZM",
                     FileName = "explorer.exe"
                 };
 

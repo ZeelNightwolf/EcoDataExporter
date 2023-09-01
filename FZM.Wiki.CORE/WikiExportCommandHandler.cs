@@ -1631,7 +1631,6 @@ namespace FZM.Wiki
                     catch (Exception e)
                     {
                         AddToErrorLog(ref ErrorItems, displayName, prop, e);
-                        
                     }
                 }
                 WriteErrorLogToFile("Wiki_Module_Skills_Errors.txt", "skills", ErrorItems);
@@ -2122,7 +2121,6 @@ namespace FZM.Wiki
                     catch (Exception e)
                     {
                         AddToErrorLog(ref ErrorItems, displayName, prop, e);
-                        ConsoleLogWriter.Instance.Write("displayName: " + displayName + "|prop: " + prop + "|e: " + e + ".\n");
                     }
                 }
                 WriteErrorLogToFile("Wiki_Module_ItemData_Errors.txt", "items", ErrorItems);

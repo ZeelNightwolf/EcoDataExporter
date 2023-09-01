@@ -40,6 +40,7 @@ using Eco.World;
 using System.Runtime.CompilerServices;
 using Eco.Gameplay.Pipes.LiquidComponents;
 using Eco.Gameplay.Systems.NewTooltip.TooltipLibraryFiles;
+using Eco.Core.Utils.Logging;
 
 namespace FZM.Wiki
 {
@@ -257,7 +258,7 @@ namespace FZM.Wiki
                 string talentString = "{";
                 foreach (var talent in TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base))
                 {
-                    talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)) + "]]'";
+                   talentString += "'[[" + Localizer.DoStr(SplitName(talent.GetType().Name)).ToString() + "]]'";
                     if (talent != TalentManager.AllTalents.Where(x => x.TalentType == typeof(CraftingTalent) && x.Base).Last())
                         talentString += ", ";
                 }
@@ -1630,6 +1631,7 @@ namespace FZM.Wiki
                     catch (Exception e)
                     {
                         AddToErrorLog(ref ErrorItems, displayName, prop, e);
+                        
                     }
                 }
                 WriteErrorLogToFile("Wiki_Module_Skills_Errors.txt", "skills", ErrorItems);
@@ -2120,6 +2122,7 @@ namespace FZM.Wiki
                     catch (Exception e)
                     {
                         AddToErrorLog(ref ErrorItems, displayName, prop, e);
+                        ConsoleLogWriter.Instance.Write("displayName: " + displayName + "|prop: " + prop + "|e: " + e + ".\n");
                     }
                 }
                 WriteErrorLogToFile("Wiki_Module_ItemData_Errors.txt", "items", ErrorItems);

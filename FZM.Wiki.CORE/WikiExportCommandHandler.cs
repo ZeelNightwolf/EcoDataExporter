@@ -41,7 +41,6 @@ using System.Runtime.CompilerServices;
 using Eco.Gameplay.Pipes.LiquidComponents;
 using Eco.Gameplay.Systems.NewTooltip.TooltipLibraryFiles;
 using Eco.Core.Utils.Logging;
-using System.Globalization;
 
 namespace FZM.Wiki
 {
@@ -753,36 +752,36 @@ namespace FZM.Wiki
                             EveryAnimal[animalName]["untranslated"] = $"'{animal.DisplayName.NotTranslated}'";
 
                             #region LIFETIME
-                            EveryAnimal[animalName]["maturity"] = "'" + animal.MaturityAgeDays.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryAnimal[animalName]["maturity"] = "'" + animal.MaturityAgeDays.ToString("F1") + "'";
                             #endregion
 
                             #region MOVEMENT
                             EveryAnimal[animalName]["isSwimming"] = animal.Swimming ? $"'{Localizer.DoStr("Swimming")}'" : "nil"; // Does the animal swin.
                             EveryAnimal[animalName]["isFlying"] = animal.Flying ? $"'{Localizer.DoStr("Flying")}'" : "nil"; // Does the animal fly.
-                            EveryAnimal[animalName]["climbHeight"] = "'" + animal.ClimbHeight.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The height the animal can climb up
+                            EveryAnimal[animalName]["climbHeight"] = "'" + animal.ClimbHeight.ToString("F1") + "'"; // The height the animal can climb up
                             #endregion
 
                             #region BEHAVIOUR
-                            EveryAnimal[animalName]["wanderingSpeed"] = "'" + animal.WanderingSpeed.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The general wandering speed of the animal.
-                            EveryAnimal[animalName]["speed"] = "'" + animal.Speed.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The non-wandering speed of the animal.
-                            EveryAnimal[animalName]["health"] = "'" + animal.Health.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The health of the animal.
+                            EveryAnimal[animalName]["wanderingSpeed"] = "'" + animal.WanderingSpeed.ToString("F1") + "'"; // The general wandering speed of the animal.
+                            EveryAnimal[animalName]["speed"] = "'" + animal.Speed.ToString("F1") + "'"; // The non-wandering speed of the animal.
+                            EveryAnimal[animalName]["health"] = "'" + animal.Health.ToString("F1") + "'"; // The health of the animal.
 
-                            EveryAnimal[animalName]["damage"] = "'" + animal.Damage.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The damage the animal inflicts.
-                            EveryAnimal[animalName]["chanceToAttack"] = "'" + animal.ChanceToAttack.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The chance the animal will attack.
-                            EveryAnimal[animalName]["attackRange"] = "'" + animal.AttackRange.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The range the animal attacks from.
-                            EveryAnimal[animalName]["detectRange"] = "'" + animal.DetectRange.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The range the animal detects others from, default is 5X the attack range.
+                            EveryAnimal[animalName]["damage"] = "'" + animal.Damage.ToString("F1") + "'"; // The damage the animal inflicts.
+                            EveryAnimal[animalName]["chanceToAttack"] = "'" + animal.ChanceToAttack.ToString("F1") + "'"; // The chance the animal will attack.
+                            EveryAnimal[animalName]["attackRange"] = "'" + animal.AttackRange.ToString("F1") + "'"; // The range the animal attacks from.
+                            EveryAnimal[animalName]["detectRange"] = "'" + animal.DetectRange.ToString("F1") + "'"; // The range the animal detects others from, default is 5X the attack range.
 
                             // Time between attacks
-                            EveryAnimal[animalName]["minAttackDelay"] = "'" + animal.DelayBetweenAttacksRangeSec.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryAnimal[animalName]["maxAttackDelay"] = "'" + animal.DelayBetweenAttacksRangeSec.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryAnimal[animalName]["minAttackDelay"] = "'" + animal.DelayBetweenAttacksRangeSec.Min.ToString("F1") + "'";
+                            EveryAnimal[animalName]["maxAttackDelay"] = "'" + animal.DelayBetweenAttacksRangeSec.Max.ToString("F1") + "'";
 
                             EveryAnimal[animalName]["flees"] = animal.FleePlayers ? $"'{Localizer.DoStr("Flees")}'" : "nil"; // Will this animal flee players / predators.
-                            EveryAnimal[animalName]["fearFactor"] = "'" + animal.FearFactor.ToString("F1", CultureInfo.InvariantCulture) + "'"; // How quickly will the animal flee.
-                            EveryAnimal[animalName]["headDistance"] = "'" + animal.HeadDistance.ToString("F1", CultureInfo.InvariantCulture) + "'"; // The default distance from the animals head for calculating various behaviours
+                            EveryAnimal[animalName]["fearFactor"] = "'" + animal.FearFactor.ToString("F1") + "'"; // How quickly will the animal flee.
+                            EveryAnimal[animalName]["headDistance"] = "'" + animal.HeadDistance.ToString("F1") + "'"; // The default distance from the animals head for calculating various behaviours
                             #endregion
 
                             #region FOOD
-                            EveryAnimal[animalName]["calorieValue"] = "'" + animal.CalorieValue.ToString("F1", CultureInfo.InvariantCulture) + "'"; // Calorie value to consumers.
+                            EveryAnimal[animalName]["calorieValue"] = "'" + animal.CalorieValue.ToString("F1") + "'"; // Calorie value to consumers.
                             #endregion
 
                             #region FOOD SOURCES
@@ -821,9 +820,9 @@ namespace FZM.Wiki
 
                             #region RESOURCES
                             // Resources returned.
-                            EveryAnimal[animalName]["resourceMin"] = "'" + animal.ResourceRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryAnimal[animalName]["resourceMax"] = "'" + animal.ResourceRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryAnimal[animalName]["resourceBonus"] = "'" + (animal.ResourceBonusAtGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryAnimal[animalName]["resourceMin"] = "'" + animal.ResourceRange.Min.ToString("F1") + "'";
+                            EveryAnimal[animalName]["resourceMax"] = "'" + animal.ResourceRange.Max.ToString("F1") + "'";
+                            EveryAnimal[animalName]["resourceBonus"] = "'" + (animal.ResourceBonusAtGrowth * 100).ToString("F0") + "'";
 
                             if (animal.ResourceItemType != null)
                             {
@@ -849,7 +848,7 @@ namespace FZM.Wiki
                             #endregion
 
                             #region WOLRD LAYERS
-                            EveryAnimal[animalName]["carbonRelease"] = "'" + animal.ReleasesCO2TonsPerDay.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryAnimal[animalName]["carbonRelease"] = "'" + animal.ReleasesCO2TonsPerDay.ToString("F4") + "'";
                             #endregion
                         }
                     }
@@ -947,24 +946,24 @@ namespace FZM.Wiki
                             #endregion
 
                             #region LIFETIME
-                            EveryTree[treeName]["maturity"] = "'" + tree.MaturityAgeDays.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["treeHealth"] = "'" + tree.TreeHealth.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["logHealth"] = "'" + tree.LogHealth.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["maturity"] = "'" + tree.MaturityAgeDays.ToString("F1") + "'";
+                            EveryTree[treeName]["treeHealth"] = "'" + tree.TreeHealth.ToString("F1") + "'";
+                            EveryTree[treeName]["logHealth"] = "'" + tree.LogHealth.ToString("F1") + "'";
                             #endregion
 
                             #region GENERATION
                             EveryTree[treeName]["isWater"] = tree.Water ? $"'{Localizer.DoStr("Underwater")}'" : "nil";
-                            EveryTree[treeName]["height"] = "'" + tree.Height.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["height"] = "'" + tree.Height.ToString("F1") + "'";
                             #endregion
 
                             #region FOOD
-                            EveryTree[treeName]["calorieValue"] = "'" + tree.CalorieValue.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["calorieValue"] = "'" + tree.CalorieValue.ToString("F1") + "'";
                             #endregion
 
                             #region RESOURCES
                             EveryTree[treeName]["requireHarvestable"] = tree.RequireHarvestable ? $"'{Localizer.DoStr("Yes")}'" : "nil";
-                            EveryTree[treeName]["pickableAtPercent"] = "'" + (tree.PickableAtPercent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["experiencePerHarvest"] = "'" + (tree.ExperiencePerHarvest).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["pickableAtPercent"] = "'" + (tree.PickableAtPercent * 100).ToString("F0") + "'";
+                            EveryTree[treeName]["experiencePerHarvest"] = "'" + (tree.ExperiencePerHarvest).ToString("F1") + "'";
 
                             if (tree.PostHarvestingGrowth == 0)
                                 EveryTree[treeName]["killOnHarvest"] = $"'{Localizer.DoStr("Yes")}'";
@@ -972,18 +971,18 @@ namespace FZM.Wiki
                                 EveryTree[treeName]["killOnHarvest"] = $"'{Localizer.DoStr("No")}'";
 
                             if (tree.PostHarvestingGrowth != 0)
-                                EveryTree[treeName]["postHarvestGrowth"] = "'" + (tree.PostHarvestingGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                EveryTree[treeName]["postHarvestGrowth"] = "'" + (tree.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
                             EveryTree[treeName]["scytheKills"] = tree.ScythingKills ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
                             if (tree.ResourceItemType != null) { EveryTree[treeName]["resourceItem"] = "'[[" + Localizer.DoStr(SplitName(RemoveItemTag(tree.ResourceItemType.Name))) + "]]'"; }
 
-                            EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["resourceBonus"] = "'" + (tree.ResourceBonusAtGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["resourceMin"] = "'" + tree.ResourceRange.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["resourceMax"] = "'" + tree.ResourceRange.Max.ToString("F1") + "'";
+                            EveryTree[treeName]["resourceBonus"] = "'" + (tree.ResourceBonusAtGrowth * 100).ToString("F0") + "'";
 
                             // Debris
-                            EveryTree[treeName]["debrisSpawnChance"] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["debrisSpawnChance"] = "'" + (tree.ChanceToSpawnDebris * 100).ToString("F0") + "'";
                             EveryTree[treeName]["debrisType"] = "'" + Localizer.DoStr(SplitName(RemoveItemTag(tree.DebrisType.Name))) + "'";
 
                             // The resources returned for chopping the debris.
@@ -1021,13 +1020,13 @@ namespace FZM.Wiki
                             #endregion
 
                             #region WORLDLAYERS
-                            EveryTree[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["carbonRelease"] = "'" + tree.ReleasesCO2TonsPerDay.ToString("F4") + "'";
 
-                            EveryTree[treeName]["idealGrowthRate"] = "'" + tree.MaxGrowthRate.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["idealGrowthRate"] = "'" + tree.MaxGrowthRate.ToString("F4") + "'";
 
-                            EveryTree[treeName]["idealDeathRate"] = "'" + tree.MaxDeathRate.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["idealDeathRate"] = "'" + tree.MaxDeathRate.ToString("F4") + "'";
 
-                            EveryTree[treeName]["spreadRate"] = "'" + tree.SpreadRate.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["spreadRate"] = "'" + tree.SpreadRate.ToString("F4") + "'";
 
                             // The resource constraints that slow growth rate.
                             #region Resource Constraints
@@ -1037,23 +1036,23 @@ namespace FZM.Wiki
                                 {
                                     if (r.LayerName == "Nitrogen")
                                     {
-                                        EveryTree[treeName]["nitrogenHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryTree[treeName]["nitrogenContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["nitrogenHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryTree[treeName]["nitrogenContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                     if (r.LayerName == "Phosphorus")
                                     {
-                                        EveryTree[treeName]["phosphorusHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryTree[treeName]["phosphorusContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["phosphorusHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryTree[treeName]["phosphorusContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                     if (r.LayerName == "Potassium")
                                     {
-                                        EveryTree[treeName]["potassiumHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryTree[treeName]["potassiumContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["potassiumHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryTree[treeName]["potassiumContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                     if (r.LayerName == "SoilMoisture")
                                     {
-                                        EveryTree[treeName]["soilMoistureHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryTree[treeName]["soilMoistureContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["soilMoistureHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryTree[treeName]["soilMoistureContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                 }
                             }
@@ -1066,13 +1065,13 @@ namespace FZM.Wiki
                                 foreach (CapacityConstraint c in tree.CapacityConstraints)
                                 {
                                     if (c.CapacityLayerName == "FertileGorund")
-                                        EveryTree[treeName]["consumedFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["consumedFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                     if (c.CapacityLayerName == "CanopySpace")
-                                        EveryTree[treeName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                     if (c.CapacityLayerName == "UnderwaterFertileGorund")
-                                        EveryTree[treeName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                     if (c.CapacityLayerName == "ShrubSpace")
-                                        EveryTree[treeName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryTree[treeName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 }
                             }
                             #endregion
@@ -1081,27 +1080,27 @@ namespace FZM.Wiki
                             #region Environment Ranges
 
                             // Temperature
-                            EveryTree[treeName]["extremeTempMin"] = "'" + tree.TemperatureExtremes.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["idealTempMin"] = "'" + tree.IdealTemperatureRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["idealTempMax"] = "'" + tree.IdealTemperatureRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["extremeTempMax"] = "'" + tree.TemperatureExtremes.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["extremeTempMin"] = "'" + tree.TemperatureExtremes.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["idealTempMin"] = "'" + tree.IdealTemperatureRange.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["idealTempMax"] = "'" + tree.IdealTemperatureRange.Max.ToString("F1") + "'";
+                            EveryTree[treeName]["extremeTempMax"] = "'" + tree.TemperatureExtremes.Max.ToString("F1") + "'";
 
                             // Moisture
-                            EveryTree[treeName]["extremeMoistureMin"] = "'" + tree.MoistureExtremes.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["idealMoistureMin"] = "'" + tree.IdealMoistureRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["idealMoistureMax"] = "'" + tree.IdealMoistureRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["extremeMoistureMax"] = "'" + tree.MoistureExtremes.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["extremeMoistureMin"] = "'" + tree.MoistureExtremes.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["idealMoistureMin"] = "'" + tree.IdealMoistureRange.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["idealMoistureMax"] = "'" + tree.IdealMoistureRange.Max.ToString("F1") + "'";
+                            EveryTree[treeName]["extremeMoistureMax"] = "'" + tree.MoistureExtremes.Max.ToString("F1") + "'";
 
                             // Salt Content
-                            EveryTree[treeName]["extremeSaltMin"] = "'" + tree.WaterExtremes.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["idealSaltMin"] = "'" + tree.IdealWaterRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["idealSaltMax"] = "'" + tree.IdealWaterRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["extremeSaltMax"] = "'" + tree.WaterExtremes.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["extremeSaltMin"] = "'" + tree.WaterExtremes.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["idealSaltMin"] = "'" + tree.IdealWaterRange.Min.ToString("F1") + "'";
+                            EveryTree[treeName]["idealSaltMax"] = "'" + tree.IdealWaterRange.Max.ToString("F1") + "'";
+                            EveryTree[treeName]["extremeSaltMax"] = "'" + tree.WaterExtremes.Max.ToString("F1") + "'";
 
                             #endregion
 
-                            EveryTree[treeName]["maxPollutionDensity"] = "'" + tree.MaxPollutionDensity.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryTree[treeName]["pollutionTolerance"] = "'" + tree.PollutionDensityTolerance.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryTree[treeName]["maxPollutionDensity"] = "'" + tree.MaxPollutionDensity.ToString("F4") + "'";
+                            EveryTree[treeName]["pollutionTolerance"] = "'" + tree.PollutionDensityTolerance.ToString("F4") + "'";
 
                             #endregion
 
@@ -1202,24 +1201,24 @@ namespace FZM.Wiki
 
                             #region LIFETIME
 
-                            EveryPlant[plantName]["maturity"] = "'" + plant.MaturityAgeDays.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["maturity"] = "'" + plant.MaturityAgeDays.ToString("F1") + "'";
                             #endregion
 
                             #region GENERATION
                             EveryPlant[plantName]["isWater"] = plant.Water ? $"'{Localizer.DoStr("Underwater")}'" : "nil";
-                            EveryPlant[plantName]["height"] = "'" + plant.Height.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["height"] = "'" + plant.Height.ToString("F1") + "'";
                             #endregion
 
                             #region FOOD
-                            EveryPlant[plantName]["calorieValue"] = "'" + plant.CalorieValue.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["calorieValue"] = "'" + plant.CalorieValue.ToString("F1") + "'";
                             #endregion
 
                             #region RESOURCES                       
                             EveryPlant[plantName]["requireHarvestable"] = plant.RequireHarvestable ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
-                            EveryPlant[plantName]["pickableAtPercent"] = "'" + (plant.PickableAtPercent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["pickableAtPercent"] = "'" + (plant.PickableAtPercent * 100).ToString("F0") + "'";
 
-                            EveryPlant[plantName]["experiencePerHarvest"] = "'" + (plant.ExperiencePerHarvest).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["experiencePerHarvest"] = "'" + (plant.ExperiencePerHarvest).ToString("F1") + "'";
 
                             if (Block.Is<Reapable>(plant.BlockType))
                                 EveryPlant[plantName]["harvestTool"] = $"'{Localizer.DoStr("Scythe")}'";
@@ -1232,15 +1231,15 @@ namespace FZM.Wiki
                                 EveryPlant[plantName]["killOnHarvest"] = $"'{Localizer.DoStr("No")}'";
 
                             if (plant.PostHarvestingGrowth != 0)
-                                EveryPlant[plantName]["postHarvestGrowth"] = "'" + (plant.PostHarvestingGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                EveryPlant[plantName]["postHarvestGrowth"] = "'" + (plant.PostHarvestingGrowth * 100).ToString("F0") + "'";
 
                             EveryPlant[plantName]["scytheKills"] = plant.ScythingKills ? $"'{Localizer.DoStr("Yes")}'" : "nil";
 
                             if (plant.ResourceItemType != null) { EveryPlant[plantName]["resourceItem"] = "'[[" + Localizer.DoStr(SplitName(RemoveItemTag(plant.ResourceItemType.Name))) + "]]'"; }
 
-                            EveryPlant[plantName]["resourceMin"] = "'" + plant.ResourceRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["resourceMax"] = "'" + plant.ResourceRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["resourceBonus"] = "'" + (plant.ResourceBonusAtGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["resourceMin"] = "'" + plant.ResourceRange.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["resourceMax"] = "'" + plant.ResourceRange.Max.ToString("F1") + "'";
+                            EveryPlant[plantName]["resourceBonus"] = "'" + (plant.ResourceBonusAtGrowth * 100).ToString("F0") + "'";
 
                             #endregion
 
@@ -1249,13 +1248,13 @@ namespace FZM.Wiki
                             #endregion
 
                             #region WORLDLAYERS
-                            EveryPlant[plantName]["carbonRelease"] = "'" + plant.ReleasesCO2TonsPerDay.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["carbonRelease"] = "'" + plant.ReleasesCO2TonsPerDay.ToString("F4") + "'";
 
-                            EveryPlant[plantName]["idealGrowthRate"] = "'" + plant.MaxGrowthRate.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["idealGrowthRate"] = "'" + plant.MaxGrowthRate.ToString("F4") + "'";
 
-                            EveryPlant[plantName]["idealDeathRate"] = "'" + plant.MaxDeathRate.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["idealDeathRate"] = "'" + plant.MaxDeathRate.ToString("F4") + "'";
 
-                            EveryPlant[plantName]["spreadRate"] = "'" + plant.SpreadRate.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["spreadRate"] = "'" + plant.SpreadRate.ToString("F4") + "'";
 
                             #region Resource Constraints
                             if (plant.ResourceConstraints != null)
@@ -1264,23 +1263,23 @@ namespace FZM.Wiki
                                 {
                                     if (r.LayerName == "Nitrogen")
                                     {
-                                        EveryPlant[plantName]["nitrogenHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryPlant[plantName]["nitrogenContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["nitrogenHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryPlant[plantName]["nitrogenContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                     if (r.LayerName == "Phosphorus")
                                     {
-                                        EveryPlant[plantName]["phosphorusHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryPlant[plantName]["phosphorusContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["phosphorusHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryPlant[plantName]["phosphorusContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                     if (r.LayerName == "Potassium")
                                     {
-                                        EveryPlant[plantName]["potassiumHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryPlant[plantName]["potassiumContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["potassiumHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryPlant[plantName]["potassiumContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                     if (r.LayerName == "SoilMoisture")
                                     {
-                                        EveryPlant[plantName]["soilMoistureHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                                        EveryPlant[plantName]["soilMoistureContent"] = "'" + (r.MaxResourceContent * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["soilMoistureHalfSpeed"] = "'" + (r.HalfSpeedConcentration * 100).ToString("F0") + "'";
+                                        EveryPlant[plantName]["soilMoistureContent"] = "'" + (r.MaxResourceContent * 100).ToString("F0") + "'";
                                     }
                                 }
                             }
@@ -1292,13 +1291,13 @@ namespace FZM.Wiki
                                 foreach (CapacityConstraint c in plant.CapacityConstraints)
                                 {
                                     if (c.CapacityLayerName == "FertileGorund")
-                                        EveryPlant[plantName]["consumedFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["consumedFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                     if (c.CapacityLayerName == "CanopySpace")
-                                        EveryPlant[plantName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["consumedCanopySpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                     if (c.CapacityLayerName == "UnderwaterFertileGorund")
-                                        EveryPlant[plantName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["consumedUnderwaterFertileGround"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                     if (c.CapacityLayerName == "ShrubSpace")
-                                        EveryPlant[plantName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1", CultureInfo.InvariantCulture) + "'";
+                                        EveryPlant[plantName]["consumedShrubSpace"] = "'" + (c.ConsumedCapacityPerPop).ToString("F1") + "'";
                                 }
                             }
                             #endregion
@@ -1306,27 +1305,27 @@ namespace FZM.Wiki
                             #region Environment Ranges
 
                             // Temperature
-                            EveryPlant[plantName]["extremeTempMin"] = "'" + plant.TemperatureExtremes.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["idealTempMin"] = "'" + plant.IdealTemperatureRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["idealTempMax"] = "'" + plant.IdealTemperatureRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["extremeTempMax"] = "'" + plant.TemperatureExtremes.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["extremeTempMin"] = "'" + plant.TemperatureExtremes.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["idealTempMin"] = "'" + plant.IdealTemperatureRange.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["idealTempMax"] = "'" + plant.IdealTemperatureRange.Max.ToString("F1") + "'";
+                            EveryPlant[plantName]["extremeTempMax"] = "'" + plant.TemperatureExtremes.Max.ToString("F1") + "'";
 
                             // Moisture
-                            EveryPlant[plantName]["extremeMoistureMin"] = "'" + plant.MoistureExtremes.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["idealMoistureMin"] = "'" + plant.IdealMoistureRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["idealMoistureMax"] = "'" + plant.IdealMoistureRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["extremeMoistureMax"] = "'" + plant.MoistureExtremes.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["extremeMoistureMin"] = "'" + plant.MoistureExtremes.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["idealMoistureMin"] = "'" + plant.IdealMoistureRange.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["idealMoistureMax"] = "'" + plant.IdealMoistureRange.Max.ToString("F1") + "'";
+                            EveryPlant[plantName]["extremeMoistureMax"] = "'" + plant.MoistureExtremes.Max.ToString("F1") + "'";
 
                             // Salt Content
-                            EveryPlant[plantName]["extremeSaltMin"] = "'" + plant.WaterExtremes.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["idealSaltMin"] = "'" + plant.IdealWaterRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["idealSaltMax"] = "'" + plant.IdealWaterRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["extremeSaltMax"] = "'" + plant.WaterExtremes.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["extremeSaltMin"] = "'" + plant.WaterExtremes.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["idealSaltMin"] = "'" + plant.IdealWaterRange.Min.ToString("F1") + "'";
+                            EveryPlant[plantName]["idealSaltMax"] = "'" + plant.IdealWaterRange.Max.ToString("F1") + "'";
+                            EveryPlant[plantName]["extremeSaltMax"] = "'" + plant.WaterExtremes.Max.ToString("F1") + "'";
 
                             #endregion
 
-                            EveryPlant[plantName]["maxPollutionDensity"] = "'" + plant.MaxPollutionDensity.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["pollutionTolerance"] = "'" + plant.PollutionDensityTolerance.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["maxPollutionDensity"] = "'" + plant.MaxPollutionDensity.ToString("F4") + "'";
+                            EveryPlant[plantName]["pollutionTolerance"] = "'" + plant.PollutionDensityTolerance.ToString("F4") + "'";
 
                             #endregion
 
@@ -1340,11 +1339,11 @@ namespace FZM.Wiki
                              * SEEDS
 
                             if (plant.SeedItemType != null) { EveryPlant[plantName]["seedDrop"] = "'" + SplitName(RemoveItemTag(plant.SeedItemType.Name)) + "'"; }   
-                            EveryPlant[plantName]["seedDropChance"] = "'" + (plant.SeedDropChance * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["seedAtGrowth"] = "'" + (plant.SeedsAtGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["seedBonusGrowth"] = "'" + (plant.SeedsBonusAtGrowth * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["seedMax"] = "'" + plant.SeedRange.Max.ToString("F1", CultureInfo.InvariantCulture) + "'";
-                            EveryPlant[plantName]["seedMin"] = "'" + plant.SeedRange.Min.ToString("F1", CultureInfo.InvariantCulture) + "'";
+                            EveryPlant[plantName]["seedDropChance"] = "'" + (plant.SeedDropChance * 100).ToString("F0") + "'";
+                            EveryPlant[plantName]["seedAtGrowth"] = "'" + (plant.SeedsAtGrowth * 100).ToString("F0") + "'";
+                            EveryPlant[plantName]["seedBonusGrowth"] = "'" + (plant.SeedsBonusAtGrowth * 100).ToString("F0") + "'";
+                            EveryPlant[plantName]["seedMax"] = "'" + plant.SeedRange.Max.ToString("F1") + "'";
+                            EveryPlant[plantName]["seedMin"] = "'" + plant.SeedRange.Min.ToString("F1") + "'";
 
 
                             */

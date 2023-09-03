@@ -1979,7 +1979,7 @@ namespace FZM.Wiki
                             prop = "maxStack"; itemD[prop] = $"'{item.MaxStackSize}'";
                             prop = "carried"; itemD[prop] = item.IsCarried ? $"'{Localizer.DoStr("Hands")}'" : $"'{Localizer.DoStr("Backpack")}'";
                             prop = "currency"; itemD[prop] = item.CanBeCurrency ? $"'{Localizer.DoStr("Yes")}'" : "nil";
-                            prop = "weight"; if (item.HasWeight) itemD[prop] = $"'{(decimal)item.Weight / 1000}'";
+                            prop = "weight"; if (item.HasWeight) itemD[prop] = "'" + ((decimal)item.Weight / 1000).ToString("F4", CultureInfo.InvariantCulture) + "'";
                             prop = "fuel"; if (item.IsFuel) itemD[prop] = $"'{item.Fuel}'";
                             prop = "yield"; if (item.HasYield) itemD[prop] = $"'[[{item.Yield.Skill.DisplayName}]]'";
 
@@ -1990,14 +1990,14 @@ namespace FZM.Wiki
                             // if the item is also a food item get the nutrient values
                             if (item is FoodItem foodItem)
                             {
-                                prop = "calories"; itemD[prop] = $"'{foodItem.Calories:F1}'";
-                                prop = "carbs"; itemD[prop] = $"'{foodItem.Nutrition.Carbs:F1}'";
-                                prop = "protein"; itemD[prop] = $"'{foodItem.Nutrition.Protein:F1}'";
-                                prop = "fat"; itemD[prop] = $"'{foodItem.Nutrition.Fat:F1}'";
-                                prop = "vitamins"; itemD[prop] = $"'{foodItem.Nutrition.Vitamins:F1}'";
+                                prop = "calories"; itemD[prop] = "'" + foodItem.Calories.ToString("F1", CultureInfo.InvariantCulture) + "'"; 
+                                prop = "carbs"; itemD[prop] = "'" + foodItem.Nutrition.Carbs.ToString("F1", CultureInfo.InvariantCulture) + "'"; 
+                                prop = "protein"; itemD[prop] = "'" + foodItem.Nutrition.Protein.ToString("F1", CultureInfo.InvariantCulture) + "'"; 
+                                prop = "fat"; itemD[prop] = "'" + foodItem.Nutrition.Fat.ToString("F1", CultureInfo.InvariantCulture) + "'"; 
+                                prop = "vitamins"; itemD[prop] = "'" + foodItem.Nutrition.Vitamins.ToString("F1", CultureInfo.InvariantCulture) + "'"; 
                                 prop = "density"; itemD[prop] = float.IsNaN(foodItem.Nutrition.Values().Sum() / foodItem.Calories)
                                 ? "'0.0'"
-                                : $"'{(foodItem.Nutrition.Values().Sum() / foodItem.Calories) * 100:F1}'";
+                                : "'" + ((foodItem.Nutrition.Values().Sum() / foodItem.Calories) * 100).ToString("F1", CultureInfo.InvariantCulture) + "'";
                             }
                             #endregion
 

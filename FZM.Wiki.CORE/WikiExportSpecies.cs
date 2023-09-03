@@ -44,63 +44,63 @@ namespace FZM.Wiki
             {             
                 // INFO
                 { "untranslated","nil" },
-                { "isDecorative", "nil" }, // Is the plant considered decorative. Not simulated after spawn.
-                { "doesSpread", "nil" }, // The plant will spawn others like it nearby given enough time not dying and not harvested
+                { "isDecorative", "nil" },                      // Is the plant considered decorative. Not simulated after spawn.
+                { "doesSpread", "nil" },                        // The plant will spawn others like it nearby given enough time not dying and not harvested
 
                 // LIFETIME
-                { "maturity", "nil" }, // Age for full maturity and reproduction.
+                { "maturity", "nil" },                          // Age for full maturity and reproduction.
 
                 // GENERATION
-                { "isWater", "nil" }, // Does the species live underwater.
-                { "height", "nil" }, // Plant height in meters.
+                { "isWater", "nil" },                           // Does the species live underwater.
+                { "height", "nil" },                            // Plant height in meters.
 
                 // FOOD
-                { "calorieValue", "nil" }, // The base calories this species provides to it's consumers.
+                { "calorieValue", "nil" },                      // The base calories this species provides to it's consumers.
 
                 // RESOURCES
-                { "requireHarvestable", "nil" }, // Does this plant require to have reached a harvestable stage before you can harvest it, you will get no resources for this if its not at a harvestable stage. 
-                { "pickableAtPercent", "nil" }, // This plant will be pickable at this percent and you will get some resources.
-                { "experiencePerHarvest", "nil" }, // Base experience you get per harvest.
-                { "harvestTool", "nil" }, // The tool required to harvest this plant, nil means hands.
-                { "killOnHarvest", "nil" }, // Does the plant die on harvest.
-                { "postHarvestGrowth", "nil" }, // What % growth does the plant return to after harvest.
-                { "scytheKills", "nil" }, // Will using a Scythe/Sickle on this plant kill it.
-                { "resourceItem", "nil" }, // The item you get from harvesting this plant.
-                { "resourceMin", "nil" }, // The minimum number of items returned.
-                { "resourceMax", "nil" }, // The maximum number of items returned.
-                { "resourceBonus", "nil" }, // The bonus items returned for allowing it to grow.
+                { "requireHarvestable", "nil" },                // Does this plant require to have reached a harvestable stage before you can harvest it, you will get no resources for this if its not at a harvestable stage. 
+                { "pickableAtPercent", "nil" },                 // This plant will be pickable at this percent and you will get some resources.
+                { "experiencePerHarvest", "nil" },              // Base experience you get per harvest.
+                { "harvestTool", "nil" },                       // The tool required to harvest this plant, nil means hands.
+                { "killOnHarvest", "nil" },                     // Does the plant die on harvest.
+                { "postHarvestGrowth", "nil" },                 // What % growth does the plant return to after harvest.
+                { "scytheKills", "nil" },                       // Will using a Scythe/Sickle on this plant kill it.
+                { "resourceItem", "nil" },                      // The item you get from harvesting this plant.
+                { "resourceMin", "nil" },                       // The minimum number of items returned.
+                { "resourceMax", "nil" },                       // The maximum number of items returned.
+                { "resourceBonus", "nil" },                     // The bonus items returned for allowing it to grow.
 
                 // WORLD LAYERS
-                { "carbonRelease", "nil" }, // The amount of carbon dioxide released by this species. (Plants & Trees are negative values)
-                { "idealGrowthRate", "nil" }, // In ideal conditions, what is the rate of growth. (%)
-                { "idealDeathRate", "nil" }, // In ideal conditions what is the rate of death. (%)
-                { "spreadRate", "nil" }, // In ideal conditions what is the rate of spread, if it does spread.
-                { "nitrogenHalfSpeed", "nil" }, // At what nitrogen value will the growth speed reduce to half.
-                { "nitrogenContent", "nil" }, // What nitrogen content is ideal.
-                { "phosphorusHalfSpeed", "nil" }, // At what phosphorus value will the growth speed reduce to half.
-                { "phosphorusContent", "nil" }, // What phosphorus content is ideal.
-                { "potassiumHalfSpeed", "nil" }, // At what potassium value will the growth speed reduce to half.
-                { "potassiumContent", "nil" }, // What potassium content is ideal.
-                { "soilMoistureHalfSpeed", "nil" }, // At what moisture value will the growth speed reduce to half.
-                { "soilMoistureContent", "nil" }, // What moisture content is ideal.
-                { "consumedFertileGround", "nil" }, // How much of the area deemed Fertile Ground does this plant take up, this is almost always more than the in game physical space.
-                { "consumedCanopySpace", "nil" }, // How much of the area deemed Canopy Space does this plant take up, this is almost always more than the in game physical space.
-                { "consumedUnderwaterFertileGround", "nil" }, // How much of the area deemed Underwater Fertile Ground does this plant take up, this is almost always more than the in game physical space.
-                { "consumedShrubSpace", "nil" }, // How much of the area deemed Shrub Space does this plant take up, this is almost always more than the in game physical space.
-                { "extremeTempMin", "nil" }, // The lowest temperature before this plant stops growth.
-                { "idealTempMin", "nil" }, // The lowest temperature of the ideal growth range (max growth).
-                { "idealTempMax", "nil" }, // The highest temperature of the ideal growth range (max growth).
-                { "extremeTempMax", "nil" }, // The highest temperature before this plant stops growth.
-                { "extremeMoistureMin", "nil" }, // The lowest moisture content before this plant stops growth.
-                { "idealMoistureMin", "nil" }, // The lowest moisture content of the ideal growth range (max growth).
-                { "idealMoistureMax", "nil" }, // The highest moisture content of the ideal growth range (max growth).
-                { "extremeMoistureMax", "nil" },// The highest moisture content before this plant stops growth.
-                { "extremeSaltMin", "nil" }, // The lowest salt content before this plant stops growth.
-                { "idealSaltMin", "nil" }, // The lowest salt contente of the ideal growth range (max growth).
-                { "idealSaltMax", "nil" }, // The highest salt content of the ideal growth range (max growth).
-                { "extremeSaltMax", "nil" }, // The highest Sslt content before this plant stops growth.
-                { "maxPollutionDensity", "nil" }, // The highest pollution density before this plant stops growing.
-                { "pollutionTolerance", "nil" } // The pollution density at which this plant slows growth, spread and carbon dioxide absorbtion.
+                { "carbonRelease", "nil" },                     // The amount of carbon dioxide released by this species. (Plants & Trees are negative values)
+                { "idealGrowthRate", "nil" },                   // In ideal conditions, what is the rate of growth. (%)
+                { "idealDeathRate", "nil" },                    // In ideal conditions what is the rate of death. (%)
+                { "spreadRate", "nil" },                        // In ideal conditions what is the rate of spread, if it does spread.
+                { "nitrogenHalfSpeed", "nil" },                 // At what nitrogen value will the growth speed reduce to half.
+                { "nitrogenContent", "nil" },                   // What nitrogen content is ideal.
+                { "phosphorusHalfSpeed", "nil" },               // At what phosphorus value will the growth speed reduce to half.
+                { "phosphorusContent", "nil" },                 // What phosphorus content is ideal.
+                { "potassiumHalfSpeed", "nil" },                // At what potassium value will the growth speed reduce to half.
+                { "potassiumContent", "nil" },                  // What potassium content is ideal.
+                { "soilMoistureHalfSpeed", "nil" },             // At what moisture value will the growth speed reduce to half.
+                { "soilMoistureContent", "nil" },               // What moisture content is ideal.
+                { "consumedFertileGround", "nil" },             // How much of the area deemed Fertile Ground does this plant take up, this is almost always more than the in game physical space.
+                { "consumedCanopySpace", "nil" },               // How much of the area deemed Canopy Space does this plant take up, this is almost always more than the in game physical space.
+                { "consumedUnderwaterFertileGround", "nil" },   // How much of the area deemed Underwater Fertile Ground does this plant take up, this is almost always more than the in game physical space.
+                { "consumedShrubSpace", "nil" },                // How much of the area deemed Shrub Space does this plant take up, this is almost always more than the in game physical space.
+                { "extremeTempMin", "nil" },                    // The lowest temperature before this plant stops growth.
+                { "idealTempMin", "nil" },                      // The lowest temperature of the ideal growth range (max growth).
+                { "idealTempMax", "nil" },                      // The highest temperature of the ideal growth range (max growth).
+                { "extremeTempMax", "nil" },                    // The highest temperature before this plant stops growth.
+                { "extremeMoistureMin", "nil" },                // The lowest moisture content before this plant stops growth.
+                { "idealMoistureMin", "nil" },                  // The lowest moisture content of the ideal growth range (max growth).
+                { "idealMoistureMax", "nil" },                  // The highest moisture content of the ideal growth range (max growth).
+                { "extremeMoistureMax", "nil" },                // The highest moisture content before this plant stops growth.
+                { "extremeSaltMin", "nil" },                    // The lowest salt content before this plant stops growth.
+                { "idealSaltMin", "nil" },                      // The lowest salt contente of the ideal growth range (max growth).
+                { "idealSaltMax", "nil" },                      // The highest salt content of the ideal growth range (max growth).
+                { "extremeSaltMax", "nil" },                    // The highest Sslt content before this plant stops growth.
+                { "maxPollutionDensity", "nil" },               // The highest pollution density before this plant stops growing.
+                { "pollutionTolerance", "nil" }                 // The pollution density at which this plant slows growth, spread and carbon dioxide absorbtion.
             };
 
             IEnumerable<Species> species = EcoSim.AllSpecies;

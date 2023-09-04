@@ -1727,7 +1727,7 @@ namespace FZM.Wiki
                         EveryRecipe[familyName]["moduleNeeds"] = moduleNeeds.ToString();
 
                         // Base craft time.
-                        EveryRecipe[familyName]["baseCraftTime"] = (family.CraftMinutes != null) ? "'" + family.CraftMinutes.GetBaseValue.ToString() + "'" : "'0'";
+                        EveryRecipe[familyName]["baseCraftTime"] = (family.CraftMinutes != null) ? "'" + family.CraftMinutes.GetBaseValue.ToString("F1", CultureInfo.InvariantCulture) + "'" : "'0'";
 
                         // Base labor cost
                         EveryRecipe[familyName]["baseLaborCost"] = "'" + family.Labor.ToString() + "'";

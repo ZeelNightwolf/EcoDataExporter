@@ -10,6 +10,7 @@ using Eco.Shared;
 using Eco.Shared.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -125,7 +126,7 @@ namespace FZM.Wiki
                     EveryRecipe[familyName]["moduleNeeds"] = moduleNeeds.ToString();
 
                     // Base craft time.
-                    EveryRecipe[familyName]["baseCraftTime"] = (family.CraftMinutes != null) ? "'" + family.CraftMinutes.GetBaseValue.ToString() + "'" : "'0'" ;
+                    EveryRecipe[familyName]["baseCraftTime"] = (family.CraftMinutes != null) ? "'" + family.CraftMinutes.GetBaseValue.ToString("F1", CultureInfo.InvariantCulture) + "'" : "'0'" ;
 
                     // Base labor cost
                     EveryRecipe[familyName]["baseLaborCost"] = "'" + family.Labor.ToString() + "'";
